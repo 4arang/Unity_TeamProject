@@ -107,7 +107,7 @@ public class WhiteTiger_Skill : MonoBehaviour
             Range.SetActive(true);
             GetMousePos();//마우스 위치받아오기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up);//화살표방향
-            ycManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
+            movingManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
          
         }
         if(Input.GetKeyUp(KeyCode.R))
@@ -118,7 +118,7 @@ public class WhiteTiger_Skill : MonoBehaviour
             Target_pos = DirectionPos.position;
             Distance_Player2Target = Vector3.Distance(Range.transform.position, Target_pos); //타겟까지 거리 구하기
 
-            ycManager.Instance.PlayerTargetPos = Target_pos;
+            movingManager.Instance.PlayerTargetPos = Target_pos;
 
             if (animator.GetBool("R_WT") == false)
             {

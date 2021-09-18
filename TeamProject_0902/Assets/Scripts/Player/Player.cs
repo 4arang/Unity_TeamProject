@@ -42,12 +42,12 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
-                ycManager.Instance.PlayerClickedPos = hit.point;//ÀÌµ¿ÁÂÇ¥ ÀúÀå
+                movingManager.Instance.PlayerClickedPos = hit.point;//ÀÌµ¿ÁÂÇ¥ ÀúÀå
                 hit_ = hit;
             }
             isupdate = true;
         }
-        PlayerDest = ycManager.Instance.PlayerClickedPos;
+        PlayerDest = movingManager.Instance.PlayerClickedPos;
 
     }
 

@@ -37,7 +37,7 @@ public class ColD : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         lr = linerenderobj.GetComponent<LineRenderer>();
-        grenadeDir = ycManager.Instance.PlayerDirection;
+        grenadeDir = movingManager.Instance.PlayerDirection;
         onSkill = false;
     }
 
@@ -50,17 +50,17 @@ public class ColD : MonoBehaviour
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (grenadeDir != ycManager.Instance.PlayerDirection)
+        if (grenadeDir != movingManager.Instance.PlayerDirection)
         {
             onSkill = true;
-            grenadeDir = ycManager.Instance.PlayerDirection;
+            grenadeDir = movingManager.Instance.PlayerDirection;
             agent.transform.rotation = Quaternion.AngleAxis(grenadeDir, Vector3.up);
         }
         else
             onSkill = false;
 
-        if (agent.velocity.magnitude < 0.1f) { ycManager.Instance.isFree = true; } //비전투모드
-        else { ycManager.Instance.isFree = false; } //전투모드
+        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+        else { movingManager.Instance.isFree = false; } //전투모드
     }
 
     void RightMouseClicked()
@@ -71,12 +71,12 @@ public class ColD : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
-                ycManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
+                movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
                 hit_ = hit;
             }
             isupdate = true;
         }
-        PlayerDest = ycManager.Instance.PlayerClickedPos;
+        PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
 
     private void LateUpdate()       //update에서 좌표값 갱신 후에 lateupdate에서 움직임
@@ -92,25 +92,12 @@ public class ColD : MonoBehaviour
     void PlayerMove()
     {
         if (hit_.collider.tag == "Floor")
-        {
-            //Play Animation
-           // animator.SetTrigger("Walk");
-          
-
+        { 
             //Move
             agent.SetDestination(PlayerDest);
             agent.stoppingDistance = 0;
 
-            // Rotation
-            //if (!onSkill)
-            //{
-            //    Quaternion rotationToLookAt = Quaternion.LookRotation(PlayerDest - transform.position);
-            //    float rotationY = Mathf.SmoothDampAngle(transform.eulerAngles.y,
-            //        rotationToLookAt.eulerAngles.y,
-            //        ref rotateVelocity,
-            //        rotateSpeedMovement * (Time.deltaTime * 5));
-            //    transform.eulerAngles = new Vector3(0, rotationY, 0);
-            //}
+
             //LinePath
             if (path != null && path.Length > 1)
             {

@@ -67,14 +67,14 @@ public class MapCamera : MonoBehaviour
             if (Input.GetMouseButtonDown(1)) //우클릭시 캐릭터 이동
             {
                 ray = cam.ScreenPointToRay(Input.mousePosition);
-                ycManager.Instance.PlayerClickedPosMiniMap = Input.mousePosition; //미니맵상 클릭점 저장
+                movingManager.Instance.PlayerClickedPosMiniMap = Input.mousePosition; //미니맵상 클릭점 저장
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, mask))
                 {
                     YPos = PlayerToMove.transform.position.y;
 
                     movePoint = new Vector3(hit.point.x, YPos, hit.point.z - offset);
-                    ycManager.Instance.PlayerClickedPos = movePoint;
-                    ycManager.Instance.ClickedOnMinimap = true;
+                    movingManager.Instance.PlayerClickedPos = movePoint;
+                    movingManager.Instance.ClickedOnMinimap = true;
                    //agent.SetDestination(movePoint);
 
                 }
@@ -86,13 +86,13 @@ public class MapCamera : MonoBehaviour
 
     void Line_PlayertoClick()
     {
-        if(ycManager.Instance.ClickedOnMinimap)
+        if(movingManager.Instance.ClickedOnMinimap)
         {
-            //Vector3 ClickonMinimap = ycManager.Instance.PlayerClickedPosMiniMap;
+            //Vector3 ClickonMinimap = movingManager.Instance.PlayerClickedPosMiniMap;
             //Vector3 PlayerImg = 
             //DrawLine();
         }
-        ycManager.Instance.ClickedOnMinimap = false;    //미니맵클릭 해제
+        movingManager.Instance.ClickedOnMinimap = false;    //미니맵클릭 해제
     }
 
     private bool IspointerOverUiObject()    //ui 클릭이벤트 감지

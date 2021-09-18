@@ -110,7 +110,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             Direction.SetActive(true); //총방향 설정 -> 총 active
             GetMousePos();  //마우스 위치 받아와서 방향 바라보게 하기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up); //각도setting
-            ycManager.Instance.PlayerDirection = DirecAngle + 52f; //플레이어에 방향전달
+            movingManager.Instance.PlayerDirection = DirecAngle + 52f; //플레이어에 방향전달
             //애니메이션 총구 이동각 때문에 보정
         }
         if (Input.GetKeyUp(KeyCode.Q))  //E키 떼는 순간 스킬 시작
@@ -159,7 +159,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             Direction.SetActive(true); //화살방향 설정 -> 화살 active
             GetMousePos();  //마우스 위치 받아와서 방향 바라보게 하기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up); //각도setting
-            ycManager.Instance.PlayerDirection = DirecAngle + 45; //플레이어에 방향전달
+            movingManager.Instance.PlayerDirection = DirecAngle + 45; //플레이어에 방향전달
         }
         if (Input.GetKeyUp(KeyCode.E))  //E키 떼는 순간 스킬 시작
         {

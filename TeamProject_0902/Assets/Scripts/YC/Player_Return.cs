@@ -24,7 +24,7 @@ public class Player_Return : MonoBehaviour
 
     void Update()
     {
-        if(!ycManager.Instance.isFree)
+        if(!movingManager.Instance.isFree)
         {
             Return_Aura.SetActive(false);
             StopCoroutine("Active_B"); //전투모드일 경우 스킬실패
@@ -46,7 +46,7 @@ public class Player_Return : MonoBehaviour
             yield return new WaitForSeconds(Return_skillTime);
             MainCamera.transform.position = CameraOrgPos; //카메라 위치 조정
             transform.position = StartPoint;
-            ycManager.Instance.PlayerClickedPos = StartPoint; //귀환후 움직임 고정
+            movingManager.Instance.PlayerClickedPos = StartPoint; //귀환후 움직임 고정
             yield return new WaitForSeconds(1.5f); //이펙트 유지
             Return_Aura.SetActive(false);
             break;

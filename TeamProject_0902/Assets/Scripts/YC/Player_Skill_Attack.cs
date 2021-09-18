@@ -55,9 +55,7 @@ public class Player_Skill_Attack : MonoBehaviour
         if (!_table.TryGetValue(other, out timer)) return; //if not in table, it's not an enemy
 
       if(Time.time>timer)
-        {
-
-
+        { 
             _table[other] = Time.time + cooldown;
             other.GetComponent<Minion1_Stats>().DropHP(ColD_Flame_AD); //damage the enemy
             timer_++;

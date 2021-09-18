@@ -44,9 +44,9 @@ public class WhiteTiger : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         lr = linerenderobj.GetComponent<LineRenderer>();
-        playerDir = ycManager.Instance.PlayerDirection;
+        playerDir = movingManager.Instance.PlayerDirection;
         onSkill = false;
-        TargetPos = ycManager.Instance.PlayerTargetPos;
+        TargetPos = movingManager.Instance.PlayerTargetPos;
 
         agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
         originalSpeed = agent.speed;
@@ -66,14 +66,14 @@ public class WhiteTiger : MonoBehaviour
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (playerDir != ycManager.Instance.PlayerDirection) //플레이어 방향
+        if (playerDir != movingManager.Instance.PlayerDirection) //플레이어 방향
         {
-            playerDir = ycManager.Instance.PlayerDirection;
+            playerDir = movingManager.Instance.PlayerDirection;
             agent.transform.rotation = Quaternion.AngleAxis(playerDir, Vector3.up);
         }
-        if (TargetPos != ycManager.Instance.PlayerTargetPos) //플레이어 이동(R스킬시 이동제한)
+        if (TargetPos != movingManager.Instance.PlayerTargetPos) //플레이어 이동(R스킬시 이동제한)
         {
-            TargetPos = ycManager.Instance.PlayerTargetPos;
+            TargetPos = movingManager.Instance.PlayerTargetPos;
             onSkill = true;
         }
 
@@ -83,8 +83,8 @@ public class WhiteTiger : MonoBehaviour
         }
 
 
-        if (agent.velocity.magnitude < 0.1f) { ycManager.Instance.isFree = true; } //비전투모드
-        else { ycManager.Instance.isFree = false; } //전투모드
+        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+        else { movingManager.Instance.isFree = false; } //전투모드
 
         SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
     }
@@ -119,11 +119,11 @@ public class WhiteTiger : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
-                ycManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
+                movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
                 hit_ = hit;
             }
             isupdate = true;
-            PlayerDest = ycManager.Instance.PlayerClickedPos;
+            PlayerDest = movingManager.Instance.PlayerClickedPos;
         }
 
 

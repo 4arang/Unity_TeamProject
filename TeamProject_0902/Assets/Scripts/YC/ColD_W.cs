@@ -84,12 +84,12 @@ public class ColD_W : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && GetComponent<ColD_Stats>().Helium >= 20)
         {
-            ycManager.Instance.PlayerClickedPos = transform.position; //위치고정
+            movingManager.Instance.PlayerClickedPos = transform.position; //위치고정
             Direction.transform.position = Range.transform.position; //캐릭터가운데로 화살이동
             Direction.SetActive(true); //화살방향 설정 -> 화살 active
             GetMousePos();  //마우스 위치 받아와서 방향 바라보게 하기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up); //각도setting
-            ycManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
+            movingManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
         }
         if (Input.GetKeyUp(KeyCode.E))  //E키 떼는 순간 스킬 시작
         {
@@ -149,7 +149,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             Direction.SetActive(false);
             if ((transform.position - Rdirection).magnitude > R_Distance)
             {//사거리 외에 있을 경우 이동
-                ycManager.Instance.PlayerClickedPos = Rdirection;
+                movingManager.Instance.PlayerClickedPos = Rdirection;
                 isR_ready = true;
             }
             else        //사거리 내일 경우 바로 실행
@@ -161,7 +161,7 @@ Quaternion.identity); //유탄발사 and transform 저장
         }
         if(isR_ready && (transform.position - Rdirection).magnitude <= R_Distance)
         {
-            ycManager.Instance.PlayerClickedPos = transform.position; //자리고정
+            movingManager.Instance.PlayerClickedPos = transform.position; //자리고정
             if (animator.GetBool("R_ColD") == false)
                 StartCoroutine("Active_R");
             isR_ready = false;

@@ -38,7 +38,7 @@ public class Xerion : MonoBehaviour
         lr = linerenderobj.GetComponent<LineRenderer>();
         //  lr.sharedMaterial.SetColor("_color", Color.white);
 
-        skillDir = ycManager.Instance.PlayerDirection;
+        skillDir = movingManager.Instance.PlayerDirection;
     }
 
 
@@ -50,16 +50,16 @@ public class Xerion : MonoBehaviour
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (skillDir != ycManager.Instance.PlayerDirection)
+        if (skillDir != movingManager.Instance.PlayerDirection)
         {
-            skillDir = ycManager.Instance.PlayerDirection;
+            skillDir = movingManager.Instance.PlayerDirection;
             agent.transform.rotation = Quaternion.AngleAxis(skillDir, Vector3.up);
 
         }
 
 
-        if (agent.velocity.magnitude < 0.1f) { ycManager.Instance.isFree = true; } //비전투모드
-        else { ycManager.Instance.isFree = false;} //전투모드
+        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+        else { movingManager.Instance.isFree = false;} //전투모드
 
     }
 
@@ -71,12 +71,12 @@ public class Xerion : MonoBehaviour
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
-                ycManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
+                movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
                 hit_ = hit;
             }
             isupdate = true;
         }
-        PlayerDest = ycManager.Instance.PlayerClickedPos;
+        PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
 
     private void LateUpdate()       //update에서 좌표값 갱신 후에 lateupdate에서 움직임

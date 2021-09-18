@@ -61,7 +61,7 @@ public class MouseCursor : MonoBehaviour
         { 
             while (true)
             {
-                rightClickPos = ycManager.Instance.PlayerClickedPos;
+                rightClickPos = movingManager.Instance.PlayerClickedPos;
                 GameObject obj = Instantiate(rightClickAnimation, rightClickPos, Quaternion.identity);
                 yield return new WaitForSeconds(0.5f);
                 Destroy(obj);
