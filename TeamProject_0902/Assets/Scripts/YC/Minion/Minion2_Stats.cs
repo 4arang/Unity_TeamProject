@@ -7,9 +7,9 @@ public class Minion2_Stats : MonoBehaviour
 {
     Stopwatch stopwatch = new Stopwatch();
 
+    public float MaxHP;
     public float HP;   //Health Point
     public float HPregen; //HP increasemnt per every 90s
-    public float HPregenperLevel;
     public int HPPtime = 90000;
 
     public float MaxAD;
@@ -25,20 +25,25 @@ public class Minion2_Stats : MonoBehaviour
     public int MoveSpeedptime = 300000; //300초마다 ms증가
     private float Recover_MoveSpeed;
 
-    [SerializeField] private GameObject DamagedEffect;
+    public byte Minion_Number;
 
-    void Start()
+  
+
+
+
+    private void Awake()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 
-    
+        Minion_Number = byte.Parse(data[5]["tags"].ToString());
+
+        MaxHP = 485;
         HP = float.Parse(data[5]["statshp"].ToString());
         HPregen = float.Parse(data[5]["statshpregen"].ToString());
-        HPregenperLevel = float.Parse(data[5]["statshpregenperlevel"].ToString());
 
+        MaxAD = 120;
         AD = float.Parse(data[5]["statsattackdamage"].ToString());
         ADperTime = float.Parse(data[5]["statsattackdamageperlevel"].ToString());
-
 
 
         MaxMoveSpeed = 425;
@@ -46,17 +51,7 @@ public class Minion2_Stats : MonoBehaviour
         AttackRange = int.Parse(data[5]["statsattackrange"].ToString());
         Recover_MoveSpeed = MoveSpeed;
 
-        DamagedEffect.SetActive(false);
-    }
 
-    void Update()
-    {
-        UnityEngine.Debug.Log("HP " + HP);
-        UnityEngine.Debug.Log("Speed " + MoveSpeed);
-    }
-
-    private void Awake()
-    {
         stopwatch.Start();
     }
 
@@ -65,11 +60,16 @@ public class Minion2_Stats : MonoBehaviour
         long elapsedTime = stopwatch.ElapsedMilliseconds;
         if (elapsedTime % HPPtime == 0)
         {
-
+            if (HP < MaxHP)
+            {
                 HP += HPregen;
-                HPregen += HPregenperLevel;       
-
+                if (HP > MaxHP) HP = MaxHP;
+            }
+            if (AD < MaxAD)
+            {
                 AD += ADperTime;
+                if (AD > MaxAD) AD = MaxAD;
+            }
 
         }
 
@@ -83,18 +83,18 @@ public class Minion2_Stats : MonoBehaviour
         }
     }
 
-        public void DropHP(float damage)
-    {
-        HP -= damage;
-    }
-    public void DropSpeed(float damage, float time)
-    {
-        MoveSpeed *= damage;
-        StartCoroutine("Active_SpeedReturn", time);
-    }
-    IEnumerator Active_SpeedReturn(float time)
-    {
-        yield return new WaitForSeconds(time); //1초후에 스피드 복구
-        MoveSpeed = Recover_MoveSpeed;
-    }
+    //    public void DropHP(float damage)
+    //{
+    //    HP -= damage;
+    //}
+    //public void DropSpeed(float damage, float time)
+    //{
+    //    MoveSpeed *= damage;
+    //    StartCoroutine("Active_SpeedReturn", time);
+    //}
+    //IEnumerator Active_SpeedReturn(float time)
+    //{
+    //    yield return new WaitForSeconds(time); //1초후에 스피드 복구
+    //    MoveSpeed = Recover_MoveSpeed;
+    //}
 }

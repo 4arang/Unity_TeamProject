@@ -36,8 +36,11 @@ public class WhiteTiger : MonoBehaviour
     private Vector3 TargetPos;
 
     private Transform Enemy; //적 위치 받아오기
-    private bool SpeedFull = false; 
+    private bool SpeedFull = false;
 
+    [SerializeField] private GameObject AttackRange;
+    public bool isBasicAttack = false;
+    private bool isAclicked = false;
 
     private void Start()
     {
@@ -124,8 +127,32 @@ public class WhiteTiger : MonoBehaviour
             }
             isupdate = true;
             PlayerDest = movingManager.Instance.PlayerClickedPos;
-        }
 
+
+            isBasicAttack = false;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            isBasicAttack = true;
+            isAclicked = true;
+
+        }
+        if(isBasicAttack && isAclicked)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+                {
+                    movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
+                    hit_ = hit;
+                }
+                isupdate = true;
+                PlayerDest = movingManager.Instance.PlayerClickedPos;
+                isAclicked = false;
+            }
+        }
 
     }
 
@@ -153,7 +180,7 @@ public class WhiteTiger : MonoBehaviour
     {
         if (hit_.collider.tag == "Floor")
         {
-
+            PlayerDest = movingManager.Instance.PlayerClickedPos;
             //Move
             agent.SetDestination(PlayerDest);
             agent.stoppingDistance = 0;
@@ -173,5 +200,6 @@ public class WhiteTiger : MonoBehaviour
         }
 
     }
+   
 
 }

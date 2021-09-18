@@ -7,6 +7,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     private Animator animator;
     private byte WildPoint; //0~4
     private bool isWild;
+    public bool isBasicAttack=false;
 
     [SerializeField] private GameObject Direction;
     [SerializeField] private GameObject Range;
@@ -72,11 +73,13 @@ public class WhiteTiger_Skill : MonoBehaviour
             WildPoint = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (isBasicAttack)
         {
+
             if (animator.GetBool("A_WT") == false)
                 StartCoroutine("Active_A");
             animator.SetBool("A_WT", true);
+            isBasicAttack = false;
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -229,8 +232,14 @@ public class WhiteTiger_Skill : MonoBehaviour
         while (true)
         {
             
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2.0f);
             animator.SetBool("A_WT", false);
+            yield return new WaitForSeconds(0.5f);
+            if (GetComponentInChildren<Player_Baisc_Attack>().AttackOn)
+            {
+                isBasicAttack = true;
+                Debug.Log("Attack aGgain");
+            }
             break;
         }
     }
@@ -253,4 +262,6 @@ public class WhiteTiger_Skill : MonoBehaviour
         time = Distance_Player2Target * ref_Dist_time;
         return time;
     }
+
+
 }

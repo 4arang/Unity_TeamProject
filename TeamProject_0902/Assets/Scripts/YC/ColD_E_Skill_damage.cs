@@ -30,8 +30,8 @@ public class ColD_E_Skill_damage : MonoBehaviour
         }
         if (other.CompareTag("Minion"))
         {
-            other.GetComponent<Minion1_Stats>().DropHP(ColD_Grenade_AD);
-            other.GetComponent<Minion1_Stats>().DropSpeed(1-ColD_grenade_MD, 2.0f);
+            other.GetComponent<Minion_Stats>().DropHP(ColD_Grenade_AD);
+            other.GetComponent<Minion_Stats>().DropSpeed(1-ColD_grenade_MD, 2.0f);
 
         }
     }

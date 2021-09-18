@@ -20,10 +20,10 @@ public class Minion2 : MonoBehaviour
 
     void Update()
     {
-        agent.speed = GetComponent<Minion2_Stats>().MoveSpeed;
+        agent.speed = GetComponent<Minion_Stats>().MoveSpeed;
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (GetComponent<Minion2_Stats>().HP <= 0)
+        if (GetComponent<Minion_Stats>().HP <= 0)
         {
             animator.SetBool("Die", true);
             StartCoroutine("Dying");
@@ -38,7 +38,7 @@ public class Minion2 : MonoBehaviour
 
     IEnumerator Dying()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.5f);
         animator.SetBool("Die", false);
         Destroy(gameObject);
     }

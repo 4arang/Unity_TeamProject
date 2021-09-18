@@ -25,7 +25,7 @@ public class WhiteTiger_W_Damage : MonoBehaviour
     {
         if (other.CompareTag("Minion"))
         {
-            other.GetComponent<Minion1_Stats>().DropHP(WT_W_AD);
+            other.GetComponent<Minion_Stats>().DropHP(WT_W_AD);
         }
     }
 }

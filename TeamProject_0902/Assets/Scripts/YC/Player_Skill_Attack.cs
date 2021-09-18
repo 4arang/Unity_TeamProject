@@ -57,13 +57,13 @@ public class Player_Skill_Attack : MonoBehaviour
       if(Time.time>timer)
         { 
             _table[other] = Time.time + cooldown;
-            other.GetComponent<Minion1_Stats>().DropHP(ColD_Flame_AD); //damage the enemy
+            other.GetComponent<Minion_Stats>().DropHP(ColD_Flame_AD); //damage the enemy
             timer_++;
             if(timer_>=4)
             {
                 if (other.CompareTag("Enemy")) //적챔피언인 경우만
                 {
-                    other.GetComponent<Minion1_Stats>().DropSpeed(0.85f, 1.0f); //챔피언으로 수정
+                    other.GetComponent<Minion_Stats>().DropSpeed(0.85f, 1.0f); //챔피언으로 수정
                     timer_ = 0;
                 }
             }

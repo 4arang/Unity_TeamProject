@@ -32,9 +32,11 @@ public class Minion1_Stats : MonoBehaviour
 
     public byte Minion_Number;
 
-    [SerializeField] private GameObject DamagedEffect;
 
-    void Start()
+
+   
+
+    private void Awake()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 
@@ -58,17 +60,8 @@ public class Minion1_Stats : MonoBehaviour
         AttackRange = int.Parse(data[4]["statsattackrange"].ToString());
         Recover_MoveSpeed = MoveSpeed;
 
-        DamagedEffect.SetActive(false);
-    }
 
-    void Update()
-    {
-        UnityEngine.Debug.Log("HP " + HP);
-        UnityEngine.Debug.Log("Speed " + MoveSpeed);
-    }
 
-    private void Awake()
-    {
         stopwatch.Start();
     }
 
@@ -108,18 +101,18 @@ public class Minion1_Stats : MonoBehaviour
 
     }
 
-    public void DropHP(float damage)
-    {
-        HP -= damage;
-    }
-    public void DropSpeed(float damage, float time)
-    {
-        MoveSpeed *= damage;
-        StartCoroutine("Active_SpeedReturn", time);
-    }
-    IEnumerator Active_SpeedReturn(float time)
-    {
-        yield return new WaitForSeconds(time); //1초후에 스피드 복구
-        MoveSpeed = Recover_MoveSpeed;
-    }
+    //public void DropHP(float damage)
+    //{
+    //    HP -= damage;
+    //}
+    //public void DropSpeed(float damage, float time)
+    //{
+    //    MoveSpeed *= damage;
+    //    StartCoroutine("Active_SpeedReturn", time);
+    //}
+    //IEnumerator Active_SpeedReturn(float time)
+    //{
+    //    yield return new WaitForSeconds(time); //1초후에 스피드 복구
+    //    MoveSpeed = Recover_MoveSpeed;
+    //}
 }

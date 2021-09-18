@@ -164,6 +164,9 @@ GameObject:
   - component: {fileID: 5048501094236319511}
   - component: {fileID: 5048501094236319512}
   - component: {fileID: 5048501094236319508}
+  - component: {fileID: 724345334}
+  - component: {fileID: 724345335}
+  - component: {fileID: 724345336}
   m_Layer: 0
   m_Name: Minion1
   m_TagString: Minion
@@ -197,9 +200,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3585058504077914494}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 771780d455b87334ab5946f7bf284359, type: 3}
-  m_Controller: {fileID: 9100000, guid: f940878c9e045bf45b1f7d7e6f253149, type: 2}
+  m_Controller: {fileID: 9100000, guid: eb930819c6e7b614fa21be93f1b56050, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -250,10 +253,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bda7e8e4d95234ebbc51b152faa1b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHP: 0
   HP: 0
+  HPregen: 0
+  HPregenperLevel: 0
+  HPPtime: 90000
+  MaxAD: 0
   AD: 0
+  ADperTime: 0
+  ADPtime: 90000
+  MaxAP: 0
   AP: 0
+  APp: 0
+  APPtime: 180000
+  MaxMoveSpeed: 0
   MoveSpeed: 0
+  AttackRange: 0
+  MoveSpeedp: 25
+  MoveSpeedptime: 300000
+  Minion_Number: 0
+--- !u!114 &724345334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585058504077914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3736ebe9b92fb1a4097586e21ef5d93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!195 &724345335
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585058504077914494}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &724345336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585058504077914494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 0
+  HP: 0
+  HPregen: 0
+  HPregenperLevel: 0
+  HPPtime: 0
+  MaxAD: 0
+  AD: 0
+  ADperTime: 0
+  ADPtime: 0
+  MaxAP: 0
+  AP: 0
+  APp: 0
+  APPtime: 0
+  MaxMoveSpeed: 0
+  MoveSpeed: 0
+  AttackRange: 0
+  MoveSpeedp: 0
+  MoveSpeedptime: 0
   DamagedEffect: {fileID: 2389679743667058932}
 --- !u!1 &4015881265962946478
 GameObject:
