@@ -46,7 +46,7 @@ public class ColD_R_Skill_damage : MonoBehaviour
             if (timer < 0) other.GetComponent<Minion_Stats>().DropSpeed(0.65f, 1.0f); //최초 1회
              _table[other] = Time.time + cooldown;
             other.GetComponent<Minion_Stats>().DropHP(ColD_Missile_AD); //damage the enemy
-            if (timer > 0) _table[other] = float.PositiveInfinity;//2회이상인경우
+          //  if (timer > 0) _table[other] = float.PositiveInfinity;//2회이상인경우
         }
 
 

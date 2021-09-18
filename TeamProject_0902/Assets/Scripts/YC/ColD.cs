@@ -33,12 +33,17 @@ public class ColD : MonoBehaviour
 
     //Basic Attack
     [SerializeField] private GameObject BasicRange;
+    [SerializeField] private GameObject BasicRange_Col;
+    [SerializeField] private GameObject BasicAttack_Effect;
+    [SerializeField] private GameObject BasicAttack_Effect_Slash;
+
     private bool isBasicAttack = false;
     public bool CheckEnemy = false;
     public Collider TargetEnemy;
     private float BasicRangef;
     private float AttackSpeed;
     private float BasicRange_Ref = 0.04f;
+    private bool OnAttack = false;
    
     private void Start()
     {
@@ -49,8 +54,11 @@ public class ColD : MonoBehaviour
         onSkill = false;
 
         BasicRange.SetActive(false);
+        BasicRange_Col.SetActive(false);
         BasicRangef = GetComponent<ColD_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
+        BasicAttack_Effect.SetActive(false);
+        BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<ColD_Stats>().AttackSpeed;
     }
@@ -82,6 +90,7 @@ public class ColD : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
+            BasicRange_Col.SetActive(true);
             BasicRange.SetActive(true);
             isBasicAttack = true;
         }
@@ -93,11 +102,14 @@ public class ColD : MonoBehaviour
         {
             if (TargetEnemy)//타겟설정이 되었다면 
             {
+                Debug.Log("Targeted");
+                GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
                 agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
                 AttackTargetEnemy(); //타겟 공격
             }
             else
             {       //타겟이 없으면 재설정
+                Debug.Log("Targeting");
                 GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
             }
         }
@@ -110,6 +122,7 @@ public class ColD : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isBasicAttack = false;
+
             BasicRange.SetActive(false); //범위이펙트 종료
             CheckEnemy = true;
 
@@ -131,6 +144,7 @@ public class ColD : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            BasicRange_Col.SetActive(false);
             TargetEnemy = null;
             CheckEnemy = false;
             RaycastHit hit;
@@ -181,7 +195,7 @@ public class ColD : MonoBehaviour
     void AttackTargetEnemy()
     {
         if ((transform.position - TargetEnemy.transform.position).magnitude < 
-            TargetEnemy.transform.localScale.magnitude)
+            TargetEnemy.transform.localScale.magnitude/2)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
 
@@ -189,27 +203,40 @@ public class ColD : MonoBehaviour
             agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
 
             Debug.Log("TargetSet, Player Stop");
-            if (animator.GetBool("A_ColD") == false)
+            if (!OnAttack)
             {
+                Debug.Log("Active animation");
                 StartCoroutine("Active_A");
             }
+        }
+        else
+        {
+            TargetEnemy = null; //공격범위 밖이면 타겟없으므로 재설정
         }
     }
 
     IEnumerator Active_A()
     {
+        OnAttack = true;
         while (true)
         {
+           
             animator.SetBool("A_ColD", true);
-            yield return new WaitForSeconds(1.0f);
+            BasicAttack_Effect.SetActive(true);
+            GetComponentInChildren<ColD_Punch_Collider>().Skill();
+            yield return new WaitForSeconds(0.2f);
+            BasicAttack_Effect_Slash.SetActive(true);
+            yield return new WaitForSeconds(0.6f);
+            BasicAttack_Effect.SetActive(false);
             animator.SetBool("A_ColD", false);
             yield return new WaitForSeconds(AttackSpeed);
             break;
         }
+        OnAttack = false;
     }
 
     float GetDirection(Vector3 home, Vector3 away)
     {
-        return Mathf.Atan2(home.x - away.x, home.z - away.z) * Mathf.Rad2Deg;
+        return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
     }
 }

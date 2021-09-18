@@ -5,8 +5,8 @@ using UnityEngine;
 public class WhiteTiger_Skill : MonoBehaviour
 {
     private Animator animator;
-    private byte WildPoint; //0~4
-    private bool isWild;
+    public byte WildPoint; //0~4
+    public bool isWild;
     public bool isBasicAttack=false;
 
     [SerializeField] private GameObject Direction;
@@ -16,12 +16,7 @@ public class WhiteTiger_Skill : MonoBehaviour
 
     private float DirecAngle;
     private Vector3 mouseVector;
-    [Header("Q_Skill")]
-    [SerializeField] private GameObject Q_Punch_L;
-    [SerializeField] private GameObject Q_Punch_R;
-    [SerializeField] private GameObject adv_Q_Punch;
-    [SerializeField] private GameObject Q_Effect;
-    [SerializeField] private GameObject adv_Q_Effect;
+
 
 
     [Header("W_Skill")]
@@ -60,6 +55,8 @@ public class WhiteTiger_Skill : MonoBehaviour
 
         animator = GetComponent<Animator>();
         WildPoint = 0;
+
+
     }
 
 
@@ -73,22 +70,7 @@ public class WhiteTiger_Skill : MonoBehaviour
             WildPoint = 0;
         }
 
-        if (isBasicAttack)
-        {
 
-            if (animator.GetBool("A_WT") == false)
-                StartCoroutine("Active_A");
-            animator.SetBool("A_WT", true);
-            isBasicAttack = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (animator.GetBool("Q_WT") == false)
-                StartCoroutine("Active_Q");
-            animator.SetBool("Q_WT", true);
-            if(!isWild) WildPoint++;
-        }
 
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -122,6 +104,7 @@ public class WhiteTiger_Skill : MonoBehaviour
             Distance_Player2Target = Vector3.Distance(Range.transform.position, Target_pos); //타겟까지 거리 구하기
 
             movingManager.Instance.PlayerTargetPos = Target_pos;
+            movingManager.Instance.PlayerClickedPos = Target_pos;
 
             if (animator.GetBool("R_WT") == false)
             {
@@ -144,31 +127,6 @@ public class WhiteTiger_Skill : MonoBehaviour
         }
     }
 
-    IEnumerator Active_Q()
-    {
-        while (true)
-        {
-
-            if (!isWild)
-            {
-                Q_Punch_L.SetActive(true);
-                Q_Punch_R.SetActive(true);
-                yield return new WaitForSeconds(1.5f);
-                Q_Punch_L.SetActive(false);
-                Q_Punch_R.SetActive(false);
-                animator.SetBool("Q_WT", false);
-                break;
-            }
-            else
-            {
-                adv_Q_Punch.SetActive(true);
-                yield return new WaitForSeconds(1.5f);
-                adv_Q_Punch.SetActive(false);
-                animator.SetBool("Q_WT", false);
-                break;
-            }
-        }
-    }
 
 
     IEnumerator Active_W()
@@ -227,22 +185,8 @@ public class WhiteTiger_Skill : MonoBehaviour
         }
     }
 
-    IEnumerator Active_A()
-    {
-        while (true)
-        {
-            
-            yield return new WaitForSeconds(2.0f);
-            animator.SetBool("A_WT", false);
-            yield return new WaitForSeconds(0.5f);
-            if (GetComponentInChildren<Player_Baisc_Attack>().AttackOn)
-            {
-                isBasicAttack = true;
-                Debug.Log("Attack aGgain");
-            }
-            break;
-        }
-    }
+
+
 
     Vector3 GetMousePos()
     {

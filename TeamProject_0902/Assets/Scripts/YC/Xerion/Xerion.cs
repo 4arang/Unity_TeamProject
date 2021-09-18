@@ -32,12 +32,14 @@ public class Xerion : MonoBehaviour
 
     //Basic Attack
     [SerializeField] private GameObject BasicRange;
+    [SerializeField] private GameObject BasicRange_col;
     private bool isBasicAttack=false;
     public bool CheckEnemy = false;
     public Collider TargetEnemy;
     private float BasicRangef;
     public GameObject GunShot;
     private float AttackSpeed;
+
 
     private void Start()
     {
