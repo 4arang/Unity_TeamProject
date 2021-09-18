@@ -32,7 +32,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     public float ref_Dist_time = 0.1f;
     public float ref_flyingSpeed = 1000f;
     private float Distance_Player2Target;
-    private Vector3 Target_pos; //적 위치
+    public Vector3 Target_pos; //적 위치
     
 
     void Start()
@@ -42,11 +42,7 @@ public class WhiteTiger_Skill : MonoBehaviour
         Direction.SetActive(false);
         Range.SetActive(false);
 
-        Q_Punch_L.SetActive(false);
-        Q_Punch_R.SetActive(false);
-        adv_Q_Punch.SetActive(false);
-        Q_Effect.SetActive(false);
-        adv_Q_Effect.SetActive(false);
+
 
         W_Shield.SetActive(false);
         adv_W_Shield.SetActive(false);
@@ -99,7 +95,7 @@ public class WhiteTiger_Skill : MonoBehaviour
         {
             Direction.SetActive(false);
             Range.SetActive(false);
-
+           // GetComponentInChildren<WT_Rskill_Collider>().Skill;
             Target_pos = DirectionPos.position;
             Distance_Player2Target = Vector3.Distance(Range.transform.position, Target_pos); //타겟까지 거리 구하기
 

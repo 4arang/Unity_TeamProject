@@ -57,8 +57,12 @@ public class WhiteTiger : MonoBehaviour
     [SerializeField] private GameObject Q_Punch_L;
     [SerializeField] private GameObject Q_Punch_R;
     [SerializeField] private GameObject adv_Q_Punch;
-    [SerializeField] private GameObject Q_Effect;
-    [SerializeField] private GameObject adv_Q_Effect;
+    [SerializeField] private GameObject adv_Q_Punch_col;
+    private bool On_adv_Q = false;
+    //[SerializeField] private GameObject Q_Effect;
+    //[SerializeField] private GameObject adv_Q_Effect;
+
+    private byte Q_SkillLevel;
 
 
     private void Start()
@@ -84,6 +88,14 @@ public class WhiteTiger : MonoBehaviour
       //  BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<WhiteTiger_Stats>().AttackSpeed;
+
+        Q_Punch_L.SetActive(false);
+        Q_Punch_R.SetActive(false);
+        adv_Q_Punch.SetActive(false);
+        adv_Q_Punch_col.SetActive(false);
+         //Q_Effect.SetActive(false);
+         //adv_Q_Effect.SetActive(false);
+        Q_SkillLevel = 1;
     }
 
 
@@ -118,8 +130,10 @@ public class WhiteTiger : MonoBehaviour
         if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
         else { movingManager.Instance.isFree = false; } //전투모드
 
-        SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
-
+        if (Enemy) //적 타겟이 있는경우
+        {
+            SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
+        }
 
         //////////////기본어택땅/////////////
         if (Input.GetKeyDown(KeyCode.A))
@@ -152,9 +166,7 @@ public class WhiteTiger : MonoBehaviour
         /////Q사용시 공격력up A공격////
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (animator.GetBool("Q_WT") == false)
                 StartCoroutine("Active_Q");
-            animator.SetBool("Q_WT", true);
             if (!GetComponent<WhiteTiger_Skill>().isWild) GetComponent<WhiteTiger_Skill>().WildPoint++;
         }
     }
@@ -205,7 +217,7 @@ public class WhiteTiger : MonoBehaviour
     }
 
     void SpeedUp()
-    {
+    { 
         if (!SpeedFull)
         {
             if ((transform.position - Enemy.position).magnitude < 10/*범위 태그minion->Enemy 수정요*/)
@@ -257,7 +269,7 @@ public class WhiteTiger : MonoBehaviour
             agent.speed = skillSpeed;
             agent.SetDestination(TargetPos);
             PlayerDest = TargetPos;
-            if (Vector3.Distance(TargetPos, agent.transform.position) < 0.1f)
+            if (Vector3.Distance(TargetPos, agent.transform.position) < 0.2f)
             {
                 onSkill = false;
                 agent.speed = originalSpeed;
@@ -300,55 +312,77 @@ public class WhiteTiger : MonoBehaviour
         OnAttack = true;
         while (true)
         {
+            if (!On_adv_Q)
+            {
+                animator.SetBool("A_WT", true);
+                BasicAttack_Effect_R.SetActive(true);
+                GetComponentInChildren<WT_Punch_Collider_R>().Skill();
+                yield return new WaitForSeconds(0.6f);
+                BasicAttack_Effect_R.SetActive(false);
+                yield return new WaitForSeconds(0.1f);
+                BasicAttack_Effect_L.SetActive(true);
+                GetComponentInChildren<WT_Punch_Collider_L>().Skill();
+                yield return new WaitForSeconds(0.5f);
+                BasicAttack_Effect_L.SetActive(false);
 
-            animator.SetBool("A_WT", true);
-            BasicAttack_Effect_R.SetActive(true);
-            GetComponentInChildren<WT_Punch_Collider_R>().Skill();
-            yield return new WaitForSeconds(0.5f);
-            BasicAttack_Effect_R.SetActive(false);
 
-            BasicAttack_Effect_L.SetActive(true);
-            GetComponentInChildren<WT_Punch_Collider_L>().Skill();
-            yield return new WaitForSeconds(0.5f);
-            BasicAttack_Effect_L.SetActive(false);
-
-            yield return new WaitForSeconds(0.5f);
-            //BasicAttack_Effect_Slash.SetActive(true);
-
-            animator.SetBool("A_WT", false);
-
-            yield return new WaitForSeconds(AttackSpeed);
-            break;
+                //BasicAttack_Effect_Slash.SetActive(true);
+                animator.SetBool("A_WT", false);
+                yield return new WaitForSeconds(AttackSpeed);
+                OnAttack = false;
+                break;
+            }
+            else
+            {
+                animator.SetBool("A_WT", true);
+                yield return new WaitForSeconds(0.2f);
+                adv_Q_Punch_col.SetActive(true);
+                GetComponentInChildren<WT_Bite_Collider>().Skill();
+                yield return new WaitForSeconds(0.3f);
+                adv_Q_Punch_col.SetActive(false);
+                yield return new WaitForSeconds(0.5f);
+                animator.SetBool("A_WT", false);
+                yield return new WaitForSeconds(AttackSpeed);
+                OnAttack = false;
+                break;
+            }
+           
         }
-        OnAttack = false;
-    }
 
+    }
 
     IEnumerator Active_Q()
     {
         while (true)
         {
-
+        
             if (!GetComponent<WhiteTiger_Skill>().isWild)
             {
+                GetComponent<WhiteTiger_Stats>().AD += 10 * Q_SkillLevel;
                 Q_Punch_L.SetActive(true);
                 Q_Punch_R.SetActive(true);
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(10.0f);
                 Q_Punch_L.SetActive(false);
                 Q_Punch_R.SetActive(false);
-                animator.SetBool("Q_WT", false);
+                GetComponent<WhiteTiger_Stats>().AD -= 10 * Q_SkillLevel;
                 break;
             }
             else
             {
+                On_adv_Q = true;    //true일경우 펀치->물어뜯기
+                GetComponent<WhiteTiger_Stats>().AD += 20 * Q_SkillLevel;
                 adv_Q_Punch.SetActive(true);
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(10.0f);
                 adv_Q_Punch.SetActive(false);
-                animator.SetBool("Q_WT", false);
+                GetComponent<WhiteTiger_Stats>().AD -= 20 * Q_SkillLevel;
+                On_adv_Q = false;
+                //yield return new WaitForSeconds(10.0f);
+                //adv_Q_Punch.SetActive(false);
                 break;
             }
         }
     }
+
 
     float GetDirection(Vector3 home, Vector3 away)
     {
