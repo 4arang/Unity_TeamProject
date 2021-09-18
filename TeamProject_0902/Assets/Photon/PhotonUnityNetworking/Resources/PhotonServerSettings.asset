@@ -42,6 +42,8 @@ MonoBehaviour:
   - ChatRPC
   - RPC_GetTeam
   - RPC_SentTeam
+  - RPC_LoadedGameScene
+  - RPC_AddCharacter
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -9,7 +9,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 {
     public int TeamID = 0;
 
-  //  public List<ChampionStats> Champions;
+    //public List<ChampionStats> Champions;
     
     public Transform MinionSpawnPoints;
 
@@ -35,7 +35,8 @@ public class TeamManager : MonoBehaviourPunCallbacks
             if (WaveTimer <= 0f)
             {
                 StartCoroutine(SpawnWave());
-                WaveTimer = GameConsts.MINION_SPAWNINTERVAL_TIME;       //Reset Timer          
+                WaveTimer = GameConsts.MINION_SPAWNINTERVAL_TIME;//Reset Timer          
+                WaveNumber++;
             }
             else
             {
