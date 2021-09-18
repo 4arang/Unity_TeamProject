@@ -10,6 +10,8 @@ TagManager:
   - Champion
   - Minion
   - Smoke
+  - UI
+  - Effect
   layers:
   - Default
   - TransparentFX

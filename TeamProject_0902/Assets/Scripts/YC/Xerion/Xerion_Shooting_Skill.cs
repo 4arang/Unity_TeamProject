@@ -6,7 +6,8 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 {
     Animator animator;
 
-    [SerializeField] private GameObject GunShot;
+
+
 
     [Header("Q_Skill")]
     [SerializeField] private GameObject Direction;
@@ -54,7 +55,6 @@ public class Xerion_Shooting_Skill : MonoBehaviour
         Laser_org_Size = new Vector3(1, 1, 1);
         Direction_Size = new Vector3(0.08f, 0.08f, 0.08f);
 
-        GunShot.SetActive(false);
         Direction.SetActive(false);
         Range.SetActive(false);
 
@@ -80,12 +80,6 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (animator.GetBool("A_Xerion") == false)
-                StartCoroutine("Active_A");
-            animator.SetBool("A_Xerion", true);
-        }
 
         if (Input.GetKey(KeyCode.Q))
         {
@@ -269,17 +263,7 @@ Quaternion.identity); //유탄발사 and transform 저장
     }
 
 
-    IEnumerator Active_A()
-    {
-        while (true)
-        {
-            GunShot.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
-            GunShot.SetActive(false);
-            animator.SetBool("A_Xerion", false);
-            break;
-        }
-    }
+
     IEnumerator Active_E()
     {
         while (true)
