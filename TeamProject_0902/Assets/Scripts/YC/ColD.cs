@@ -123,9 +123,9 @@ public class ColD : MonoBehaviour
         {
             isBasicAttack = false;
 
-            BasicRange.SetActive(false); //범위이펙트 종료
+        
             CheckEnemy = true;
-
+            BasicRange_Col.SetActive(false);
             RaycastHit hit; //캐릭터 이동
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -134,7 +134,8 @@ public class ColD : MonoBehaviour
                 hit_ = hit;
             }
             isupdate = true;
-
+            BasicRange_Col.SetActive(true);
+            BasicRange.SetActive(false); //범위이펙트 종료
         }
         PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
@@ -195,7 +196,7 @@ public class ColD : MonoBehaviour
     void AttackTargetEnemy()
     {
         if ((transform.position - TargetEnemy.transform.position).magnitude < 
-            TargetEnemy.transform.localScale.magnitude/2)
+            TargetEnemy.transform.localScale.magnitude*0.85f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
 
@@ -222,9 +223,9 @@ public class ColD : MonoBehaviour
         {
            
             animator.SetBool("A_ColD", true);
+            yield return new WaitForSeconds(0.2f);
             BasicAttack_Effect.SetActive(true);
             GetComponentInChildren<ColD_Punch_Collider>().Skill();
-            yield return new WaitForSeconds(0.2f);
             BasicAttack_Effect_Slash.SetActive(true);
             yield return new WaitForSeconds(0.6f);
             BasicAttack_Effect.SetActive(false);

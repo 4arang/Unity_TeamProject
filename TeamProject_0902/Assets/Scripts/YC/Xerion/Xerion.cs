@@ -33,13 +33,15 @@ public class Xerion : MonoBehaviour
     //Basic Attack
     [SerializeField] private GameObject BasicRange;
     [SerializeField] private GameObject BasicRange_col;
+    [SerializeField] private GameObject GunShot_Effect;
+    [SerializeField] private Transform BasicShot;
     private bool isBasicAttack=false;
     public bool CheckEnemy = false;
     public Collider TargetEnemy;
     private float BasicRangef;
-    public GameObject GunShot;
     private float AttackSpeed;
-
+    private float BasicRange_Ref = 0.004f;
+    private bool OnAttack = false;
 
     private void Start()
     {
@@ -49,9 +51,11 @@ public class Xerion : MonoBehaviour
         //  lr.sharedMaterial.SetColor("_color", Color.white);
 
         skillDir = movingManager.Instance.PlayerDirection;
+
         BasicRange.SetActive(false);
-        GunShot.SetActive(false);
-        BasicRangef = GetComponent<Xerion_Stats>().AttackRange/100;
+        BasicRange_col.SetActive(false);
+        BasicRangef = GetComponent<Xerion_Stats>().AttackRange*BasicRange_Ref;
+        BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
         AttackSpeed = GetComponent<Xerion_Stats>().AttackSpeed;
     }
 
@@ -75,28 +79,35 @@ public class Xerion : MonoBehaviour
         if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
         else { movingManager.Instance.isFree = false;} //전투모드
 
-        if(Input.GetKeyDown(KeyCode.A))
+
+        //////////////기본어택땅/////////////
+        if (Input.GetKeyDown(KeyCode.A))
         {
+            BasicRange_col.SetActive(true);
             BasicRange.SetActive(true);
             isBasicAttack = true;
         }
 
-        if(isBasicAttack)       //A키 입력 이후에 마우스왼쪽키 입력 가능
+        if (isBasicAttack)       //A키 입력 이후에 마우스왼쪽키 입력 가능
         {
             LeftMouseClicked();
-
-            if (TargetEnemy)
+        }
+        if (CheckEnemy && !isBasicAttack) //적 체크 완료한경우
+        {
+            if (TargetEnemy)//타겟설정이 되었다면 
             {
-                agent.SetDestination(TargetEnemy.transform.position);
-
-                AttackTargetEnemy();
+                Debug.Log("Targeted");
+                GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
+                agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
+                AttackTargetEnemy(); //타겟 공격
             }
             else
             {       //타겟이 없으면 재설정
+                Debug.Log("Targeting");
                 GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
             }
         }
-    
+
     }
 
 
@@ -104,11 +115,13 @@ public class Xerion : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            BasicRange.SetActive(false); //범위이펙트 종료
-            CheckEnemy = true;
-            GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
+      
+            isBasicAttack = false;
 
-            RaycastHit hit;
+            BasicRange_col.SetActive(false);
+            CheckEnemy = true;
+
+            RaycastHit hit; //캐릭터 이동
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
@@ -116,7 +129,8 @@ public class Xerion : MonoBehaviour
                 hit_ = hit;
             }
             isupdate = true;
-            
+            BasicRange_col.SetActive(true);
+            BasicRange.SetActive(false); //범위이펙트 종료
         }
         PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
@@ -125,7 +139,10 @@ public class Xerion : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            BasicRange_col.SetActive(false);
             isBasicAttack = false; //우클릭시 a(기본공격) 이동 false
+            TargetEnemy = null;
+            CheckEnemy = false;
             RaycastHit hit;
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -144,6 +161,7 @@ public class Xerion : MonoBehaviour
         {
             PlayerMove();
         }
+
     }
 
 
@@ -173,31 +191,45 @@ public class Xerion : MonoBehaviour
 
     void AttackTargetEnemy()
     {
-        if((transform.position - TargetEnemy.transform.position).magnitude<BasicRangef)
+        if((transform.position - TargetEnemy.transform.position).magnitude<5)
         {
             movingManager.Instance.PlayerClickedPos = transform.position;
             Debug.Log("TargetSet, Player Stop");
             if (animator.GetBool("A_Xerion") == false)
             {
-                animator.SetBool("A_Xerion", true);
+    
                 float shootDir = GetDirection(transform.position, TargetEnemy.transform.position);
                 movingManager.Instance.PlayerDirection = shootDir;
-                agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
-                StartCoroutine("Active_A");
+                agent.transform.rotation = Quaternion.AngleAxis(shootDir+45, Vector3.up);
+         
+                if (!OnAttack)
+                {
+
+                    Transform BasicShotTransform = Instantiate(BasicShot, GunShot_Effect.transform.position,
+                     Quaternion.identity);
+                    Vector3 shootingDir = (TargetEnemy.transform.position - transform.position).normalized;
+                    BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir);
+                    Debug.Log("Fire");
+                    StartCoroutine("Active_A");
+                }
+      
             }
         }
     }
     IEnumerator Active_A()
     {
+        OnAttack = true;
         while (true)
         {
-            GunShot.SetActive(true);
+            animator.SetBool("A_Xerion", true);
+            GunShot_Effect.SetActive(true);
             yield return new WaitForSeconds(0.3f);
-            GunShot.SetActive(false);
+            GunShot_Effect.SetActive(false);
             animator.SetBool("A_Xerion", false);
             yield return new WaitForSeconds(AttackSpeed);
             break;
         }
+        OnAttack = false;
     }
     float GetDirection(Vector3 home, Vector3 away)
     {

@@ -33,6 +33,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     public float ref_flyingSpeed = 1000f;
     private float Distance_Player2Target;
     public Vector3 Target_pos; //적 위치
+    public bool R_Targeted;
     
 
     void Start()
@@ -88,16 +89,24 @@ public class WhiteTiger_Skill : MonoBehaviour
             Range.SetActive(true);
             GetMousePos();//마우스 위치받아오기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up);//화살표방향
+
             movingManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
-         
+            GetComponentInChildren<WT_Rskill_Collider>().Skill(); //트리거+타겟위치 받아서 Target_pos 저장
+
         }
-        if(Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R))
         {
             Direction.SetActive(false);
             Range.SetActive(false);
-           // GetComponentInChildren<WT_Rskill_Collider>().Skill;
-            Target_pos = DirectionPos.position;
-            Distance_Player2Target = Vector3.Distance(Range.transform.position, Target_pos); //타겟까지 거리 구하기
+
+            if (!R_Targeted) //타겟을 찾지 못한경우 끝으로 가게
+
+            {
+                Debug.Log("Non Target");
+                Target_pos = DirectionPos.position;
+            }   
+                Distance_Player2Target = Vector3.Distance(Range.transform.position, Target_pos); //타겟까지 거리 구하기
+            
 
             movingManager.Instance.PlayerTargetPos = Target_pos;
             movingManager.Instance.PlayerClickedPos = Target_pos;
@@ -179,6 +188,7 @@ public class WhiteTiger_Skill : MonoBehaviour
             animator.SetBool("R_WT", false);
             break;
         }
+        if (R_Targeted) GetComponent<WhiteTiger>().R_Attack();
     }
 
 

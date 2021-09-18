@@ -155,7 +155,7 @@ public class WhiteTiger : MonoBehaviour
                 agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
                 AttackTargetEnemy(); //타겟 공격
             }
-            else
+            else if(!isBasicAttack)
             {       //타겟이 없으면 재설정
                 Debug.Log("Targeting");
                 GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
@@ -175,11 +175,12 @@ public class WhiteTiger : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             isBasicAttack = false; 
 
-            BasicRange.SetActive(false); //범위이펙트 종료
+     
             CheckEnemy = true;
-
+            BasicRange_Col.SetActive(false); //콜라이더 클릭 방지
             RaycastHit hit; //캐릭터 이동
 
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -188,7 +189,8 @@ public class WhiteTiger : MonoBehaviour
                 hit_ = hit;
             }
             isupdate = true;
-
+            BasicRange_Col.SetActive(true);
+            BasicRange.SetActive(false); //범위이펙트 종료
         }
         PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
@@ -196,7 +198,7 @@ public class WhiteTiger : MonoBehaviour
     void AttackTargetEnemy()
     {
         if ((transform.position - TargetEnemy.transform.position).magnitude <
-            TargetEnemy.transform.localScale.magnitude/2)
+            TargetEnemy.transform.localScale.magnitude*0.85f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
 
@@ -284,7 +286,7 @@ public class WhiteTiger : MonoBehaviour
 
     void PlayerMove()
     {
-        if (hit_.collider.tag == "Floor")
+        if (hit_.collider.CompareTag("Floor"))
         {
             PlayerDest = movingManager.Instance.PlayerClickedPos;
             //Move
@@ -387,6 +389,16 @@ public class WhiteTiger : MonoBehaviour
     float GetDirection(Vector3 home, Vector3 away)
     {
         return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
+    }
+
+    public void R_Attack()
+    {
+        // StartCoroutine("Active_R_Attack");
+        /// 적 챔피언에게만 가능. 추후 수정요
+        ///////
+        ///
+
+        Debug.Log("RSkill Targeted");
     }
 
 }
