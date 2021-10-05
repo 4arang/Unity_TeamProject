@@ -12,6 +12,8 @@ public class PFX_ProjectileObject : MonoBehaviour
     [HideInInspector]
     public float ImpactOffset = 0.15f;
 
+    public float grenadeRange=0.72f;
+
     private Vector3 grenadeDir;
 
    public void Setup(Vector3 ShootDir)
@@ -22,7 +24,7 @@ public class PFX_ProjectileObject : MonoBehaviour
     private void Start()
     {
        
-        Destroy(gameObject, 3.0f);
+        Destroy(gameObject, grenadeRange);
     }
 
     private void FixedUpdate()

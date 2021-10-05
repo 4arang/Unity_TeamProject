@@ -6,33 +6,32 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 {
     Animator animator;
 
-    public GameObject Direction;
-    public GameObject Range;
-    // public GameObject RangeDirection;
+    [SerializeField] private GameObject GunShot;
 
-    public GameObject GunShot;
-
-    public GameObject Laser;
+    [Header("Q_Skill")]
+    [SerializeField] private GameObject Direction;
+    [SerializeField] private GameObject Range;
+    [SerializeField] private GameObject Laser;
     [SerializeField] private GameObject Laser_ball;
     [SerializeField] private GameObject Laser_Range;
+    // public GameObject RangeDirection;
     private Vector3 Laser_Range_Size;
     public float Laser_Size_vel_ref = 0.5f;
     private Vector3 Laser_org_Size;
     private Vector3 Direction_Size;
     public float Direction_Size_vel_ref = 0.5f;
 
-
-
-
+    [Header("W_Skill")]
     [SerializeField] private GameObject satellite;
     [SerializeField] private GameObject satellite_range;
 
-
-    protected float DirecAngle; //e키 방향각도
+    [Header("E_Skill")]
     [SerializeField] private Transform grenade;
     [SerializeField] private GameObject grenadeEffect;
+    protected float DirecAngle; //e키 방향각도
 
 
+    [Header("R_Skill")]
     [SerializeField] private GameObject Drone_Range;
     [SerializeField] private GameObject Drone;
     [SerializeField] private Transform Drone_grenade;
@@ -45,7 +44,6 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     public float R_time = 7.0f;
     private float delayTime;
     private bool R_active = false;
-
 
     //마우스 좌표 저장용(임시)
     Vector3 mouseVector;
@@ -99,7 +97,8 @@ public class Xerion_Shooting_Skill : MonoBehaviour
                         * Laser_Size_vel_ref; //laer range ++
             if (Laser.transform.localScale.x <= Range.transform.localScale.x)
                 Laser.transform.localScale += new Vector3(Laser_org_Size.x * Time.deltaTime
-                    * Laser_Size_vel_ref, 0, 0);
+                    * Laser_Size_vel_ref, 0, Laser_org_Size.z * Time.deltaTime
+                    * Laser_Size_vel_ref);
             //laser ++;
             if (Direction.transform.localScale.z <= 0.17f)
                 Direction.transform.localScale += new Vector3(0, 0, Direction_Size.x * Time.deltaTime
@@ -111,7 +110,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             Direction.SetActive(true); //총방향 설정 -> 총 active
             GetMousePos();  //마우스 위치 받아와서 방향 바라보게 하기
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up); //각도setting
-            ycManager.Instance.PlayerDirection = DirecAngle + 47f; //플레이어에 방향전달
+            ycManager.Instance.PlayerDirection = DirecAngle + 52f; //플레이어에 방향전달
             //애니메이션 총구 이동각 때문에 보정
         }
         if (Input.GetKeyUp(KeyCode.Q))  //E키 떼는 순간 스킬 시작
@@ -225,8 +224,8 @@ Quaternion.identity); //유탄발사 and transform 저장
                     if (DroneShot == 1) //드론공격
                     {
 
-                        Transform DroneGrenadeTransform = Instantiate(Drone_grenade_self, new Vector3(
-                         Drone.transform.position.x, 1.0f, Drone.transform.position.z), 
+                        Transform DroneGrenadeTransform = Instantiate(Drone_grenade_self, Drone.transform.position/*new Vector3(
+                         Drone.transform.position.x, 1.0f, Drone.transform.position.z)*/, 
                          Quaternion.identity); //드론좌표에서 스킬 발사
                         DroneGrenadeTransform.GetComponent<Xerion_Drone_Grenade>().Setup(Drone.transform.position, mouseVector);
                         //드론에 방향, 포격위치 전달
@@ -235,8 +234,8 @@ Quaternion.identity); //유탄발사 and transform 저장
                     }
                     else //드론 미사일 공격
                     {
-                        Transform DroneGrenadeTransform = Instantiate(Drone_grenade, new Vector3(
-                            Drone.transform.position.x, 1.0f, Drone.transform.position.z),
+                        Transform DroneGrenadeTransform = Instantiate(Drone_grenade,new Vector3(
+                         Drone.transform.position.x, Drone.transform.position.y+1.0f, Drone.transform.position.z),
                             Quaternion.identity); //드론좌표에서 스킬 발사
                         DroneGrenadeTransform.GetComponent<Xerion_Drone_Grenade>().Setup(Drone.transform.position, mouseVector);
                         //드론에 방향, 포격위치 전달

@@ -39,13 +39,13 @@ public class ColD : MonoBehaviour
         lr = linerenderobj.GetComponent<LineRenderer>();
         grenadeDir = ycManager.Instance.PlayerDirection;
         onSkill = false;
-
     }
 
 
     private void Update()
     {
-
+        agent.speed = GetComponent<ColD_Stats>().MoveSpeed / 100;
+        Debug.Log("Speed " + agent.speed);
         RightMouseClicked();
 
         animator.SetFloat("Speed", agent.velocity.magnitude);

@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - Ping
   - Champion
+  - Minion
   layers:
   - Default
   - TransparentFX

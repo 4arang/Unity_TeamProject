@@ -24,11 +24,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region PUN CALLBACKS
 
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
-    }
-
     public override void OnLeftRoom()
     {
         PhotonNetwork.Disconnect();

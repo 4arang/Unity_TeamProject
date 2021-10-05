@@ -20,8 +20,11 @@ public class Xerion_Drone_Grenade : MonoBehaviour
     private Rigidbody myRigidbody;
     Vector3 target;
     Vector3 origin;
-    private float gravity = 10f;
-    public float height = 10f;
+    public float gravity = 10f;
+    public float height = 7.5f;
+    public float height_near = 2.5f;
+    public float distance_grenade = 8.5f;
+    public float ref_whenTofall = 0.7f;
 
     private void Start()
     {
@@ -34,6 +37,18 @@ public class Xerion_Drone_Grenade : MonoBehaviour
     {
         origin = ShootDir;
         target = Dest;
+        float flyingDistance = (target - origin).magnitude;
+        if (flyingDistance < distance_grenade)
+        {
+            height = height_near;
+            time = 0.015f*flyingDistance;
+            //Debug.Log("near distance " + time + " " + flyingDistance);
+        }
+        else
+        {
+            height = 7.5f;
+            time = 0.5f;
+        }
     }
 
     public void SetupVelocity(Vector3 ShootDir, Vector3 Dest)
@@ -69,7 +84,7 @@ public class Xerion_Drone_Grenade : MonoBehaviour
         if (Speed == 0)
             return;
 
-        if ((transform.position - target).magnitude > (origin - target).magnitude*2/3)
+        if ((transform.position - target).magnitude > (origin - target).magnitude*ref_whenTofall)
         {
             target.y = height;
         }
@@ -80,7 +95,7 @@ public class Xerion_Drone_Grenade : MonoBehaviour
        
         transform.rotation = Quaternion.LookRotation(grenadeDir);
         myRigidbody.velocity = grenadeDir;
-        Debug.Log("Direction Y : " + grenadeDir.y);
+       // Debug.Log("Direction Y : " + grenadeDir.y);
        
     }
 

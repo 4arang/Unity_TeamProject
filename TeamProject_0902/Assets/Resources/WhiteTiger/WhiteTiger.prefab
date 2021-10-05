@@ -81267,13 +81267,14 @@ GameObject:
   - component: {fileID: 7313489342749204782}
   - component: {fileID: 7313489342749204783}
   - component: {fileID: 161692127}
+  - component: {fileID: 584200122}
   m_Layer: 0
   m_Name: WhiteTiger
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5002886031893401612
 Transform:
   m_ObjectHideFlags: 0
@@ -81431,6 +81432,43 @@ MonoBehaviour:
   MainCamera: {fileID: 0}
   Return_skillTime: 6
   Return_coolTime: 10
+--- !u!114 &584200122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5002886031893236844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb063763a5b64a408cfd0cb87ca6e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackAbility: 0
+  DefenseAbility: 0
+  MagicAbility: 0
+  Difficulty: 0
+  HP: 0
+  HPperLevel: 0
+  MP: 0
+  MPperLevel: 0
+  AP: 0
+  APperLevel: 0
+  AD: 0
+  ADperLevel: 0
+  MRP: 0
+  MRPperLevel: 0
+  AttackSpeed: 0
+  AttackSpeedperLevel: 0
+  MoveSpeed: 0
+  AttackRange: 0
+  HPregen: 0
+  HPregenperLevel: 0
+  MPregen: 0
+  MPregenperLevel: 0
+  Wildness: 0
+  minWildness: 0
+  maxWildness: 4
 --- !u!1 &5002886031893236846
 GameObject:
   m_ObjectHideFlags: 0

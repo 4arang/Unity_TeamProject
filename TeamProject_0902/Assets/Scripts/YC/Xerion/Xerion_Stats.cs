@@ -5,30 +5,34 @@ using UnityEngine;
 public class Xerion_Stats : MonoBehaviour
 {
     //Player Information
-    byte AttackAbility;
-    byte DefenseAbility;
-    byte MagicAbility;
-    byte Difficulty;
+    public byte AttackAbility;
+    public byte DefenseAbility;
+    public byte MagicAbility;
+    public byte Difficulty;
 
     //Game Stats
-    int HP;             //Health Point
-    int HPperLevel;     //HP increasement per Level
-    int MP;             //Mana Point
-    int MPperLevel;
-    int AP;             //Armor Point
-    float APperLevel;
-    int AD;             //Attack Damage
-    float ADperLevel;
-    int MRP;             //Magic Resistance Point
-    float MRPperLevel;
-    float AttackSpeed;
-    float AttackSpeedperLevel;
-    int MoveSpeed;
-    int AttackRange;
-    float HPregen;
-    float HPregenperLevel;
-    int MPregen;
-    float MPregenperLevel;
+    public float HP;             //Health Point
+    public int HPperLevel;     //HP increasement per Level
+    public int MP;             //Mana Point
+    public int MPperLevel;
+    public int AP;             //Armor Point
+    public float APperLevel;
+    public int AD;             //Attack Damage
+    public float ADperLevel;
+    public int MRP;             //Magic Resistance Point
+    public float MRPperLevel;
+    public float AttackSpeed;
+    public float AttackSpeedperLevel;
+    public float MoveSpeed;
+    public int AttackRange;
+    public float HPregen;
+    public float HPregenperLevel;
+    public int MPregen;
+    public float MPregenperLevel;
+
+    //Xerion special
+    public int Energy=0;
+
 
     void Start()
     {

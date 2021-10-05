@@ -5,23 +5,35 @@ using UnityEngine;
 public class ColD_W : MonoBehaviour
 {
     Animator animator;
-    public GameObject aura;
-    public GameObject shield;
 
-    public GameObject flame;
+    [Header("Q_Skill")]
+    [SerializeField] private GameObject flame;
 
-    public GameObject Direction;
-    public GameObject grenade;
+    [Header("W_Skill")]
+    [SerializeField] private GameObject aura;
+    [SerializeField] private GameObject shield;
+    private float W_cooldown = 7.0f; //6.75  6.75  6.25  6
+    private float W_SpeedUp = 1.1f; // 1.15  1.20  1.25  1.30
+    private float W_HP = 60;        // 95 135 165 200
 
+    [Header("E_Skill")]
+    [SerializeField] private GameObject Direction;
+    [SerializeField] private GameObject grenade_L;
+    [SerializeField] private GameObject grenade_R;
     [SerializeField] private Transform grenade_Bomb;
     protected float DirecAngle; //e키 방향각도
-    protected float R_DirecAngle; //r키 방향각도
-                                  // protected Vector3 BombDirec;
+    private bool grenade_Left=true;
 
-    public GameObject missile;
-    public GameObject Range;
-    public GameObject RangeDirection;
-    public GameObject missile_target_effect;
+
+    [Header("R_Skill")] 
+    [SerializeField] private GameObject missile;
+    [SerializeField] private GameObject Range;
+    [SerializeField] private GameObject RangeDirection;
+    [SerializeField] private GameObject missile_target_effect;
+    protected float R_DirecAngle; //r키 방향각도// protected Vector3 BombDirec;
+    public float R_Distance=10.0f; //사거리 밖에 있는경우 이동해서 스킬 발동
+    private bool isR_ready; //r스킬 발동가능한지
+    private Vector3 Rdirection; //r방향좌표 저장
 
     //마우스 좌표 저장용(임시)
     Vector3 mouseVector;
@@ -34,13 +46,15 @@ public class ColD_W : MonoBehaviour
         flame.SetActive(false);
 
         Direction.SetActive(false);
-        grenade.SetActive(false);
+        grenade_L.SetActive(false);
+        grenade_R.SetActive(false);
 
         missile.SetActive(false);
         Range.SetActive(false);
         RangeDirection.SetActive(false);
         //  missile_target_effect.SetActive(false);
         animator = GetComponent<Animator>();
+        isR_ready = false;
     }
 
 
@@ -54,22 +68,23 @@ public class ColD_W : MonoBehaviour
             animator.SetBool("A_ColD", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && GetComponent<ColD_Stats>().Helium >= 20)
         {
             if (animator.GetBool("W_ColD") == false)
                 StartCoroutine("Active_W");
             animator.SetBool("W_ColD", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && GetComponent<ColD_Stats>().Helium >= 20)
         {
             if (animator.GetBool("Q_ColD") == false)
                 StartCoroutine("Active_Q");
             animator.SetBool("Q_ColD", true);
         }
 
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && GetComponent<ColD_Stats>().Helium >= 20)
         {
+            ycManager.Instance.PlayerClickedPos = transform.position; //위치고정
             Direction.transform.position = Range.transform.position; //캐릭터가운데로 화살이동
             Direction.SetActive(true); //화살방향 설정 -> 화살 active
             GetMousePos();  //마우스 위치 받아와서 방향 바라보게 하기
@@ -79,15 +94,30 @@ public class ColD_W : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E))  //E키 떼는 순간 스킬 시작
         {
             Direction.SetActive(false);
+            GetComponent<ColD_Stats>().DropHe();
 
-            Transform grenadeTransform = Instantiate(grenade_Bomb, grenade.transform.position,
-           Quaternion.identity); //유탄발사 and transform 저장
+            if (grenade_Left)   //첫탄
+            {
+                Transform grenadeTransform = Instantiate(grenade_Bomb, grenade_L.transform.position,
+               Quaternion.identity); //유탄발사 and transform 저장
 
-            Vector3 nextDir = new Vector3(mouseVector.x, grenade.transform.position.y, mouseVector.z);
-            Vector3 shootDir = (nextDir - grenade.transform.position).normalized; //마우스좌표 -발사좌표
+                Vector3 nextDir = new Vector3(mouseVector.x, grenade_L.transform.position.y, mouseVector.z);
+                Vector3 shootDir = (nextDir - grenade_L.transform.position).normalized; //마우스좌표 -발사좌표
 
-            grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+                grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+                grenade_Left = false;
+            }
+            else        //둘째탄
+            {
+                Transform grenadeTransform = Instantiate(grenade_Bomb, grenade_R.transform.position,
+Quaternion.identity); //유탄발사 and transform 저장
 
+                Vector3 nextDir = new Vector3(mouseVector.x, grenade_R.transform.position.y, mouseVector.z);
+                Vector3 shootDir = (nextDir - grenade_R.transform.position).normalized; //마우스좌표 -발사좌표
+
+                grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+                grenade_Left = true;
+            }
 
 
             if (animator.GetBool("E_ColD") == false)
@@ -114,11 +144,27 @@ public class ColD_W : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.R))
         {
+            Rdirection = Direction.transform.position;
             Range.SetActive(false);
             Direction.SetActive(false);
+            if ((transform.position - Rdirection).magnitude > R_Distance)
+            {//사거리 외에 있을 경우 이동
+                ycManager.Instance.PlayerClickedPos = Rdirection;
+                isR_ready = true;
+            }
+            else        //사거리 내일 경우 바로 실행
+            {
+                if (animator.GetBool("R_ColD") == false)
+                    StartCoroutine("Active_R");
+            }
+        
+        }
+        if(isR_ready && (transform.position - Rdirection).magnitude <= R_Distance)
+        {
+            ycManager.Instance.PlayerClickedPos = transform.position; //자리고정
             if (animator.GetBool("R_ColD") == false)
                 StartCoroutine("Active_R");
-            animator.SetBool("R_ColD", true);
+            isR_ready = false;
         }
     }
     IEnumerator Active_A()
@@ -134,6 +180,7 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
+            GetComponent<ColD_Stats>().DropHe();
             yield return new WaitForSeconds(0.1f);
             flame.SetActive(true);
             yield return new WaitForSeconds(2.5f);
@@ -148,9 +195,32 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
+            GetComponent<ColD_Stats>().DropHe();
             aura.SetActive(true);
             shield.SetActive(true);
-            yield return new WaitForSeconds(1.5f);
+
+            if (GetComponent<ColD_Stats>().isDanger)
+            {
+                GetComponent<ColD_Stats>().MoveSpeed *= W_SpeedUp*1.5f;
+                GetComponent<ColD_Stats>().HP += W_HP*1.5f;
+                yield return new WaitForSeconds(1.5f);
+                GetComponent<ColD_Stats>().MoveSpeed *= 1 / (W_SpeedUp*1.5f);
+                GetComponent<ColD_Stats>().HP -= W_HP * 1.5f;
+            }
+            else
+            {
+                GetComponent<ColD_Stats>().MoveSpeed *= W_SpeedUp;
+                GetComponent<ColD_Stats>().HP += W_HP;
+                yield return new WaitForSeconds(1.5f);
+                GetComponent<ColD_Stats>().MoveSpeed *= 1 / W_SpeedUp;
+                GetComponent<ColD_Stats>().HP -= W_HP;
+            }
+
+
+
+
+  
+            yield return new WaitForSeconds(0.5f);
             aura.SetActive(false);
             shield.SetActive(false);
             animator.SetBool("W_ColD", false);
@@ -161,11 +231,22 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
-            grenade.SetActive(true);
+            if (grenade_Left)
+            {
+                grenade_L.SetActive(true);
 
-            yield return new WaitForSeconds(0.5f);
-            grenade.SetActive(false);
-            animator.SetBool("E_ColD", false);
+                yield return new WaitForSeconds(0.5f);
+                grenade_L.SetActive(false);
+                animator.SetBool("E_ColD", false);
+            }
+            else
+            {
+                grenade_R.SetActive(true);
+
+                yield return new WaitForSeconds(0.5f);
+                grenade_R.SetActive(false);
+                animator.SetBool("E_ColD", false);
+            }
             break;
         }
     }
@@ -173,23 +254,25 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
-            missile.SetActive(true);
-            yield return new WaitForSeconds(0.67f);
-            missile.SetActive(false);
-            animator.SetBool("R_ColD", false);
-            break;
+                animator.SetBool("R_ColD", true);
+                missile.SetActive(true);
+                yield return new WaitForSeconds(0.67f);
+                missile.SetActive(false);
+                animator.SetBool("R_ColD", false);
+                break;
         }
         while (true)
         {
 
             missile_target_effect.transform.position =
-                new Vector3(Direction.transform.position.x, 12.5f, Direction.transform.position.z);
+                new Vector3(Rdirection.x, 12.5f, Rdirection.z);
             //미사일 타겟 위치
 
-            Instantiate(missile_target_effect, missile_target_effect.transform.position,
-          Direction.transform.rotation); //유탄발사
+           GameObject Missile = Instantiate(missile_target_effect, missile_target_effect.transform.position,
+         Quaternion.AngleAxis(R_DirecAngle, Vector3.up)); //유탄발사
 
-            yield return new WaitForSeconds(4.5f);
+            yield return new WaitForSeconds(7.0f);
+            GameObject.Destroy(Missile);
             break;
         }
     }

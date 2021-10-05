@@ -9865,7 +9865,9 @@ MonoBehaviour:
   ImpactFX: {fileID: 0}
   ImpactFXDestroyDelay: 2
   ImpactOffset: 0.15
-  height: 5
+  height: 7.5
+  height_near: 2.5
+  distance_grenade: 5.8
 --- !u!1 &4162063902139371180
 GameObject:
   m_ObjectHideFlags: 0
