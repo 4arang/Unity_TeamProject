@@ -15,11 +15,11 @@ D:/Unity_TeamProject/TeamProject_0902
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-4604
+10620
 Successfully changed project path to: D:/Unity_TeamProject/TeamProject_0902
 D:/Unity_TeamProject/TeamProject_0902
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 135.08 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 169.45 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.1.22f1 (a137e5fb0427)
 [Subsystems] Discovering subsystems at path C:/Program Files/2021.1.22f1/Editor/Data/Resources/UnitySubsystems
@@ -37,37 +37,37 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/2021.1.22f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/2021.1.22f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/2021.1.22f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56924
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56456
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/2021.1.22f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001211 seconds.
+Registered in 0.001126 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 140.53 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 143.91 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.868 seconds
+- Completed reload, in  0.879 seconds
 Domain Reload Profiling:
-	ReloadAssembly (868ms)
-		BeginReloadAssembly (42ms)
+	ReloadAssembly (880ms)
+		BeginReloadAssembly (41ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (395ms)
-			LoadAssemblies (41ms)
+		EndReloadAssembly (416ms)
+			LoadAssemblies (40ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (107ms)
+			SetupTypeCache (122ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (20ms)
-			SetupLoadedEditorAssemblies (235ms)
+			RebuildScriptCaches (19ms)
+			SetupLoadedEditorAssemblies (240ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (141ms)
+				RefreshPlugins (144ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (68ms)
+				ProcessInitializeOnLoadAttributes (69ms)
 				ProcessInitializeOnLoadMethodAttributes (21ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
@@ -75,55 +75,55 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004234 seconds.
+Registered in 0.004564 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image D:\Unity_TeamProject\TeamProject_0902\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Symbol file LoadedFromMemory doesn't match image D:\Unity_TeamProject\TeamProject_0902\Library\PackageCache\com.unity.visualscripting@1.6.1\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.36 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.34 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.205 seconds
+- Completed reload, in  1.236 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1205ms)
-		BeginReloadAssembly (103ms)
+	ReloadAssembly (1236ms)
+		BeginReloadAssembly (102ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (14ms)
-		EndReloadAssembly (1062ms)
-			LoadAssemblies (73ms)
+			CreateAndSetChildDomain (15ms)
+		EndReloadAssembly (1093ms)
+			LoadAssemblies (71ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (252ms)
-			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (52ms)
-			SetupLoadedEditorAssemblies (627ms)
+			SetupTypeCache (266ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (41ms)
+			SetupLoadedEditorAssemblies (648ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (3ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (65ms)
-				ProcessInitializeOnLoadAttributes (514ms)
-				ProcessInitializeOnLoadMethodAttributes (39ms)
+				BeforeProcessingInitializeOnLoad (68ms)
+				ProcessInitializeOnLoadAttributes (527ms)
+				ProcessInitializeOnLoadMethodAttributes (43ms)
 				AfterProcessingInitializeOnLoad (4ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (4ms)
+			AwakeInstancesAfterBackupRestoration (5ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'FORGE3D/Burnout': fallback shader 'Transparent' not found
 Shader 'FORGE3D/Billboard Additive': fallback shader 'Particles/Additive' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 1.72 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.42 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 4616 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 355.8 MB.
-System memory in use after: 356.1 MB.
+Unloading 4623 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 355.7 MB.
+System memory in use after: 356.0 MB.
 
-Unloading 70 unused Assets to reduce memory usage. Loaded Objects now: 5064.
-Total: 4.981200 ms (FindLiveObjects: 0.305200 ms CreateObjectMapping: 0.132100 ms MarkObjects: 4.488300 ms  DeleteObjects: 0.054800 ms)
+Unloading 70 unused Assets to reduce memory usage. Loaded Objects now: 5071.
+Total: 4.922100 ms (FindLiveObjects: 0.255000 ms CreateObjectMapping: 0.132500 ms MarkObjects: 4.473900 ms  DeleteObjects: 0.059800 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -137,19 +137,13 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/1006_MY
-  artifactKey: Guid(261330ea81c3e484d9ace36b44d87837) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/1006_MY using Guid(261330ea81c3e484d9ace36b44d87837) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e23ec10f7034088ac3f09e1809bf9ef6') in 0.009130 seconds 
+  path: Assets/1006_MY/UIManager.cs
+  artifactKey: Guid(d76dd31965824e841b3f1a89e1a3058c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/1006_MY/UIManager.cs using Guid(d76dd31965824e841b3f1a89e1a3058c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4badae2113f43b3e9c82f7ea1a9509b') in 0.021504 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 23.017170 seconds.
-  path: Assets/Scenes/MapScene.unity
-  artifactKey: Guid(89b9ab1d6733f2d418bd55de43eb0807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/MapScene.unity using Guid(89b9ab1d6733f2d418bd55de43eb0807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02ccf62a136269eec11e589033d7ef44') in 0.010770 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 8.012167 seconds.
-  path: Assets/Scenes/MainScene_copy.unity
-  artifactKey: Guid(57f5191d51f1eb5498ac6e8a27019ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/MainScene_copy.unity using Guid(57f5191d51f1eb5498ac6e8a27019ba2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '165c6f740f7cdcfdd8a695b387988f89') in 0.004423 seconds 
+  Time since last request: 28.243089 seconds.
+  path: Assets/Scripts/GameManager.cs
+  artifactKey: Guid(edec035ae0903a941adc09d29fd284cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/GameManager.cs using Guid(edec035ae0903a941adc09d29fd284cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed20d988370aba206890f8dbba3e6336') in 0.005963 seconds 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

@@ -7,7 +7,7 @@ public class TeamManager : MonoBehaviour
 {
     public int TeamID = 0;
 
-    public List<ChampionStats> Champions;
+  //  public List<ChampionStats> Champions;
     
     public Transform MinionSpawnPoints;
 
