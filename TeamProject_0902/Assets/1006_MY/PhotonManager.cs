@@ -50,10 +50,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     private Slider LoadingSlider;
     private AsyncOperation operation;
 
-
-  
-
-
     // 룸 목록에 대한 데이터를 저장하기 위한 딕셔너리 자료형
     private Dictionary<string, GameObject> rooms = new Dictionary<string, GameObject>();
     // 룸 목록을 표시할 프리팹

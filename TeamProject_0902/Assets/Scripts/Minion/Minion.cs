@@ -8,7 +8,6 @@ public class Minion : MonoBehaviour
 {
     float speed = 100.0f;                        //Get value from stats
     public Transform target;
-<<<<<<< HEAD
     private int wavePointIndex = 0;             //Node Index
     void Start()
     {
@@ -24,11 +23,11 @@ public class Minion : MonoBehaviour
 
             if (Vector3.Distance(transform.position, target.position) <= 10.0f)      //0.2f->get value from stat attack range
             {
-                if (target.CompareTag("Building"))
-                {
-                    //Attack if Target is Inhibitator or Nexus.
-                }
-                else
+                //if (target.CompareTag("Building"))
+                //{
+                //    //Attack if Target is Inhibitator or Nexus.
+                //}
+                //else
                 {
                     GetNextWayPoint();
                 }
@@ -79,38 +78,3 @@ public class Minion : MonoBehaviour
 //    target = WayPoints.wayPoints[wavePointIndex];
 //    navAgent.SetDestination(target.position);
 //}
-=======
-    private int wavePointIndex = 0;         //Node Index
-
-    public GameObject DamagedEffect;
-
-    //void Start()
-    //{
-    //    navAgent = GetComponentInChildren<NavMeshAgent>();
-    //    target = WayPoints.wayPoints[0];
-    //}
-
-    //void Update()
-    //{
-    //    if (target != null)
-    //    {
-    //        //navAgent.SetDestination(target.position);
-    //        if(navAgent.remainingDistance<=0.1f)
-    //        {
-    //            GetNextWayPoint();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        //Combat when get destination
-    //    }
-    //}
-
-    //void GetNextWayPoint()
-    //{
-    //    wavePointIndex++;
-    //    target = WayPoints.wayPoints[wavePointIndex];
-    //    navAgent.SetDestination(target.position);
-    //}
-}
->>>>>>> 411f3d27fa428da8a073347eb2cb120ca660c751

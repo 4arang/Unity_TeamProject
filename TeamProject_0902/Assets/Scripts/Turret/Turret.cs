@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    [Header("Turret Status")]
-    private Transform target;       //터렛 공격대상
-    public float range = 15f;       //터렛 사정거리
-    public float fireRate = 1f;                 //터렛 공격 속도
+    public Transform target;
+    
+    [Header("To Stats")]
+    public float range = 15f;
+    public float rotateSpeed = 10f;
+    public float fireRate = 1f;
     private float fireCountdown = 0f;
+    
+    [Header("Unity Setup Fields")]
+    public string enemyTag = "Player";
+    public Transform rotatePart;
 
-    [Header("Setup Fields")]
-    public string enemyTag = "Champion";        //공격대상 태그
+    //private LineRenderer lr;
+    public Transform firePoint;
 
     public GameObject bulletPrefab;
-    public Transform firePoint;                 //미사일 발사 위치 지정
-    public float turnSpeed = 10f;
+    public GameObject shootEffPrefab;
 
-    void Start()
+    private void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
-    void UpdateTarget()             //범위에 들어온 타겟을 설정
+    void UpdateTarget()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
         float shortestDistance = Mathf.Infinity;
@@ -30,53 +35,54 @@ public class Turret : MonoBehaviour
         foreach(GameObject enemy in enemies)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if(distanceToEnemy<shortestDistance)
+                if(distanceToEnemy<shortestDistance)
             {
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
             }
         }
 
-        if(nearestEnemy!=null&&shortestDistance<=range)          //적을 발견했을 경우
+        if(nearestEnemy!=null&&shortestDistance<=range)
         {
             target = nearestEnemy.transform;
         }
-        else
-        {
-            target = null;
-        }
     }
-        
-    void Update()
+    private void Update()
     {
         if (target == null)
+        {
             return;
+        }
 
-        //Vector3 dir = target.position - target.position;        //적 방향으로 조준
-        //Quaternion lookRotation = Quaternion.LookRotation(dir);
-        //Vector3 rotation = lookRotation.eulerAngles;
-        //partToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        //Target lock on
+        Vector3 dir = target.position - transform.transform.position;     //Head to target
+        Quaternion lookRotation = Quaternion.LookRotation(dir);
 
-        if (fireCountdown <= 0f)
+        Vector3 rotation = Quaternion.Lerp(rotatePart.rotation, lookRotation, Time.deltaTime*rotateSpeed).eulerAngles;
+        rotatePart.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
+        if(fireCountdown<=0f)
         {
             Shoot();
             fireCountdown = 1f / fireRate;
         }
-
-        fireCountdown -= Time.deltaTime;
         fireCountdown -= Time.deltaTime;
     }
 
     void Shoot()
     {
-        GameObject turretBulletObject=(GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-        TurretBullet turretBullet = turretBulletObject.GetComponent<TurretBullet>();
+        GameObject shootEffGo = (GameObject)Instantiate(shootEffPrefab, firePoint.position, firePoint.rotation);
+        GameObject bulletGo=(GameObject)Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        TurretBullet bullet = bulletGo.GetComponent<TurretBullet>();
 
-        if(turretBullet!=null)
+        if(bullet!=null)
         {
-            turretBullet.Seek(target);
+            bullet.Seek(target);
         }
+        Destroy(shootEffGo);
     }
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

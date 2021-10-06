@@ -34,6 +34,7 @@ public class TurretBullet : MonoBehaviour
 
     void HitTarget()
     {
+        //Need to add damaged effect
         Debug.Log("Hit Something");
         //Destroy(target.gameObject);     //Stats추가해서 제거 부분
         Destroy(gameObject);

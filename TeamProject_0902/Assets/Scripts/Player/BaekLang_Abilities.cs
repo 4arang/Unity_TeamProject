@@ -14,7 +14,7 @@ public class BaekLang_Abilities : MonoBehaviour
     [Header("Ability 0")]           //Passive
     public Image abilityImage0;
     public float cooldown0 = 5;
-    bool isCooldown0 = false;
+    //bool isCooldown0 = false;
 
     [Header("Ability 1")]           //Q
     public Image abilityImage1;

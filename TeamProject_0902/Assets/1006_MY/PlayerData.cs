@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System.IO;
 public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
@@ -15,20 +16,29 @@ public class PlayerData : MonoBehaviour
     public Button PlayerReadyButton;
     public Image PlayerReadyImage;
 
-    private ExitGames.Client.Photon.Hashtable dictionaryEntries = new ExitGames.Client.Photon.Hashtable();
+    private ExitGames.Client.Photon.Hashtable UserCustomProperties = new ExitGames.Client.Photon.Hashtable();
 
     private void Awake()
     {
-        PlayerChampImage = GetComponentInChildren<Image>();
+        this.transform.parent = GameObject.Find("Room Panel").transform;
+
+        PlayerChampImage = GetComponent<Image>();
         photonView = GetComponent<PhotonView>();
  
         if (PlayerData.Instance == null)
         {
             PlayerData.Instance = this;
         }
-        SetRandomChamp();    
+    }
+    private void Start()
+    {
+        SetRandomChamp();
     }
 
+    private void Update()
+    {
+
+    }
     public void SetRandomChamp()
     {
         System.Random rndIdx = new System.Random();
@@ -40,10 +50,13 @@ public class PlayerData : MonoBehaviour
         {
             case 0:
                 {
-                    PlayerChampImage = Resources.Load<Image>("Xerion");
+                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
+
+                    PlayerChampImage.GetComponent<Image>().sprite = 
+                        Resources.Load(Path.Combine("2D","Xerion"),typeof(Sprite))as Sprite;
                     Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
 
-                    if(PlayerChampImage==null)
+                    if (PlayerChampImage==null)
                     {
                         Debug.LogError("ImageSetting Error");
                     }
@@ -51,7 +64,9 @@ public class PlayerData : MonoBehaviour
                 }
             case 1:
                 {
-                    PlayerChampImage = Resources.Load<Image>("BaekRang");
+                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
+                    PlayerChampImage.GetComponent<Image>().sprite = 
+                        Resources.Load(Path.Combine("2D", "BaekRang"), typeof(Sprite)) as Sprite;
                     Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
                     if (PlayerChampImage == null)
                     {
@@ -61,7 +76,10 @@ public class PlayerData : MonoBehaviour
                 }
             case 2:
                 {
-                    PlayerChampImage = Resources.Load<Image>("ColD");
+                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
+
+                    PlayerChampImage.GetComponent<Image>().sprite = 
+                        Resources.Load(Path.Combine("2D", "ColD"), typeof(Sprite)) as Sprite;
                     Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
                     if (PlayerChampImage == null)
                     {
