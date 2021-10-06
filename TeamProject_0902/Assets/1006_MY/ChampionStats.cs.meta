@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:TeamProject_0902/Assets/1006_MY/ChampionStats.cs.meta
 guid: f93e3641c6e54124a99b3af2064c7d79
+=======
+guid: d1c9a4bfcec12e04ea9f8421338f2ce6
+>>>>>>> 411f3d27fa428da8a073347eb2cb120ca660c751:TeamProject_0902/Assets/Scripts/Minion/NewBehaviourScript.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

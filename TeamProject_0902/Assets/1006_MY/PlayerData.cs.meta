@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:TeamProject_0902/Assets/1006_MY/PlayerData.cs.meta
 guid: 7c295748fffb7e5438135c0b84449d9d
+=======
+guid: 85fe485bc81655a4b9e88b1bb81287e0
+>>>>>>> 411f3d27fa428da8a073347eb2cb120ca660c751:TeamProject_0902/Assets/Scripts/YC/WhiteTiger/WhiteTiger_Bite_Damage.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
