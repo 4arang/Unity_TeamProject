@@ -9,6 +9,7 @@ TagManager:
   - Ping
   - Champion
   - Minion
+  - Smoke
   layers:
   - Default
   - TransparentFX
