@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class ChampionDatabase : MonoBehaviour
 {
+    public ChampionDatabase Instance;
+
+    private void Awake()
+    {
+        if(Instance==null)
+        {
+            Instance = this;
+        }
+    }
     public enum Champions
     {
-        BaseChamp,
-        Xerion,
+        Xerion=0,
         BaekRang,
         ColD
     }
-
 }

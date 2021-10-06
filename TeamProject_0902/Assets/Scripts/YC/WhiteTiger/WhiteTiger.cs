@@ -35,6 +35,8 @@ public class WhiteTiger : MonoBehaviour
     //to move to targetPos
     private Vector3 TargetPos;
 
+    private Transform Enemy; //적 위치 받아오기
+    private bool SpeedFull = false; 
 
     private void Start()
     {
@@ -44,30 +46,68 @@ public class WhiteTiger : MonoBehaviour
         playerDir = ycManager.Instance.PlayerDirection;
         onSkill = false;
         TargetPos = ycManager.Instance.PlayerTargetPos;
+
+        agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
         originalSpeed = agent.speed;
+
+        Enemy = GameObject.FindWithTag("Minion").transform;
     }
 
 
     private void Update()
     {
 
+        Debug.Log("Tiger speed " + agent.speed);
+
+        agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
+
         RightMouseClicked();
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (playerDir != ycManager.Instance.PlayerDirection)
+        if (playerDir != ycManager.Instance.PlayerDirection) //플레이어 방향
         {
             playerDir = ycManager.Instance.PlayerDirection;
             agent.transform.rotation = Quaternion.AngleAxis(playerDir, Vector3.up);
         }
-        if (TargetPos != ycManager.Instance.PlayerTargetPos)
+        if (TargetPos != ycManager.Instance.PlayerTargetPos) //플레이어 이동(R스킬시 이동제한)
         {
             TargetPos = ycManager.Instance.PlayerTargetPos;
             onSkill = true;
         }
 
+        if(!onSkill)
+        {
+            agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100; //스킬x일때 스피드값받기
+        }
+
+
         if (agent.velocity.magnitude < 0.1f) { ycManager.Instance.isFree = true; } //비전투모드
         else { ycManager.Instance.isFree = false; } //전투모드
+
+        SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
+    }
+
+    void SpeedUp()
+    {
+        if (!SpeedFull)
+        {
+            if ((transform.position - Enemy.position).magnitude < 10/*범위 태그minion->Enemy 수정요*/)
+            {
+                GetComponent<WhiteTiger_Stats>().MoveSpeed += 30;
+                SpeedFull = true; //한번만 가능
+                Debug.Log("Tiger speedup " + agent.speed);
+            }
+        }
+        else
+        {
+            if ((transform.position - Enemy.position).magnitude >= 10/*범위 태그minion->Enemy 수정요*/)
+            {
+                GetComponent<WhiteTiger_Stats>().MoveSpeed -= 30;
+                SpeedFull = false; //한번만 가능
+                Debug.Log("Tiger speeddown " + agent.speed);
+            }
+        }
     }
 
     void RightMouseClicked()
@@ -85,6 +125,7 @@ public class WhiteTiger : MonoBehaviour
             PlayerDest = ycManager.Instance.PlayerClickedPos;
         }
 
+
     }
 
     private void LateUpdate()       //update에서 좌표값 갱신 후에 lateupdate에서 움직임
@@ -94,7 +135,7 @@ public class WhiteTiger : MonoBehaviour
             agent.speed = skillSpeed;
             agent.SetDestination(TargetPos);
             PlayerDest = TargetPos;
-            if (Vector3.Distance(TargetPos, agent.transform.position) < 0.01f)
+            if (Vector3.Distance(TargetPos, agent.transform.position) < 0.1f)
             {
                 onSkill = false;
                 agent.speed = originalSpeed;

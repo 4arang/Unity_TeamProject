@@ -30,15 +30,15 @@ public static class GameConsts
 
 
 
-    public static ChampionDatabase.Champions GetChampion(int championChoice)
-    {
-        switch(championChoice)
-        {
-            case 0: return ChampionDatabase.Champions.BaseChamp;
-            case 1: return ChampionDatabase.Champions.Xerion;
-            case 2: return ChampionDatabase.Champions.BaekRang;
-            case 3: return ChampionDatabase.Champions.ColD;
-        }
-        return ChampionDatabase.Champions.BaseChamp; 
-    }
+    //public static ChampionDatabase.Champions GetChampion(int championChoice)
+    //{
+    //    switch(championChoice)
+    //    {
+    //        case 0: return ChampionDatabase.Champions.BaseChamp;
+    //        case 1: return ChampionDatabase.Champions.Xerion;
+    //        case 2: return ChampionDatabase.Champions.BaekRang;
+    //        case 3: return ChampionDatabase.Champions.ColD;
+    //    }
+    //    return ChampionDatabase.Champions.BaseChamp; 
+    //}
 }

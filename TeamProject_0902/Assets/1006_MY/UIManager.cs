@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public ChampionStats CurrentPlayer;
+   // public ChampionStats CurrentPlayer;
 
     public Text TimeText;
 

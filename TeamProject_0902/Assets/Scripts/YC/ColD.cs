@@ -45,7 +45,7 @@ public class ColD : MonoBehaviour
     private void Update()
     {
         agent.speed = GetComponent<ColD_Stats>().MoveSpeed / 100;
-        Debug.Log("Speed " + agent.speed);
+        //Debug.Log("Speed " + agent.speed);
         RightMouseClicked();
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
