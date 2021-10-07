@@ -8,19 +8,18 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
+
     [Header("SpanPoint Settings")]
-    public Transform[] redSpawnPoints;
-    public Transform[] blueSpawnPoints;
+    public Transform[] lobbySpawnPoints;
 
     [Header("Spell Settings")]
     public GameObject SpellSelectBox;
     public int CurrentSpellBtn=0;
     public Button[] SpellButtons;
     public Button[] SpellSelectListButtons;
-    public int nextPlayerTeamId=1;
-    
-    Photon.Realtime.Player player;
-    
+
+
+
     private void Awake()
     {
         if(Instance==null)
@@ -28,17 +27,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Instance = this;
         }
 
-        player = PhotonNetwork.LocalPlayer;
-        if (player == null)
-        {
-            Debug.Log("player Null" + player.ActorNumber);
-            return;
-        }
-        else
-        {
-            SpawnPlayer();
-        }        
+        //Get Team Spawn Position
+        lobbySpawnPoints=GameObject.Find("LobbySpawnGroup").GetComponentsInChildren<Transform>();
     }
+
+    
 
     #region UI_BUTTONS CALLBACKS
     public void OnSpellSetBoxOpen(int whichBtn)
@@ -57,16 +50,26 @@ public class RoomManager : MonoBehaviourPunCallbacks
         {
             case 0:     //D spell
                 {
-                    print("D spell clicked and set");
-                    SpellButtons[0].image = spell;
+                    //PlayerData.Instance.userDspell = spell.name;
+                    SpellButtons[0].GetComponentInChildren<Image>().sprite = spell.sprite;
                     OnSpellSetBoxClose();
+
+                    Hashtable props = new Hashtable() { 
+                        { GameConsts.PLAYER_SPELL1, PlayerData.Instance.userDspell } };
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+                    Debug.Log($"userFSpell Set={PlayerData.Instance.userDspell}");
                     break;
                 }
             case 1:     //F Spell
                 {
-                    print("F spell clicked and set");
-                    SpellButtons[1].image = spell;
+                    PlayerData.Instance.userFspell = spell.name;
+                    SpellButtons[1].GetComponentInChildren<Image>().sprite = spell.sprite;
+
+                    Hashtable props = new Hashtable() { 
+                        { GameConsts.PLAYER_SPELL2, PlayerData.Instance.userFspell } };
+                    PhotonNetwork.LocalPlayer.SetCustomProperties(props);
                     OnSpellSetBoxClose();
+                    Debug.Log($"userFSpell Set={PlayerData.Instance.userFspell}");
                     break;
                 }
             default:
@@ -74,51 +77,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
                     print("Error");
                     break;
                 }
-
         }
 
     }
     #endregion
-
-    private void Update()
-    {
-        PlayerSettingUpdate();
-    }
-
-    void PlayerSettingUpdate()
-    {
-
-    }
-    void SpawnPlayer()
-    {       
-  
-        //Get Team Spawn Position
-        redSpawnPoints = GameObject.Find("RedSpawnGroup").GetComponentsInChildren<Transform>();
-        blueSpawnPoints = GameObject.Find("BlueSpawnGroup").GetComponentsInChildren<Transform>();
-        
-        
-        if (nextPlayerTeamId==1)
-        {
-            int spawnPicker = Random.Range(0, redSpawnPoints.Length);;
-            PhotonNetwork.Instantiate("PhotonPlayer",
-                redSpawnPoints[spawnPicker].position,
-                redSpawnPoints[spawnPicker].rotation,
-                0);
-            nextPlayerTeamId = 2;
-            
-            Debug.Log($"Red Team Spawn Player at {redSpawnPoints[spawnPicker].position}");
-            
-        }
-        else
-        {
-            int spawnPicker = Random.Range(1, blueSpawnPoints.Length); ;
-            PhotonNetwork.Instantiate("PhotonPlayer",
-            blueSpawnPoints[spawnPicker].position,        
-            blueSpawnPoints[spawnPicker].rotation,
-                0);
-
-            nextPlayerTeamId = 1;
-            Debug.Log($"Blue Team Spawn Player at {blueSpawnPoints[spawnPicker].position}");
-        }        
-    }
+    
+    
 }

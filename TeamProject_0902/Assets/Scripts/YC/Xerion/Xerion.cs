@@ -44,7 +44,7 @@ public class Xerion : MonoBehaviour
 
     private void Update()
     {
-
+        agent.speed = GetComponent<Xerion_Stats>().MoveSpeed / 100;
 
         RightMouseClicked();
 

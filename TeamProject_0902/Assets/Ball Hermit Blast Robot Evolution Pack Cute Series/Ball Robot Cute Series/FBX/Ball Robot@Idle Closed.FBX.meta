@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 009cfb648b7e3af439bb5af2e32436b3
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21100
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
@@ -26,7 +26,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -109,7 +109,52 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Ball Robot@Idle Closed(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Ball Robot
+      parentName: Ball Robot@Idle Closed(Clone)
+      position: {x: -0, y: 0, z: 0.00000002932376}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Rig
+      parentName: Ball Robot@Idle Closed(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.50000006, y: -0.50000006, z: -0.49999994, w: 0.49999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RigHead
+      parentName: Ball Robot@Idle Closed(Clone)
+      position: {x: 0.038137518, y: 0.98565114, z: 0.01332427}
+      rotation: {x: -0.5, y: 0.50000006, z: 0.49999994, w: -0.5}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
+    - name: RigTail1
+      parentName: RigHead
+      position: {x: 0.08395447, y: -0.057125557, z: 0.00000001430511}
+      rotation: {x: 0.011423738, y: 0.002536878, z: -0.9928242, w: 0.11900957}
+      scale: {x: 1.0000013, y: 1.0000005, z: 1.0000001}
+    - name: RigTail2
+      parentName: RigTail1
+      position: {x: -0.1492358, y: 0.00000007629395, z: -0.000000002384186}
+      rotation: {x: 0.0020082197, y: 0.0043458752, z: -0.34853354, w: 0.93728405}
+      scale: {x: 1.0000001, y: 0.9999997, z: 1.0000001}
+    - name: RigTail3
+      parentName: RigTail2
+      position: {x: -0.103645, y: 0, z: 0}
+      rotation: {x: 0.0048684613, y: -0.014381572, z: 0.23549154, w: 0.9717578}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: RigBarrel01
+      parentName: RigTail1
+      position: {x: -0.14538069, y: -0.001801071, z: 0}
+      rotation: {x: -0.0000000095226795, y: 0.00000010354197, z: 0.5389452, w: 0.8423408}
+      scale: {x: 0.41206598, y: 1.0000006, z: 1.0000002}
+    - name: RigBarrel02
+      parentName: RigBarrel01
+      position: {x: -0.09238846, y: 0, z: 0}
+      rotation: {x: -0.000000004318145, y: 0.0000000015329178, z: 9.761315e-16, w: 1}
+      scale: {x: 0.9999999, y: 0.99999994, z: 0.99999976}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -120,13 +165,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 

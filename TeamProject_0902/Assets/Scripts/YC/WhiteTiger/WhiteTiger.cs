@@ -38,6 +38,7 @@ public class WhiteTiger : MonoBehaviour
     private Transform Enemy; //적 위치 받아오기
     private bool SpeedFull = false; 
 
+
     private void Start()
     {
         animator = GetComponent<Animator>();

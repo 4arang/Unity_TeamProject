@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ChampionDatabase : MonoBehaviour
 {
-    public ChampionDatabase Instance;
+    public static ChampionDatabase Instance;
 
+    public string randomChamp;
     private void Awake()
     {
         if(Instance==null)

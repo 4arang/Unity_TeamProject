@@ -20,25 +20,18 @@ public static class GameConsts
     public static int BLUE_TEAM = 1;
 
 
-    public static int MINION_SPAWN_TIME = 5;//75
-    public static int MINION_WAVE_TIME = 5;//30
+    public static int MINION_SPAWNINTERVAL_TIME = 6;
+    public static int MINION_WAVESTART_TIME = 5;
 
 
     public const float PLAYER_RESPAWN_TIME = 4.0f;
 
     public const string PLAYER_READY = "IsPlayerReady";
+    public const string PLAYER_LOADED_LEVEL = "PlayerLoadedLevel";
 
 
-
-    //public static ChampionDatabase.Champions GetChampion(int championChoice)
-    //{
-    //    switch(championChoice)
-    //    {
-    //        case 0: return ChampionDatabase.Champions.BaseChamp;
-    //        case 1: return ChampionDatabase.Champions.Xerion;
-    //        case 2: return ChampionDatabase.Champions.BaekRang;
-    //        case 3: return ChampionDatabase.Champions.ColD;
-    //    }
-    //    return ChampionDatabase.Champions.BaseChamp; 
-    //}
+    public const string PLAYER_CHAMPION = "PlayerChampion";
+    public const string PLAYER_TEAM = "PlayerTeam";
+    public const string PLAYER_SPELL1 = "D Spell";
+    public const string PLAYER_SPELL2 = "F Spell";
 }

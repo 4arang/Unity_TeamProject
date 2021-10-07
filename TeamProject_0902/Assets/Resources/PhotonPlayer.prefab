@@ -313,10 +313,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c295748fffb7e5438135c0b84449d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  photonView: {fileID: -2049231852707983627}
   PlayerNameText: {fileID: 5429675011952439624}
   PlayerChampImage: {fileID: 7839882474398754554}
   PlayerReadyButton: {fileID: 469831199245224456}
   PlayerReadyImage: {fileID: 317127043020067336}
+  myAvatar: {fileID: 0}
+  myTeam: 0
+  userSelectChamp: 
 --- !u!1001 &469831199251347788
 PrefabInstance:
   m_ObjectHideFlags: 0

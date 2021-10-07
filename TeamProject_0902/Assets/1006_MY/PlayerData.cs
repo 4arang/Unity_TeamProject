@@ -5,10 +5,12 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.IO;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
     private PhotonView photonView;
+
 
     [Header("UI References")]
     public Text PlayerNameText;
@@ -16,82 +18,108 @@ public class PlayerData : MonoBehaviour
     public Button PlayerReadyButton;
     public Image PlayerReadyImage;
 
-    private ExitGames.Client.Photon.Hashtable UserCustomProperties = new ExitGames.Client.Photon.Hashtable();
+    [Header("User private Settings")]
+    public string userFspell;
+    public string userDspell;
+    public string userChamp;
+    private int userrId;
+    private bool isPlayerReady;
+
 
     private void Awake()
     {
-        this.transform.parent = GameObject.Find("Room Panel").transform;
-
-        PlayerChampImage = GetComponent<Image>();
-        photonView = GetComponent<PhotonView>();
- 
-        if (PlayerData.Instance == null)
+        if (Instance == null)
         {
-            PlayerData.Instance = this;
+            Instance = this;
         }
+       
+        //SetRandomChamp();
     }
     private void Start()
     {
-        SetRandomChamp();
-    }
+        //Initialize
+        photonView = GetComponent<PhotonView>();
+        if (PhotonNetwork.LocalPlayer.ActorNumber != userrId)
+        {
+            PlayerReadyButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            Hashtable initialProps = new Hashtable() { { GameConsts.PLAYER_READY, isPlayerReady },
+                { GameConsts.PLAYER_CHAMPION, userChamp },
+                { GameConsts.PLAYER_TEAM, null },
+                { GameConsts.PLAYER_SPELL1, null },       //Default
+                { GameConsts.PLAYER_SPELL2, null }};    //Defualt
+            PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
 
-    private void Update()
+            PlayerReadyButton.onClick.AddListener(() =>
+            {
+                isPlayerReady = !isPlayerReady;
+                SetPlayerReady(isPlayerReady);
+
+                Hashtable props = new Hashtable() { { GameConsts.PLAYER_READY, isPlayerReady }};
+                PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    FindObjectOfType<NetworkManager>().LocalPlayerPropertiesUpdated();
+                }
+            });
+
+            SetUserTeam();
+            SetPlayerChampion();
+            Debug.Log($"Player Init- isReady={isPlayerReady}," +
+                $"userChamp={userChamp},userF={userFspell}, userD={userDspell}");
+        }
+
+    }
+    public void Initialize(int playerId, string playerName)
     {
-
+        userrId = playerId;
+        PlayerNameText.text = playerName;
     }
-    public void SetRandomChamp()
+    public void SetPlayerReady(bool playerReady)
+    {
+        PlayerReadyButton.GetComponentInChildren<Text>().text = playerReady ? "Ready!" : "Ready?";
+        
+        PlayerReadyImage.enabled = playerReady;
+    }
+
+    public void SetPlayerChampion()
     {
         System.Random rndIdx = new System.Random();
         int result = UnityEngine.Random.Range(0, System.Enum.GetNames(typeof(ChampionDatabase.Champions)).Length);
-        
-        Debug.Log($"Player Random Selected ={System.Enum.GetName(typeof(ChampionDatabase.Champions), result)}");
 
-        switch(result)
-        {
-            case 0:
-                {
-                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
+        userChamp = System.Enum.GetName(typeof(ChampionDatabase.Champions), result);
+        Debug.Log($"RandomIdx={rndIdx}Player Random Selected ={System.Enum.GetName(typeof(ChampionDatabase.Champions), result)}");
 
-                    PlayerChampImage.GetComponent<Image>().sprite = 
-                        Resources.Load(Path.Combine("2D","Xerion"),typeof(Sprite))as Sprite;
-                    Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
+        Hashtable props = new Hashtable() { { GameConsts.PLAYER_CHAMPION, userChamp } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
-                    if (PlayerChampImage==null)
-                    {
-                        Debug.LogError("ImageSetting Error");
-                    }
-                    break;
-                }
-            case 1:
-                {
-                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
-                    PlayerChampImage.GetComponent<Image>().sprite = 
-                        Resources.Load(Path.Combine("2D", "BaekRang"), typeof(Sprite)) as Sprite;
-                    Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
-                    if (PlayerChampImage == null)
-                    {
-                        Debug.LogError("ImageSetting Error");
-                    }
-                    break;
-                }
-            case 2:
-                {
-                    Debug.Log(PlayerChampImage.GetComponent<Image>().sprite.name);
+        PlayerChampImage.GetComponentInChildren<Image>().sprite =
+            Resources.Load(Path.Combine("2D", userChamp), typeof(Sprite)) as Sprite;
 
-                    PlayerChampImage.GetComponent<Image>().sprite = 
-                        Resources.Load(Path.Combine("2D", "ColD"), typeof(Sprite)) as Sprite;
-                    Debug.Log($"ChampImageSet = {PlayerChampImage.name}");
-                    if (PlayerChampImage == null)
-                    {
-                        Debug.LogError("ImageSetting Error");
-                    }
-                    break;
-                }
-        }
+        //PlayerReadyImage.enabled = playerReady;
     }
+    
     public void SetUserTeam()
     {
-        
+        if(PhotonNetwork.LocalPlayer.ActorNumber==1|| PhotonNetwork.LocalPlayer.ActorNumber == 3)
+        {
+            Hashtable props = new Hashtable() { { GameConsts.PLAYER_TEAM, GameConsts.RED_TEAM } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            object myTeam;
+            Debug.Log(props.TryGetValue(GameConsts.PLAYER_TEAM, out myTeam));
+        }
+        else
+        {
+            Hashtable props = new Hashtable() { { GameConsts.PLAYER_TEAM, GameConsts.BLUE_TEAM } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+            object myTeam;
+            Debug.Log(props.TryGetValue(GameConsts.PLAYER_TEAM, out myTeam));
+        }
     }
     
     public void SetUserSpell()

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 using UnityEngine.UI;
-public class TeamManager : MonoBehaviour
+public class TeamManager : MonoBehaviourPunCallbacks
 {
     public int TeamID = 0;
 
@@ -17,102 +19,75 @@ public class TeamManager : MonoBehaviour
     public GameObject SuperPrefab;
 
     public int WaveNumber = 0;
-    public float WaveTimer = 0;
-
-    public bool MidInhibitor = false;
-    public bool TopInhibitor = false;
-    public bool BotInhibitor = false;
-
-    private void Start()
-    {
-        WaveTimer = GameConsts.MINION_WAVE_TIME;
-    }
+    public float WaveTimer = GameConsts.MINION_WAVESTART_TIME;          //countdown
+    public bool Inhibitor = false;
 
     private void Update()
     {
-        if (GameManager.Instance.GameTime < GameConsts.MINION_SPAWN_TIME) return;
-        if (WaveTimer>=GameConsts.MINION_SPAWN_TIME)
+        //Return until MINION _WAVESTART_TIME
+        if (GameManager.Instance.GameTime < GameConsts.MINION_WAVESTART_TIME)       
         {
-            Debug.Log($"Wave Number : {WaveNumber} has spawned at {GameManager.Instance.GameTime}");
-
-            WaveTimer = 0;
-            WaveNumber++;
-
-            StartCoroutine(SpawnWave());
+            return;
         }
+        else
+        {
+            //Instantiate Minion After WAVESTART_TIME and Spawn every MINION_SPAWNINTERVAL_TIME
+            if (WaveTimer <= 0f)
+            {
+                StartCoroutine(SpawnWave());
+                WaveTimer = GameConsts.MINION_SPAWNINTERVAL_TIME;       //Reset Timer          
+            }
+            else
+            {
+                WaveTimer -= Time.deltaTime;
+            }
+        }
+        
+        
     }
 
     IEnumerator SpawnWave()
     {
-        SpawnUnits(CannonPrefab);
-        yield return null;     
+        Debug.Log($"Wave Number : {WaveNumber} has spawned at {GameManager.Instance.GameTime}");
 
-        #region MinionWave Patern
-        //    //if super spawn minions
-        //    if(BotInhibitor||MidInhibitor||TopInhibitor)
-        //    {
-        //        if (BotInhibitor && MidInhibitor && TopInhibitor)
-        //        {
-        //            for(int m=0;m<GameConsts.SUPER_ALL_COUNT;m++)
-        //            {
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_TOP);
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_MID);
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_BOT);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            for(int m=0;m<GameConsts.SUPER_COUNT;m++)
-        //            {
+        for (int m = 0; m < GameConsts.MELEE_COUNT; m++)
+        {
+            //spawn melee
+            SpawnUnits(MeleePrefab);
+            yield return new WaitForSeconds(0.2f);
+        }
 
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_TOP);
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_MID);
-        //                SpawnUnits(SuperPrefab, GameConsts.SPAWN_BOT);
-        //            }
-        //        }
-        //    }
-        //    for (int m = 0; m < 3; m++) 
-        //    {
-        //        //spawn melee
-        //        SpawnUnits(MeleePrefab, GameConsts.SPAWN_TOP);
-        //        SpawnUnits(MeleePrefab, GameConsts.SPAWN_BOT);
-        //        SpawnUnits(MeleePrefab, GameConsts.SPAWN_MID);
-        //    }
+        for (int m = 0; m < GameConsts.RANGE_COUNT; m++)
+        {
+            //spawn range
+            SpawnUnits(RangePrefab);
+            yield return new WaitForSeconds(0.2f);
+        }
 
-        //    for (int m = 0; m < 3; m++)
-        //    {
-        //        //spawn range
-        //        SpawnUnits(RangePrefab, GameConsts.SPAWN_TOP);
-        //        SpawnUnits(RangePrefab, GameConsts.SPAWN_BOT);
-        //        SpawnUnits(RangePrefab, GameConsts.SPAWN_MID);
-        //    }
+        if (WaveNumber != 0 && WaveNumber % 3 == 0)
+        {
+            for (int m = 0; m < GameConsts.CANNON_COUNT; m++)
+            {
+                //spawn Cannon every 2 waves
+                SpawnUnits(CannonPrefab);
+                yield return new WaitForSeconds(0.2f);
 
-        //    if(WaveNumber!=0&&WaveNumber%3==0)
-        //    {
-        //        //for(int m=0;m<GameConsts.CANNON_COUNT-1;m++)
-        //        //{
-        //        //    //spawn Cannon every 2 waves
-        //        //    SpawnUnits(CannonPrefab, GameConsts.SPAWN_TOP);
-        //        //    SpawnUnits(CannonPrefab, GameConsts.SPAWN_BOT);
-        //        //    SpawnUnits(CannonPrefab, GameConsts.SPAWN_MID);
-        //        //}
-        //    }
+            }
+        }
+        if (Inhibitor)
+        {
+            for (int m = 0; m < GameConsts.SUPER_ALL_COUNT; m++)
+            {
+                SpawnUnits(SuperPrefab);
+                yield return new WaitForSeconds(0.2f);
 
-
-        //}
-        //else
-        //{
-        //}
-        #endregion Minion wave pattern
+            }
+        }
+        WaveNumber++;
     }
 
     private void SpawnUnits(GameObject prefab)
     {
-        #region Wave Spawner
-
         Instantiate(prefab, MinionSpawnPoints.transform.position, Quaternion.identity);
-
-        
-        #endregion WaveSpawner
     }
 }
