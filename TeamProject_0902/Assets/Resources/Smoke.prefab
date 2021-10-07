@@ -4776,7 +4776,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8172247115467326194}
   serializedVersion: 8
-  lengthInSec: 10
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -4851,8 +4851,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 22
-      minScalar: 15
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4886,8 +4886,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 18
-      minScalar: 12
+      scalar: 15
+      minScalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4984,8 +4984,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 22
-      minScalar: 18
+      scalar: 6.2
+      minScalar: 4.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5411,7 +5411,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5
+      value: 0.1
       mode: 0
       spread: 0
       speed:
@@ -9493,7 +9493,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8172247115467326196}
   serializedVersion: 8
-  lengthInSec: 10
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -9568,8 +9568,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 18
-      minScalar: 15
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9603,8 +9603,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 8
+      scalar: 15
+      minScalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9701,8 +9701,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 25
-      minScalar: 20
+      scalar: 7.5
+      minScalar: 5.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10042,7 +10042,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 1
+    angle: 0.5
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -10128,7 +10128,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.6
+      value: 0.5
       mode: 0
       spread: 0
       speed:
@@ -14358,7 +14358,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8172247115467326202}
   serializedVersion: 8
-  lengthInSec: 10
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -14433,8 +14433,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
-      minScalar: 15
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14566,8 +14566,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 22
-      minScalar: 15
+      scalar: 6.2
+      minScalar: 4.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14907,7 +14907,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 2
+    angle: 5
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -14993,7 +14993,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5
+      value: 0.1
       mode: 0
       spread: 0
       speed:
@@ -19044,6 +19044,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8172247115467300572}
   - component: {fileID: 8172247115473909532}
+  - component: {fileID: 974457246}
+  - component: {fileID: 974457245}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -19094,6 +19096,33 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!135 &974457246
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172247115467326204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 1, y: 0, z: 0}
+--- !u!114 &974457245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8172247115467326204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c46e064e2d4f1754db3ccf46487c1c4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Smoke1: {fileID: 8172247115467326194}
+  Smoke2: {fileID: 8172247115467326202}
 --- !u!1 &8172247115467326206
 GameObject:
   m_ObjectHideFlags: 0

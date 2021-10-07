@@ -34,7 +34,11 @@ public class MapCamera : MonoBehaviour
         {
             cam = GetComponent<Camera>();
         }
-        agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
+        if (PlayerToMove == null)
+        {
+            PlayerToMove = GameObject.FindWithTag("Player");
+            agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
+        }
     }
 
 

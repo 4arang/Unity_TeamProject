@@ -20,9 +20,12 @@ public class MainCamera_CameraRoam : MonoBehaviour
     public float camSpeed = 20;
     public float screenSizeThickness = 10;
 
+    public float camHeight;
+
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
+        camHeight = transform.position.y;
     }
 
     void Update()
@@ -30,7 +33,7 @@ public class MainCamera_CameraRoam : MonoBehaviour
         if(Input.GetKey(KeyCode.Space))
         {
             cameraOffset = player.transform.position;
-            cameraOffset.y = 6.54f;
+            cameraOffset.y = camHeight;
             cameraOffset.z -= 6;
             transform.position = Vector3.Slerp(transform.position, cameraOffset, smoothness);
         }

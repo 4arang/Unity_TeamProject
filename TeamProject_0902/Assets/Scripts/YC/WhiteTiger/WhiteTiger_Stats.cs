@@ -12,6 +12,7 @@ public class WhiteTiger_Stats : MonoBehaviour
 
     //Game Stats
     public float HP;             //Health Point
+    public float MaxHP;
     public int HPperLevel;     //HP increasement per Level
     public int MP;             //Mana Point
     public int MPperLevel;
@@ -31,11 +32,8 @@ public class WhiteTiger_Stats : MonoBehaviour
     public float MPregenperLevel;
 
 
-    //WT special (Wildness)
-    public byte Wildness;
-    public byte minWildness = 0;
-    public byte maxWildness = 4;
-    private float TimeCheck = 0.0f;
+    //WT special (W 스킬 사용 후 데미지 회복)
+    public float DamageStorage=0;
 
     void Start()
     {
@@ -68,11 +66,25 @@ public class WhiteTiger_Stats : MonoBehaviour
         MPregen = int.Parse(data[1]["statsmpregen"].ToString());
         MPregenperLevel = float.Parse(data[1]["statsmpregenperlevel"].ToString());
 
+        MaxHP = HP;
     }
 
 
     void Update()
     {
         
+    }
+
+    public void DropHP(float Damage)
+    {
+        HP -= Damage;
+        StartCoroutine("StoreDamage", Damage);
+    }
+
+    IEnumerator StoreDamage(float Damage)
+    {
+        DamageStorage += Damage;
+        yield return new WaitForSeconds(1.5f);
+        DamageStorage -= Damage;
     }
 }

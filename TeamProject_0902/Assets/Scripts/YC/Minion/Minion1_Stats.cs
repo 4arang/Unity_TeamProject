@@ -9,6 +9,7 @@ public class Minion1_Stats : MonoBehaviour
     public float AP;    //Armor Point
     public float MoveSpeed;
 
+    [SerializeField] private GameObject DamagedEffect;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class Minion1_Stats : MonoBehaviour
         AD = Minion1StatManager.Instance.AD;
         AP = Minion1StatManager.Instance.AP;
         MoveSpeed = Minion1StatManager.Instance.MoveSpeed;
+        DamagedEffect.SetActive(false);
     }
 
     void Update()
