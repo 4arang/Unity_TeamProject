@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("DemoAsteroids-LobbyScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Launcher");
     }
 
     public override void OnLeftRoom()

@@ -40,7 +40,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     //Get custom Properties
     private Dictionary<int, GameObject> playerListEntries;
 
-
     [Header("Loading Panel")]
     private string SceneToLoad;
     [SerializeField]
@@ -52,9 +51,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("ETC")]
     public Text StatusText;
     public PhotonView PV;
-
-
-
+    
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
 
@@ -267,24 +264,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     #region loading
-    //public void ShowLoadingProgress(string sceneName)
-    //{
-    //    StartCoroutine(BeginLoad(sceneName));
-    //}
-    //private IEnumerator BeginLoad(string sceneName)
-    //{
-    //    PhotonNetwork.LoadLevel("GameScene");
+    public void ShowLoadingProgress(string sceneName)
+    {
+        StartCoroutine(BeginLoad(sceneName));
+    }
+    private IEnumerator BeginLoad(string sceneName)
+    {
+        PhotonNetwork.LoadLevel("GameScene");
 
-    //    while (PhotonNetwork.LevelLoadingProgress< 1)
-    //    {
-    //        ProgressText.text = "Loading: %" + (int) (PhotonNetwork.LevelLoadingProgress* 100);
-    //        //loadAmount = async.progress;
-    //        LoadingSlider.value = PhotonNetwork.LevelLoadingProgress;
-    //        ProgressText.text = (int) (PhotonNetwork.LevelLoadingProgress* 100f) + "%";
-    //        yield return new WaitForEndOfFrame();
-    //    }
-    //}
-    #endregion
+        while (PhotonNetwork.LevelLoadingProgress < 1)
+        {
+            ProgressText.text = "Loading: %" + (int)(PhotonNetwork.LevelLoadingProgress * 100);
+            //loadAmount = async.progress;
+            LoadingSlider.value = PhotonNetwork.LevelLoadingProgress;
+            ProgressText.text = (int)(PhotonNetwork.LevelLoadingProgress * 100f) + "%";
+            yield return new WaitForEndOfFrame();
+        }
+    }
+        #endregion
 
     public override void OnJoinedRoom() //Callback Func when JoinedRoom
     {
@@ -308,7 +305,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
         {
             
-            GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab,RoomManager.Instance.lobbySpawnPoints[player.ActorNumber-1]);
+            GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab,RoomManager.Instance.lobbySpawnPoints[player.ActorNumber]);
 
             lobbyPlayer.transform.SetParent(RoomPanel.transform);
             lobbyPlayer.transform.localScale = Vector3.one;
@@ -321,7 +318,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             playerListEntries.Add(player.ActorNumber, lobbyPlayer);
             Debug.Log($"Player Add ActorNumber={player.ActorNumber}, playerName={player.NickName}, " +
-                $"spawnPosition={RoomManager.Instance.lobbySpawnPoints[player.ActorNumber - 1].name}");
+                $"spawnPosition={RoomManager.Instance.lobbySpawnPoints[player.ActorNumber].name}");
         }
 
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
@@ -334,20 +331,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     }
 
     //Called when a remote player entered the room.This Player is already added to the playerlist.
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)   
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)   
     {
         RoomRenewal();
-        ChatRPC("<color=yellow>" + newPlayer.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
+        ChatRPC("<color=yellow>" + player.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
 
-        GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab, RoomManager.Instance.lobbySpawnPoints[newPlayer.ActorNumber - 1]);
+        GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab, RoomManager.Instance.lobbySpawnPoints[player.ActorNumber+1]);       //Need to fix
         lobbyPlayer.transform.SetParent(RoomPanel.transform);
         lobbyPlayer.transform.localScale = Vector3.one;
-        lobbyPlayer.GetComponent<PlayerData>().Initialize(newPlayer.ActorNumber, newPlayer.NickName);
+        lobbyPlayer.GetComponent<PlayerData>().Initialize(player.ActorNumber, player.NickName);
 
-        playerListEntries.Add(newPlayer.ActorNumber, lobbyPlayer);
+        playerListEntries.Add(player.ActorNumber, lobbyPlayer);
 
         StartGameButton.gameObject.SetActive(CheckPlayersReady());
-        Debug.Log($"Player Add ActorNumber={newPlayer.ActorNumber}, playerName={newPlayer.NickName}");
+        Debug.Log($"Player Add ActorNumber={player.ActorNumber}, playerName={player.NickName}, selectedChamp={PlayerData.Instance.userChamp}");
 
     }
 
