@@ -47,9 +47,9 @@ public class PlayerData : MonoBehaviour
         {
             Hashtable initialProps = new Hashtable() { { GameConsts.PLAYER_READY, isPlayerReady },
                 { GameConsts.PLAYER_CHAMPION, userChamp },
-                { GameConsts.PLAYER_TEAM, null },
-                { GameConsts.PLAYER_SPELL1, null },       //Default
-                { GameConsts.PLAYER_SPELL2, null }};    //Defualt
+                { GameConsts.PLAYER_TEAM, GameConsts.RED_TEAM },
+                { GameConsts.PLAYER_SPELL1, SummonerSpell.SummonerSpells.Flash },       //Default
+                { GameConsts.PLAYER_SPELL2, SummonerSpell.SummonerSpells.Ignite }};    //Defualt
             PhotonNetwork.LocalPlayer.SetCustomProperties(initialProps);
 
             PlayerReadyButton.onClick.AddListener(() =>
@@ -97,9 +97,7 @@ public class PlayerData : MonoBehaviour
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
 
         PlayerChampImage.GetComponentInChildren<Image>().sprite =
-            Resources.Load(Path.Combine("2D", userChamp), typeof(Sprite)) as Sprite;
-
-        //PlayerReadyImage.enabled = playerReady;
+            Resources.Load(Path.Combine("2D", userChamp), typeof(Sprite)) as Sprite;        
     }
     
     public void SetUserTeam()

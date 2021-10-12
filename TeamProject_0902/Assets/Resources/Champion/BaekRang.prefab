@@ -81452,6 +81452,7 @@ MonoBehaviour:
   MagicAbility: 0
   Difficulty: 0
   HP: 0
+  MaxHP: 0
   HPperLevel: 0
   MP: 0
   MPperLevel: 0
@@ -81469,9 +81470,7 @@ MonoBehaviour:
   HPregenperLevel: 0
   MPregen: 0
   MPregenperLevel: 0
-  Wildness: 0
-  minWildness: 0
-  maxWildness: 4
+  DamageStorage: 0
 --- !u!114 &-1773032671959484960
 MonoBehaviour:
   m_ObjectHideFlags: 0

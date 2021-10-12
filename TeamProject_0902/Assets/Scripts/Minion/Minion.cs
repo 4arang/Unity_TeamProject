@@ -8,10 +8,10 @@ public class Minion : MonoBehaviour
 {
     float speed = 100.0f;                        //Get value from stats
     public Transform target;
-    private int wavePointIndex = 0;             //Node Index
+    private int wavePointIndex = 0;              //Node Index
     void Start()
     {
-        target = WayPoints.wayPoints[0];            //WayPoint Initialize
+        target = WayPoints.wayPoints[0];         //WayPoint Initialize
     }
 
     void Update()
@@ -47,7 +47,8 @@ public class Minion : MonoBehaviour
         wavePointIndex++;
         target = WayPoints.wayPoints[wavePointIndex];
     }
-}    //NavMeshAgent navAgent;
+}   
+//NavMeshAgent navAgent;
      //public Transform target;
      //private int wavePointIndex = 0;         //Node Index
      //void Start()
