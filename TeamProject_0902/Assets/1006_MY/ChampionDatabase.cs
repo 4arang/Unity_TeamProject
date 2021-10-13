@@ -15,9 +15,9 @@ public class ChampionDatabase : MonoBehaviour
         }
     }
     public enum Champions
-    {
-        Xerion=0,
+    { 
         BaekRang,
-        ColD
+        ColD,
+        Xerion     
     }
 }

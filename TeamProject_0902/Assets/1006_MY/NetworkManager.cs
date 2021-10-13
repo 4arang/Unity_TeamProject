@@ -1,14 +1,15 @@
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;        //get HashTable
 
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
     public static NetworkManager Instance;
 
@@ -51,7 +52,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("ETC")]
     public Text StatusText;
     public PhotonView PV;
-    
+    public int currentScene;
+    public int multiplayScene;
+
+    [Header("Player Info")]
+    Photon.Realtime.Player[] photonPlayers;
+    public int playersInRoom;
+    public int mynumberInRoom;
+
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
 
@@ -215,11 +223,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LocalPlayer.NickName = PlayerNameInput.text;
         WelcomeText.text = PhotonNetwork.LocalPlayer.NickName + "님 환영합니다";
         myList.Clear();
-
-        if(!PhotonNetwork.IsMasterClient)
-        {
-            StartGameButton.gameObject.SetActive(false);
-        }
     }
 
     public void Disconnect()
@@ -246,51 +249,51 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         return roomOption;
     }
 
-
-
-
-    public void StartGame()
+    public void StartGame() //Call by StartGame Button
     {
+        Debug.Log("Game Start");
         LoadingSlider.enabled = true;
 
         PhotonNetwork.CurrentRoom.IsOpen = false;
         PhotonNetwork.CurrentRoom.IsVisible = false;
 
-        if(PhotonNetwork.IsMasterClient)
+        if(!PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("MapScene_Test");
+            return;
         }
-        
+        PhotonNetwork.LoadLevel("MapScene_Test");
     }
-
-    #region loading
-    public void ShowLoadingProgress(string sceneName)
+    void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(BeginLoad(sceneName));
-    }
-    private IEnumerator BeginLoad(string sceneName)
-    {
-        PhotonNetwork.LoadLevel("GameScene");
-
-        while (PhotonNetwork.LevelLoadingProgress < 1)
+        currentScene = scene.buildIndex;
+        if (currentScene == multiplayScene)
         {
-            ProgressText.text = "Loading: %" + (int)(PhotonNetwork.LevelLoadingProgress * 100);
-            //loadAmount = async.progress;
-            LoadingSlider.value = PhotonNetwork.LevelLoadingProgress;
-            ProgressText.text = (int)(PhotonNetwork.LevelLoadingProgress * 100f) + "%";
-            yield return new WaitForEndOfFrame();
+            CreatePlayer();
         }
     }
-        #endregion
+
+    private void CreatePlayer()
+    {
+        Debug.Log("CreatePlayer");
+        PhotonNetwork.Instantiate(Path.Combine("Champions", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
+    }
+
+    [PunRPC]
+    private void RPC_LoadedGameScene()
+    {
+        PV.RPC("RPC_CreatePlayer", RpcTarget.All);
+    }
 
     public override void OnJoinedRoom() //Callback Func when JoinedRoom
     {
-        Debug.Log($"Photonnetwork.Inroom={PhotonNetwork.InRoom}");
-        Debug.Log($"Player Count={PhotonNetwork.CurrentRoom.PlayerCount}");
         LoginPanel.SetActive(false);
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(true);
 
+        photonPlayers = PhotonNetwork.PlayerList;
+        playersInRoom = photonPlayers.Length;
+        mynumberInRoom = playersInRoom;
+        //PhotonNetwork.NickName = mynumberInRoom.ToString();
         RoomRenewal();        
 
         ChatInput.text = "";

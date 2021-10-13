@@ -33,15 +33,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     public void Start()
     {
-        Hashtable props = new Hashtable
-        {
-                { GameConsts.PLAYER_LOADED_LEVEL, true },
-                { GameConsts.PLAYER_CHAMPION,PlayerData.Instance.userChamp },
-                { GameConsts.PLAYER_SPELL1, PlayerData.Instance.userDspell },       //Default
-                { GameConsts.PLAYER_SPELL2, PlayerData.Instance.userDspell }
-        };    //Defualt
+        //Hashtable props = new Hashtable
+        //{
+        //        { GameConsts.PLAYER_LOADED_LEVEL, true },
+        //        { GameConsts.PLAYER_CHAMPION,PlayerData.Instance.userChamp },
+        //        { GameConsts.PLAYER_SPELL1, PlayerData.Instance.userDspell },       //Default
+        //        { GameConsts.PLAYER_SPELL2, PlayerData.Instance.userDspell }
+        //};    //Defualt
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        //PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
     public override void OnDisable()
     {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void StartGame()
     {
         Debug.Log("StartGame!!");
-        SpawningPlayer();
+        //SpawningPlayer();
     }
     void SpawningPlayer()
     {
