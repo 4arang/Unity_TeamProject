@@ -310,9 +310,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         LoginPanel.SetActive(activePanel.Equals(LoginPanel.name));
         SelectionPanel.SetActive(activePanel.Equals(SelectionPanel.name));
-        //CreateRoomPanel.SetActive(activePanel.Equals(CreateRoomPanel.name));
         JoinRandomRoomPanel.SetActive(activePanel.Equals(JoinRandomRoomPanel.name));
-        //RoomListPanel.SetActive(activePanel.Equals(RoomListPanel.name));    // UI should call OnRoomListButtonClicked() to activate this
         InsideRoomPanel.SetActive(activePanel.Equals(InsideRoomPanel.name));
     }
 

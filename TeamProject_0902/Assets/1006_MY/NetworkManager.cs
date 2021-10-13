@@ -167,7 +167,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     #region UI CALLBACKS
     public void LocalPlayerPropertiesUpdated()
     {
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        //StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     private bool CheckPlayersReady()
@@ -290,47 +290,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         LobbyPanel.SetActive(false);
         RoomPanel.SetActive(true);
 
+        //Room Initialize
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom = photonPlayers.Length;
         mynumberInRoom = playersInRoom;
-        //PhotonNetwork.NickName = mynumberInRoom.ToString();
+
+        Debug.Log("Create Lobby Player");
+        PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), 
+            transform.position, 
+            Quaternion.identity, 0);
         RoomRenewal();        
 
         ChatInput.text = "";
-        for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
-
-
-        //CustomProperties Setting Region
-        if (playerListEntries == null)
-        {
-            playerListEntries = new Dictionary<int, GameObject>();
-        }
-        foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
-        {
-            
-            GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab,RoomManager.Instance.lobbySpawnPoints[player.ActorNumber]);
-
-            lobbyPlayer.transform.SetParent(RoomPanel.transform);
-            lobbyPlayer.transform.localScale = Vector3.one;
-            lobbyPlayer.GetComponent<PlayerData>().Initialize(player.ActorNumber, player.NickName);
-
-            object isPlayerReady;
-            if(player.CustomProperties.TryGetValue(GameConsts.PLAYER_READY,out isPlayerReady))
-            {
-                lobbyPlayer.GetComponent<PlayerData>().SetPlayerReady((bool)isPlayerReady);
-            }
-            playerListEntries.Add(player.ActorNumber, lobbyPlayer);
-            Debug.Log($"Player Add ActorNumber={player.ActorNumber}, playerName={player.NickName}, " +
-                $"spawnPosition={RoomManager.Instance.lobbySpawnPoints[player.ActorNumber].name}");
-        }
-
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
-
-        Hashtable props = new Hashtable
-        {
-            {GameConsts.PLAYER_LOADED_LEVEL, false}
-        };
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";        
     }
 
     //Called when a remote player entered the room.This Player is already added to the playerlist.
@@ -338,17 +310,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     {
         RoomRenewal();
         ChatRPC("<color=yellow>" + player.NickName + "´ÔÀÌ Âü°¡ÇÏ¼Ì½À´Ï´Ù</color>");
-
-        GameObject lobbyPlayer = Instantiate(LobbyPlayerPrefab, RoomManager.Instance.lobbySpawnPoints[player.ActorNumber+1]);       //Need to fix
-        lobbyPlayer.transform.SetParent(RoomPanel.transform);
-        lobbyPlayer.transform.localScale = Vector3.one;
-        lobbyPlayer.GetComponent<PlayerData>().Initialize(player.ActorNumber, player.NickName);
-
-        playerListEntries.Add(player.ActorNumber, lobbyPlayer);
-
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
-        Debug.Log($"Player Add ActorNumber={player.ActorNumber}, playerName={player.NickName}, selectedChamp={PlayerData.Instance.userChamp}");
-
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)     //Chat Alarm when new player leaved.
@@ -359,13 +320,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
         playerListEntries.Remove(otherPlayer.ActorNumber);
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        //StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
-            StartGameButton.gameObject.SetActive(CheckPlayersReady());
+            //StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
     }
 
@@ -386,7 +347,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
             }
         }
 
-        StartGameButton.gameObject.SetActive(CheckPlayersReady());
+        //StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }

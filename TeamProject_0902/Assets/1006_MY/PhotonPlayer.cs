@@ -10,6 +10,7 @@ public class PhotonPlayer : MonoBehaviour
     public int myTeam;
     private void Start()
     {
+        Debug.Log("포톤 플레이어 생성");
         PV = GetComponent<PhotonView>();
         if (PV.IsMine)
         {

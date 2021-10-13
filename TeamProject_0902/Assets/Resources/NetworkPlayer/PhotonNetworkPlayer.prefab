@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 3882017491448535423}
   - component: {fileID: 4047674489031145711}
   m_Layer: 5
-  m_Name: PhotonPlayer
+  m_Name: PhotonNetworkPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -333,6 +333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389fe01a7d8dde945aeedec4e9b0ac19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PV: {fileID: -2049231852707983627}
+  myAvatar: {fileID: 0}
+  myTeam: 0
 --- !u!1001 &469831199251347788
 PrefabInstance:
   m_ObjectHideFlags: 0

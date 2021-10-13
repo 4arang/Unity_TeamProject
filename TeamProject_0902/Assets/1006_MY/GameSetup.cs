@@ -37,13 +37,13 @@ public class GameSetup : MonoBehaviour
 
     public void UpdateTeam()
     {
-        if (nextPlayersTeam == 1)
+        if (nextPlayersTeam == 0)
         {
-            nextPlayersTeam = 2;
+            nextPlayersTeam = 1;
         }
         else
         {
-            nextPlayersTeam = 1;
+            nextPlayersTeam = 0;
         }
 
     }
