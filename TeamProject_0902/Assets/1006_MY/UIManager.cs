@@ -67,5 +67,14 @@ public class UIManager : MonoBehaviour
         //PlayerHealthImage.fillAmount = CurrentPlayer.health;
         //PlayerResourceImage.fillAmount = CurrentPlayer.resource;
         //PlayerExp.fillAmount = CurrentPlayer.expValue;
+        if(Input.GetKey(KeyCode.Tab))
+        {
+            StartCoroutine(PopUpScoreBoard());
+        }        
+    }
+
+    IEnumerator PopUpScoreBoard()
+    {
+        return null;
     }
 }

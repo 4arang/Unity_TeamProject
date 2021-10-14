@@ -54,7 +54,7 @@ public class WhiteTiger : MonoBehaviour
         agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
         originalSpeed = agent.speed;
 
-        Enemy = GameObject.FindWithTag("Minion").transform;
+        //Enemy = GameObject.FindWithTag("Minion").transform;
     }
 
 

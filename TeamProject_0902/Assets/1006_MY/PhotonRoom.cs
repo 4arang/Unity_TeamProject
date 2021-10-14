@@ -19,7 +19,12 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int playersInRoom;
     public int mynumberInRoom;
 
+    [Header("Spell Settings")]
+    public GameObject spellSelectBox;
+    public int currentSpellBtn = 0;
+
     public int playersInGame;
+
     private void Awake()
     {
         if (PhotonRoom.room == null)
@@ -72,6 +77,18 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         PhotonNetwork.Instantiate(Path.Combine("Champions", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
     }
 
+    #region UI_BUTTONS CALLBACKS
+    public void OnSpellSetBoxOpen(int whichBtn)
+    {
+        spellSelectBox.SetActive(true);
+        currentSpellBtn = whichBtn;
+    }
+    public void OnSpellSetBoxClose()
+    {
+        spellSelectBox.SetActive(false);
+    }
+
+    #endregion
     [PunRPC]
     private void RPC_LoadedGameScene()
     {

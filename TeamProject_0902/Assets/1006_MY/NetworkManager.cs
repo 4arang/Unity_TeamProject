@@ -38,9 +38,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public GameObject LobbyPlayerPrefab;
     public Button StartGameButton;
 
-    //Get custom Properties
-    private Dictionary<int, GameObject> playerListEntries;
-
     [Header("Loading Panel")]
     private string SceneToLoad;
     [SerializeField]
@@ -154,14 +151,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         LobbyPanel.SetActive(true);
         LoginPanel.SetActive(false);
         RoomPanel.SetActive(false);
-
-        foreach (GameObject entry in playerListEntries.Values)
-        {
-            Destroy(entry.gameObject);
-        }
-
-        playerListEntries.Clear();
-        playerListEntries = null;
     }
     #endregion
     #region UI CALLBACKS
@@ -272,10 +261,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         }
     }
 
-    private void CreatePlayer()
+    private void CreatePlayer()//Avatar Uploaded
     {
         Debug.Log("CreatePlayer");
-        PhotonNetwork.Instantiate(Path.Combine("Champions", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
+        //PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
     }
 
     [PunRPC]
@@ -317,9 +306,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         RoomRenewal();
         ChatRPC("<color=yellow>" + otherPlayer.NickName + "¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ</color>");
 
-        Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
-        playerListEntries.Remove(otherPlayer.ActorNumber);
-
         //StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
@@ -328,26 +314,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             //StartGameButton.gameObject.SetActive(CheckPlayersReady());
         }
-    }
-
-    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
-    {
-        if (playerListEntries == null)
-        {
-            playerListEntries = new Dictionary<int, GameObject>();
-        }
-
-        GameObject entry;
-        if (playerListEntries.TryGetValue(targetPlayer.ActorNumber, out entry))
-        {
-            object isPlayerReady;
-            if (changedProps.TryGetValue(GameConsts.PLAYER_READY, out isPlayerReady))
-            {
-                entry.GetComponent<PlayerData>().SetPlayerReady((bool)isPlayerReady);
-            }
-        }
-
-        //StartGameButton.gameObject.SetActive(CheckPlayersReady());
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }

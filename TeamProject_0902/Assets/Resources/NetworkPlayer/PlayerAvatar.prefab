@@ -135,3 +135,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterValue: 0
   myCharacter: {fileID: 0}
+  myLobbyCharacter: {fileID: 0}
