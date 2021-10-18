@@ -9,26 +9,50 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public static GameManager Instance;
+    #region SINGLETON
+    private static GameManager instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                var obj = FindObjectOfType<GameManager>();
+                if (obj != null)
+                {
+                    instance = obj;
+                }
+                else
+                {
+                    var newObj = new GameObject().AddComponent<GameManager>();        //배포 시, 활성화
+                    instance = newObj;
+                }
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        var objs = FindObjectsOfType<GameManager>();
+        if (objs.Length != 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
 
     public Text InfoText;
-
     public float GameTime;
     public int CurrentPlayerID = 0;
     public List<TeamManager> Teams;
 
-
-    private void Awake()
-    {
-        if (Instance != this)
-            Instance = this;
-    }
-
     public override void OnEnable()
     {
         base.OnEnable();
-        Debug.Log("GameManager OnEnable");
-        StartGame();
     }
     public void Start()
     {
@@ -63,15 +87,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     #region START GAME SETTING
 
-    private void StartGame()
-    {
-        Debug.Log("StartGame!!");
-        SpawningPlayer();
-    }
-    void SpawningPlayer()
-    {
-       
-    }
     [PunRPC]
     void RPC_AddCharacter(int whichCharacter)
     {

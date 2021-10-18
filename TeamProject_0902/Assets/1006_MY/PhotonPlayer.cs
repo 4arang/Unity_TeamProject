@@ -7,11 +7,11 @@ public class PhotonPlayer : MonoBehaviour
 {
     public PhotonView PV;
     public GameObject myAvatar;
+    public GameObject myLobbyAvatar;
     public int myTeam;
     private void Start()
     {
-        Debug.Log("포톤 플레이어 생성");
-        Debug.Log(myTeam == 0 ? "Red team" : "Blue Team");
+        Debug.Log(myTeam == 1 ? "Red team" : "Blue Team");
         PV = GetComponent<PhotonView>();
         if (PV.IsMine)
         {
@@ -21,48 +21,38 @@ public class PhotonPlayer : MonoBehaviour
     private void Update()
     {
         #region
-        if (myAvatar == null)
+        if(myAvatar==null&&myTeam!=0)
         {
-            if (myTeam == 0)
+            if (myTeam == 1)
             {
-                int spawnPicker = 0;
+                int spawnPicker = Random.Range(0, GameSetup.GS.redSpawnPoints.Length); ;
 
-                if (PhotonRoom.room.mynumberInRoom!=1)
-                {
-                    spawnPicker = Random.Range(0, GameSetup.GS.redTeamSpawnPoints.Length);
-                }                
-                
-                Debug.Log("spawnPicker= " + spawnPicker);
                 if (PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
-                        GameSetup.GS.redTeamSpawnPoints[spawnPicker].position,
-                        GameSetup.GS.redTeamSpawnPoints[spawnPicker].rotation, 0);
-
-                    Debug.Log($"Spawn at {GameSetup.GS.redTeamSpawnPoints[spawnPicker].position}");
+                               GameSetup.GS.redSpawnPoints[spawnPicker].position,
+                               GameSetup.GS.redSpawnPoints[spawnPicker].rotation, 0);
                 }
             }
             else
             {
-                int spawnPicker = Random.Range(0, GameSetup.GS.blueTeamSpawnPoints.Length);
+                int spawnPicker = Random.Range(0, GameSetup.GS.blueSpawnPoints.Length); ;
                 if (PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
-                    GameSetup.GS.blueTeamSpawnPoints[spawnPicker].position,
-                    GameSetup.GS.blueTeamSpawnPoints[spawnPicker].rotation, 0);
-
-                    Debug.Log($"Spawn at {GameSetup.GS.blueTeamSpawnPoints[spawnPicker].position}");
+                               GameSetup.GS.blueSpawnPoints[spawnPicker].position,
+                               GameSetup.GS.blueSpawnPoints[spawnPicker].rotation, 0);
                 }
             }
-        }
-        #endregion
-
+        }        
     }
+    #endregion
 
     [PunRPC]
     void RPC_GetTeam()
     {
         myTeam = GameSetup.GS.nextPlayersTeam;
+        PlayerInfo.PI.myTeam = myTeam;
         GameSetup.GS.UpdateTeam();
         PV.RPC("RPC_SentTeam", RpcTarget.OthersBuffered, myTeam);
     }

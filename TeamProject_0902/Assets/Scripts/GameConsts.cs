@@ -16,8 +16,8 @@ public static class GameConsts
     public static int SPAWN_TOP = 1;
     public static int SPAWN_BOTTOM = 2;
 
-    public static int RED_TEAM = 0;
-    public static int BLUE_TEAM = 1;
+    public static int RED_TEAM = 1;
+    public static int BLUE_TEAM = 2;
 
 
     public static int MINION_SPAWNINTERVAL_TIME = 6;

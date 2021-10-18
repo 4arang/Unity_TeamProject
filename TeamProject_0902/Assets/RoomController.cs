@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuController : MonoBehaviour
+public class RoomController : MonoBehaviour
 {
     public void OnClickCharacterPick(int whichCharacter)
     {
         if (PlayerInfo.PI != null)
         {
+            //Normal Selected mode
             PlayerInfo.PI.mySelectedChampion = whichCharacter;
             PlayerPrefs.SetInt("MyCharacter", whichCharacter);
             PlayerPrefs.SetInt("MyLobbyCharacter", whichCharacter);//Lobby Test
         }
     }
+
 
     public void OnClickSpellPick(int whichSpell)
     {

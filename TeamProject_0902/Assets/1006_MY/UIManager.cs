@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
     public Image PlayerResourceImage;
     public Image PlayerExp;
 
+    public Image ScoreBoardPanel;
     private void Awake()
     {
         if (Instance != this)
@@ -67,14 +68,25 @@ public class UIManager : MonoBehaviour
         //PlayerHealthImage.fillAmount = CurrentPlayer.health;
         //PlayerResourceImage.fillAmount = CurrentPlayer.resource;
         //PlayerExp.fillAmount = CurrentPlayer.expValue;
-        if(Input.GetKey(KeyCode.Tab))
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
             StartCoroutine(PopUpScoreBoard());
-        }        
+        }
+        else
+        {
+            StartCoroutine(CloseScoreBoard());
+        }
     }
 
     IEnumerator PopUpScoreBoard()
     {
-        return null;
+        ScoreBoardPanel.gameObject.SetActive(true);
+        yield return null;
+    }
+    IEnumerator CloseScoreBoard()
+    {
+        ScoreBoardPanel.gameObject.SetActive(false);
+        yield return null;
+
     }
 }

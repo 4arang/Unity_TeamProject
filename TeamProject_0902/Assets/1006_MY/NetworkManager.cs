@@ -55,6 +55,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     [Header("Player Info")]
     Photon.Realtime.Player[] photonPlayers;
     public int playersInRoom;
+    public string playerNickname;
     public int mynumberInRoom;
 
     List<RoomInfo> myList = new List<RoomInfo>();
@@ -255,16 +256,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
     void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         currentScene = scene.buildIndex;
-        if (currentScene == multiplayScene)
-        {
-            CreatePlayer();
-        }
-    }
-
-    private void CreatePlayer()//Avatar Uploaded
-    {
-        Debug.Log("CreatePlayer");
-        //PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
     }
 
     [PunRPC]
@@ -282,12 +273,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         //Room Initialize
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom = photonPlayers.Length;
+        playerNickname = PhotonNetwork.NickName;
         mynumberInRoom = playersInRoom;
 
-        Debug.Log("Create Lobby Player");
         PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), 
             transform.position, 
             Quaternion.identity, 0);
+
+        //Champ Random Choice
+        PlayerInfo.PI.RandomSelectMode();
         RoomRenewal();        
 
         ChatInput.text = "";

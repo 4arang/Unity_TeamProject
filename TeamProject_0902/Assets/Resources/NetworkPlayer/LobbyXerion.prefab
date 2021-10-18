@@ -190,7 +190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6781553880843202427}
   - component: {fileID: -7196656524649055852}
-  - component: {fileID: 8346962418678256343}
   - component: {fileID: 5795773099888899316}
   m_Layer: 5
   m_Name: LobbyXerion
@@ -208,7 +207,7 @@ RectTransform:
   m_GameObject: {fileID: 5732699308233884933}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 3680937465466064456}
   m_Father: {fileID: 0}
@@ -237,25 +236,11 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5795773099888899316}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &8346962418678256343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5732699308233884933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f53c77705da58f2428228be1bb3b2631, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterValue: 0
-  myCharacter: {fileID: 0}
-  myLobbyCharacter: {fileID: 0}
 --- !u!114 &5795773099888899316
 MonoBehaviour:
   m_ObjectHideFlags: 0

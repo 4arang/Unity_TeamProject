@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 3155950057333691157}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.49, y: 1.3920308, z: -1.52}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 3153111447558657685}
   - {fileID: 3155950057333198643}
@@ -128,6 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79c1ba13ee98dba4aa477dd1787b98b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ImpactFX: {fileID: 0}
+  ImpactFXDestroyDelay: 2
+  ImpactOffset: 0.15
+  Speed: 20
 --- !u!65 &8640610376086208529
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ public class GameSetup : MonoBehaviour
     public static GameSetup GS;
 
     public int nextPlayersTeam;
-    public Transform[] redTeamSpawnPoints;
-    public Transform[] blueTeamSpawnPoints;
+    public Transform[] redSpawnPoints;
+    public Transform[] blueSpawnPoints;
 
     private void OnEnable()
     {
@@ -37,13 +37,13 @@ public class GameSetup : MonoBehaviour
 
     public void UpdateTeam()
     {
-        if (nextPlayersTeam == 0)
+        if (nextPlayersTeam == 1)
         {
-            nextPlayersTeam = 1;
+            nextPlayersTeam = 2;
         }
         else
         {
-            nextPlayersTeam = 0;
+            nextPlayersTeam = 1;
         }
 
     }

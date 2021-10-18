@@ -6,13 +6,14 @@ public class PlayerInfo : MonoBehaviour
 {
     public static PlayerInfo PI;
     private int selectIdx = 0;
+    public int myTeam = 0;
     //Ingame Avatar
     public int mySelectedChampion;
     public GameObject[] allCharacters;
 
     //Lobby Avatar
-    public int mySelectedLobbyChampion;
-    public GameObject[] allLobbyCharacters;
+    //public int mySelectedLobbyChampion;
+    public GameObject[] allLobbyCharacters;    
 
     //Room Spell Select
     public int mySelectedSpell1;
@@ -42,28 +43,33 @@ public class PlayerInfo : MonoBehaviour
         if (PlayerPrefs.HasKey("MyCharacter"))
         {
             mySelectedChampion = PlayerPrefs.GetInt("MyCharacter");
-            Debug.Log("MySelectedChampion=" + mySelectedChampion);
         }
         else
         {
-            mySelectedChampion = 0;
             PlayerPrefs.SetInt("MyCharacter", mySelectedChampion);
-            Debug.Log("MySelectedChampion=" + mySelectedChampion);
         }
         
         //Lobby Character Select
         if(PlayerPrefs.HasKey("MyLobbyCharacter"))
         {
             mySelectedChampion = PlayerPrefs.GetInt("MyLobbyCharacter");
-            Debug.Log("MySelectedChampion=" + mySelectedChampion);
-
         }
         else
         {
-            mySelectedChampion = 0;
             PlayerPrefs.SetInt("MyLobbyCharacter", mySelectedChampion);
-            Debug.Log("MySelectedChampion=" + mySelectedChampion);
         }
+    }
+
+    public void RandomSelectMode()
+    {
+        int rndIdx = Random.Range(0, PlayerInfo.PI.allLobbyCharacters.Length);
+
+        mySelectedChampion = rndIdx;
+        PlayerPrefs.SetInt("MyCharacter", rndIdx);
+        PlayerPrefs.SetInt("MyLobbyCharacter", rndIdx);//Lobby Test
+
+        Debug.Log("My Random Champ = "+
+            System.Enum.ToObject(typeof(ChampionDatabase.Champions), mySelectedChampion));
     }
 
     public void SpellSetting()

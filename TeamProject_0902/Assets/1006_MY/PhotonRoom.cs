@@ -74,7 +74,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private void CreatePlayer()
     {
         Debug.Log("CreatePlayer");
-        PhotonNetwork.Instantiate(Path.Combine("Champions", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
+        PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
     }
 
     #region UI_BUTTONS CALLBACKS

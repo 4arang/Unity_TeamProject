@@ -9,7 +9,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
 {
     public int TeamID = 0;
 
-    //public List<ChampionStats> Champions;
+    public List<GameObject> Champions;
     
     public Transform MinionSpawnPoints;
 
@@ -21,6 +21,15 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public int WaveNumber = 0;
     public float WaveTimer = GameConsts.MINION_WAVESTART_TIME;          //countdown
     public bool Inhibitor = false;
+
+    private void Start()
+    {
+        Debug.Log("Add Champions to TeamManager");
+        if(PlayerInfo.PI.myTeam==this.TeamID)
+        {
+            Champions.Add(GameObject.FindGameObjectWithTag("Player"));
+        }        
+    }
 
     private void Update()
     {
@@ -34,7 +43,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
             //Instantiate Minion After WAVESTART_TIME and Spawn every MINION_SPAWNINTERVAL_TIME
             if (WaveTimer <= 0f)
             {
-                StartCoroutine(SpawnWave());
+                //StartCoroutine(SpawnWave());
                 WaveTimer = GameConsts.MINION_SPAWNINTERVAL_TIME;//Reset Timer          
                 WaveNumber++;
             }
@@ -47,6 +56,7 @@ public class TeamManager : MonoBehaviourPunCallbacks
         
     }
 
+    #region Wave Spawner
     IEnumerator SpawnWave()
     {
         Debug.Log($"Wave Number : {WaveNumber} has spawned at {GameManager.Instance.GameTime}");
@@ -91,4 +101,5 @@ public class TeamManager : MonoBehaviourPunCallbacks
     {
         Instantiate(prefab, MinionSpawnPoints.transform.position, Quaternion.identity);
     }
+    #endregion
 }
