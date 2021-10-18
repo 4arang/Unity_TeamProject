@@ -61,13 +61,6 @@ public class ColD_W : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (animator.GetBool("A_ColD") == false)
-                StartCoroutine("Active_A");
-            animator.SetBool("A_ColD", true);
-        }
-
         if (Input.GetKeyDown(KeyCode.W) && GetComponent<ColD_Stats>().Helium >= 20)
         {
             if (animator.GetBool("W_ColD") == false)
@@ -167,15 +160,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             isR_ready = false;
         }
     }
-    IEnumerator Active_A()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1.0f);
-            animator.SetBool("A_ColD", false);
-            break;
-        }
-    }
+
     IEnumerator Active_Q()
     {
         while (true)
