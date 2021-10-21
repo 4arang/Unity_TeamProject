@@ -30,8 +30,11 @@ public class Xerion_Stats : MonoBehaviour
     public int MPregen;
     public float MPregenperLevel;
 
+    public float hp; 
+    public float mp; 
     //Xerion special
     public int Energy=0;
+    private float TimeCheck = 0.0f;
 
 
     void Start()
@@ -44,9 +47,9 @@ public class Xerion_Stats : MonoBehaviour
         MagicAbility = byte.Parse(data[3]["infomagic"].ToString());
         Difficulty = byte.Parse(data[3]["infodifficulty"].ToString());
 
-        HP = int.Parse(data[3]["statshp"].ToString());
+        HP = int.Parse(data[3]["statshp"].ToString());  //max hp
         HPperLevel = int.Parse(data[3]["statshpperlevel"].ToString());
-        MP = int.Parse(data[3]["statsmp"].ToString());
+        MP = int.Parse(data[3]["statsmp"].ToString());  //max mp
         MPperLevel = int.Parse(data[3]["statsmpperlevel"].ToString());
         AP = int.Parse(data[3]["statsarmor"].ToString());
         APperLevel = float.Parse(data[3]["statsarmorperlevel"].ToString());
@@ -63,5 +66,49 @@ public class Xerion_Stats : MonoBehaviour
         MPregen = int.Parse(data[3]["statsmpregen"].ToString());
         MPregenperLevel = float.Parse(data[3]["statsmpregenperlevel"].ToString());
 
+        Xerion_Manager.Instance.Xerion_AD = AD;
+        hp = HP;
+        mp = MP;
+    }
+    private void Update()
+    {
+
+        Debug.Log("Xerion energy " + mp);
+
+        if (Energy >= 100)
+        {
+            Energy = 100;
+            GetComponent<Xerion>().OnPassive();
+        }
+
+        Regen();
+        
+        
+    }
+    public void DropMP(float energy)
+    {
+        if (mp >= energy)
+        {
+            mp -= energy;
+        }
+        if (mp > MP) mp = MP;
+    }
+    void Regen()
+    {
+        TimeCheck += Time.deltaTime;
+        if (TimeCheck > 1.0f)
+        {
+            if(hp<HP)
+            {
+                hp += HPregen;
+                if (hp > HP) hp = HP;
+            }
+            if(mp<MP)
+            {
+                mp += MPregen;
+                if (mp > MP) mp = MP;
+            }
+            TimeCheck = 0;
+        }
     }
 }

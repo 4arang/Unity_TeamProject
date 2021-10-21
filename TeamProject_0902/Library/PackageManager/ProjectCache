@@ -286,9 +286,11 @@ m_ResolvedPackages:
     - 3.4.0
     - 3.5.3
     - 3.6.11
+    - 3.6.12
     compatible:
     - 3.6.11
-    verified: 3.6.11
+    - 3.6.12
+    verified: 3.6.12
   dependencies:
   - name: com.unity.ugui
     version: 1.0.0
@@ -823,10 +825,12 @@ m_ResolvedPackages:
     - 3.2.3
     - 4.0.0
     - 4.0.3
+    - 4.1.0
     compatible:
     - 3.2.3
     - 4.0.0
     - 4.0.3
+    - 4.1.0
     verified: 3.2.3
   dependencies:
   - name: com.unity.ugui

@@ -27,6 +27,7 @@
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
 -define:UNITY_INCLUDE_TESTS
+-define:UNITY_ANALYTICS
 -define:USE_SEARCH_ENGINE_API
 -define:USE_QUICK_SEARCH_MODULE
 -define:SCENE_TEMPLATE_MODULE
@@ -614,6 +615,8 @@
 "Assets/Scripts/YC/Xerion/Xerion_Basic_Range_collider.cs"
 "Assets/Scripts/YC/Xerion/Xerion_Drone_Grenade.cs"
 "Assets/Scripts/YC/Xerion/Xerion_E_bullet.cs"
+"Assets/Scripts/YC/Xerion/Xerion_Manager.cs"
+"Assets/Scripts/YC/Xerion/Xerion_Q_Laser_Collider.cs"
 "Assets/Scripts/YC/Xerion/Xerion_Shooting_Skill.cs"
 "Assets/Scripts/YC/Xerion/Xerion_Stats.cs"
 "Assets/SineVFX/TopDownEffects/Resources/Scripts/PrefabSpawner.cs"

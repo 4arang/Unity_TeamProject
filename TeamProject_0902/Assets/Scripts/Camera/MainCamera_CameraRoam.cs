@@ -24,7 +24,7 @@ public class MainCamera_CameraRoam : MonoBehaviour
 
     private void Start()
     {
-        //player = GameObject.FindWithTag("Player").transform;
+        player = GameObject.FindWithTag("Player").transform;
         camHeight = transform.position.y;
     }
 
