@@ -6,7 +6,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 {
     Animator animator;
 
-
+    public bool isSkillon = false;
 
 
     [Header("Q_Skill")]
@@ -32,6 +32,9 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     private float W_MP = 70;
     private byte W_Level = 1;
     private bool W_On = false;
+    private bool isW_ready = false;
+    public float W_Distance = 9.5f;
+    private Vector3 Wdirection; //W방향좌표 저장
     
 
     [Header("E_Skill")]
@@ -95,6 +98,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Q) && GetComponent<Xerion_Stats>().mp >= Q_MP)
         {
+            isSkillon = true;
             GetComponent<Xerion_Stats>().DropMP(Q_MP);
             Q_On = true;
         }
@@ -154,6 +158,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && GetComponent<Xerion_Stats>().mp >= W_MP)
         {
+            isSkillon = true;
             W_On = true;
             GetComponent<Xerion_Stats>().DropMP(W_MP);
             satellite_range.SetActive(true);    //위성공격 범위 active
@@ -167,20 +172,40 @@ public class Xerion_Shooting_Skill : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.W)&&W_On)  //E키 떼는 순간 스킬 시작
         {
-         
+            Wdirection = satellite_range.transform.position;
+         if((transform.position-Wdirection).magnitude>W_Distance) //사거리 외에있을 경우 이동
+            {
+                movingManager.Instance.PlayerClickedPos = Wdirection;
+                isW_ready = true;
+            }
+            else
+            {
+                if (animator.GetBool("W_Xerion") == false)
+                {
+                    StartCoroutine("Active_W");
+                }
+                animator.SetBool("W_Xerion", true);
+            }
+
             Range.SetActive(false);
             satellite_range.SetActive(false);
-
+  
+            W_On = false;
+        }
+        if(isW_ready && (transform.position-Wdirection).magnitude<=W_Distance)
+        {
+            movingManager.Instance.PlayerClickedPos = transform.position; //위치고정
             if (animator.GetBool("W_Xerion") == false)
             {
                 StartCoroutine("Active_W");
             }
             animator.SetBool("W_Xerion", true);
-            W_On = false;
+            isW_ready = false;
         }
 
         if (Input.GetKeyDown(KeyCode.E) && GetComponent<Xerion_Stats>().mp >= E_MP)
         {
+            isSkillon = true;
             GetComponent<Xerion_Stats>().DropMP(E_MP);
             E_On = true;
         }
@@ -217,6 +242,7 @@ Quaternion.identity); //유탄발사 and transform 저장
         {
             if (Input.GetKeyDown(KeyCode.R) && GetComponent<Xerion_Stats>().mp >= R_MP)
             {
+                isSkillon = true;
                 GetComponent<Xerion_Stats>().DropMP(R_MP);
                 satellite_range.SetActive(true);
                 Drone_Range.SetActive(true);
@@ -300,6 +326,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             animator.SetBool("R_Xerion", false);
             break;
         }
+        isSkillon = false;
     }
 
 
@@ -315,19 +342,21 @@ Quaternion.identity); //유탄발사 and transform 저장
             animator.SetBool("E_Xerion", false);
             break;
         }
+        isSkillon = false;
     }
     IEnumerator Active_W()
     {
         while (true)
         {
             yield return new WaitForSeconds(1.0f);
-            Instantiate(satellite, satellite_range.transform.position, Quaternion.identity);
+            Instantiate(satellite, Wdirection, Quaternion.identity);
             yield return new WaitForSeconds(0.1f);
             animator.SetBool("W_Xerion", false);
             yield return new WaitForSeconds(1.0f);
 
             break;
         }
+        isSkillon = false;
     }
     IEnumerator Active_Q()
     {
@@ -343,6 +372,7 @@ Quaternion.identity); //유탄발사 and transform 저장
         }
         Laser.transform.localScale = Laser_org_Size;
         Q_LaserFull = false;
+        isSkillon = false;
     }
     Vector3 GetMousePos()
     {

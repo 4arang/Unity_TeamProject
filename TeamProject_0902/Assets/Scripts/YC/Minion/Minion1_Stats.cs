@@ -65,41 +65,41 @@ public class Minion1_Stats : MonoBehaviour
         stopwatch.Start();
     }
 
-    private void FixedUpdate()
-    {
-        long elapsedTime = stopwatch.ElapsedMilliseconds;
-        if (elapsedTime % HPPtime == 0)
-        {
-            if (HP < MaxHP)
-            {
-                HP += HPregen;
-                HPregen += HPregenperLevel;
-                if (HP > MaxHP) HP = MaxHP;
-            }
-            if (AD < MaxAD)
-            {
-                AD += ADperTime;
-                if (AD > MaxAD) AD = MaxAD;
-            }
-        }
-        if (elapsedTime % APPtime == 0)
-        {
-            if (AP < MaxAP)
-            {
-                AP += APp;
-                if (AP > MaxAP) AP = MaxAP;
-            }
-        }
-        if (elapsedTime % MoveSpeedptime == 0)
-        {
-            if (MoveSpeed < MaxMoveSpeed)
-            {
-                MoveSpeed += MoveSpeedp;
-                if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
-            }
-        }
+    //private void FixedUpdate()
+    //{
+    //    long elapsedTime = stopwatch.ElapsedMilliseconds;
+    //    if (elapsedTime % HPPtime == 0)
+    //    {
+    //        if (HP < MaxHP)
+    //        {
+    //            HP += HPregen;
+    //            HPregen += HPregenperLevel;
+    //            if (HP > MaxHP) HP = MaxHP;
+    //        }
+    //        if (AD < MaxAD)
+    //        {
+    //            AD += ADperTime;
+    //            if (AD > MaxAD) AD = MaxAD;
+    //        }
+    //    }
+    //    if (elapsedTime % APPtime == 0)
+    //    {
+    //        if (AP < MaxAP)
+    //        {
+    //            AP += APp;
+    //            if (AP > MaxAP) AP = MaxAP;
+    //        }
+    //    }
+    //    if (elapsedTime % MoveSpeedptime == 0)
+    //    {
+    //        if (MoveSpeed < MaxMoveSpeed)
+    //        {
+    //            MoveSpeed += MoveSpeedp;
+    //            if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+    //        }
+    //    }
 
-    }
+    //}
 
     //public void DropHP(float damage)
     //{

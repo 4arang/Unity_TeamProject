@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Diagnostics;
+using System.Diagnostics;//unity 내장시간함수? 어떻게 처리해야하는지 게임내 멈춰있는동안 처리같은거?
 
 
 public class Minion_Stats : MonoBehaviour
@@ -29,7 +29,7 @@ public class Minion_Stats : MonoBehaviour
     public float AttackRange;
     public int MoveSpeedp;
     public int MoveSpeedptime;
-    private float Recover_MoveSpeed;
+    public float Recover_MoveSpeed;
 
     private byte MinionNum;
 
@@ -60,6 +60,7 @@ public class Minion_Stats : MonoBehaviour
             AttackRange = GetComponent<Minion1_Stats>().AttackRange;
             MoveSpeedp = GetComponent<Minion1_Stats>().MoveSpeedp;
             MoveSpeedptime = GetComponent<Minion1_Stats>().MoveSpeedptime;
+            Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion1_Stats>().Minion_Number;
         }
@@ -80,6 +81,7 @@ public class Minion_Stats : MonoBehaviour
             AttackRange = GetComponent<Minion2_Stats>().AttackRange;
             MoveSpeedp = GetComponent<Minion2_Stats>().MoveSpeedp;
             MoveSpeedptime = GetComponent<Minion2_Stats>().MoveSpeedptime;
+            Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion2_Stats>().Minion_Number;
         }
@@ -100,6 +102,7 @@ public class Minion_Stats : MonoBehaviour
             AttackRange = GetComponent<Minion3_Stats>().AttackRange;
             MoveSpeedp = GetComponent<Minion3_Stats>().MoveSpeedp;
             MoveSpeedptime = GetComponent<Minion3_Stats>().MoveSpeedptime;
+            Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion3_Stats>().Minion_Number;
         }
@@ -119,6 +122,7 @@ public class Minion_Stats : MonoBehaviour
             AttackRange = GetComponent<Minion4_Stats>().AttackRange;
             MoveSpeedp = GetComponent<Minion4_Stats>().MoveSpeedp;
             MoveSpeedptime = GetComponent<Minion4_Stats>().MoveSpeedptime;
+            Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion4_Stats>().Minion_Number;
         }
@@ -138,7 +142,122 @@ public class Minion_Stats : MonoBehaviour
         UnityEngine.Debug.Log("Minion." + MinionNum + " Speed " + MoveSpeed);
     }
 
+    private void FixedUpdate()
+    {
 
+        long elapsedTime = stopwatch.ElapsedMilliseconds;
+        if (TryGetComponent(out Minion1_Stats Minion_Num1))
+        {
+            if (elapsedTime % HPPtime == 0)
+            {
+                if (HP <= MaxHP)
+                {
+                    HP += HPregen;
+                    HPregen += HPregenperLevel;
+                    if (HP > MaxHP) HP = MaxHP;
+                }
+                if (AD <= MaxAD)
+                {
+                    AD += ADperTime;
+                    if (AD > MaxAD) AD = MaxAD;
+                }
+            }
+            if (elapsedTime % APPtime == 0)
+            {
+                if (AP <= MaxAP)
+                {
+                    AP += APp;
+                    if (AP > MaxAP) AP = MaxAP;
+                }
+            }
+            if (elapsedTime % MoveSpeedptime == 0)
+            {
+                if (MoveSpeed <= MaxMoveSpeed)
+                {
+                    MoveSpeed += MoveSpeedp;
+                    if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+                    Recover_MoveSpeed = MoveSpeed;
+                }
+            }
+        }
+        else if (TryGetComponent(out Minion2_Stats Minion_Num2))
+        {
+            if (elapsedTime % HPPtime == 0)
+            {
+                if (HP <= MaxHP)
+                {
+                    HP += HPregen;
+                    if (HP > MaxHP) HP = MaxHP;
+                }
+                if (AD <= MaxAD)
+                {
+                    AD += ADperTime;
+                    if (AD > MaxAD) AD = MaxAD;
+                }
+
+            }
+
+            if (elapsedTime % MoveSpeedptime == 0)
+            {
+                if (MoveSpeed <= MaxMoveSpeed)
+                {
+                    MoveSpeed += MoveSpeedp;
+                    if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+                    Recover_MoveSpeed = MoveSpeed;
+                }
+            }
+        }
+        else if (TryGetComponent(out Minion3_Stats Minion_Num3))
+        {
+            if (elapsedTime % HPPtime == 0)
+            {
+                if (HP <= MaxHP)
+                {
+                    HP += HPregen;
+                    if (HP > MaxHP) HP = MaxHP;
+                }
+                if (AD <= MaxAD)
+                {
+                    AD += ADperTime;
+                    if (AD > MaxAD) AD = MaxAD;
+                }
+            }
+
+            if (elapsedTime % MoveSpeedptime == 0)
+            {
+                if (MoveSpeed <= MaxMoveSpeed)
+                {
+                    MoveSpeed += MoveSpeedp;
+                    if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+                    Recover_MoveSpeed = MoveSpeed;
+                }
+            }
+        }
+        else if (TryGetComponent(out Minion4_Stats Minion_Num4))
+        {
+            if (elapsedTime % HPPtime == 0)
+            {
+
+                HP += HPregen;
+
+
+                AD += ADperTime;
+
+
+            }
+
+            if (elapsedTime % MoveSpeedptime == 0)
+            {
+                if (MoveSpeed <= MaxMoveSpeed)
+                {
+                    MoveSpeed += MoveSpeedp;
+                    if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+                    Recover_MoveSpeed = MoveSpeed;
+                }
+            }
+
+        }
+    }
 
 
     public void DropHP(float damage)
@@ -154,6 +273,12 @@ public class Minion_Stats : MonoBehaviour
     IEnumerator Active_SpeedReturn(float time)
     {
         yield return new WaitForSeconds(time); //1초후에 스피드 복구
-        MoveSpeed = Recover_MoveSpeed;
+        MoveSpeed = Recover_MoveSpeed; //미니언 렙업시 변경시켜주기
+    }
+
+    public void Stun(float StunTime)
+    {
+        DropSpeed(0, StunTime); 
+        //stop attack
     }
 }

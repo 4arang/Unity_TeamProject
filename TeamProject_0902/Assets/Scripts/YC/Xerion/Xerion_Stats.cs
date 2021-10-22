@@ -73,7 +73,7 @@ public class Xerion_Stats : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log("Xerion energy " + mp);
+      //  Debug.Log("Xerion energy " + mp);
 
         if (Energy >= 100)
         {

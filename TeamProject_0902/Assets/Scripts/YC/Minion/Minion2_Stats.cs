@@ -55,33 +55,33 @@ public class Minion2_Stats : MonoBehaviour
         stopwatch.Start();
     }
 
-    private void FixedUpdate()
-    {
-        long elapsedTime = stopwatch.ElapsedMilliseconds;
-        if (elapsedTime % HPPtime == 0)
-        {
-            if (HP < MaxHP)
-            {
-                HP += HPregen;
-                if (HP > MaxHP) HP = MaxHP;
-            }
-            if (AD < MaxAD)
-            {
-                AD += ADperTime;
-                if (AD > MaxAD) AD = MaxAD;
-            }
+    //private void FixedUpdate()
+    //{
+    //    long elapsedTime = stopwatch.ElapsedMilliseconds;
+    //    if (elapsedTime % HPPtime == 0)
+    //    {
+    //        if (HP < MaxHP)
+    //        {
+    //            HP += HPregen;
+    //            if (HP > MaxHP) HP = MaxHP;
+    //        }
+    //        if (AD < MaxAD)
+    //        {
+    //            AD += ADperTime;
+    //            if (AD > MaxAD) AD = MaxAD;
+    //        }
 
-        }
+    //    }
 
-        if (elapsedTime % MoveSpeedptime == 0)
-        {
-            if (MoveSpeed < MaxMoveSpeed)
-            {
-                MoveSpeed += MoveSpeedp;
-                if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
-            }
-        }
-    }
+    //    if (elapsedTime % MoveSpeedptime == 0)
+    //    {
+    //        if (MoveSpeed < MaxMoveSpeed)
+    //        {
+    //            MoveSpeed += MoveSpeedp;
+    //            if (MoveSpeed > MaxMoveSpeed) MoveSpeed = MaxMoveSpeed;
+    //        }
+    //    }
+    //}
 
     //    public void DropHP(float damage)
     //{

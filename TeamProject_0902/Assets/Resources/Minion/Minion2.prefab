@@ -5276,7 +5276,7 @@ Transform:
   m_GameObject: {fileID: 4884981614487665006}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -8.83, y: -0.04755211, z: -2.21}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4867258667714734219}
   - {fileID: 8579622971888037375}
@@ -5334,9 +5334,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.33632934
-  m_Height: 1.1726723
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!195 &8458150320253727992
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5415,6 +5415,7 @@ MonoBehaviour:
   AttackRange: 0
   MoveSpeedp: 0
   MoveSpeedptime: 0
+  Recover_MoveSpeed: 0
   DamagedEffect: {fileID: 4421426672439770253}
 --- !u!114 &3549102503086252787
 MonoBehaviour:

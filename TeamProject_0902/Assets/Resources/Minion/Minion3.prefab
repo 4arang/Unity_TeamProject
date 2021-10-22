@@ -10218,7 +10218,7 @@ Transform:
   m_GameObject: {fileID: 4309339646192897887}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0.5916357, y: -0.04755211, z: 0.4022293}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2127255696756011910}
   - {fileID: 1087576243704355790}
@@ -10331,6 +10331,7 @@ MonoBehaviour:
   AttackRange: 0
   MoveSpeedp: 0
   MoveSpeedptime: 0
+  Recover_MoveSpeed: 0
   DamagedEffect: {fileID: 8682400839364694740}
 --- !u!114 &4273195882427612568
 MonoBehaviour:
@@ -10370,9 +10371,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00329de330485764e9a6a2f4b2a0b4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Laser: {fileID: 0}
-  Barrel: {fileID: 0}
-  BarrelArm: {fileID: 0}
+  Laser: {fileID: 3155950057333198645, guid: ff4f464fbaff7be41960b1033eef24e7, type: 3}
+  Barrel: {fileID: 6352848691452314595}
+  BarrelArm: {fileID: 487979768672542297}
 --- !u!1 &4645142188284848166
 GameObject:
   m_ObjectHideFlags: 0

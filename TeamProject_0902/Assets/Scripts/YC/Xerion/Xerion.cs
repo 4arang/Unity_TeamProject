@@ -82,7 +82,7 @@ public class Xerion : MonoBehaviour
         {
             TotalAgentDistance = 0;
             GetComponent<Xerion_Stats>().Energy += 1;
-            Debug.Log("Xerion_Energy " + GetComponent<Xerion_Stats>().Energy);
+          //  Debug.Log("Xerion_Energy " + GetComponent<Xerion_Stats>().Energy);
         }
 
         if (skillDir != movingManager.Instance.PlayerDirection)
@@ -123,6 +123,11 @@ public class Xerion : MonoBehaviour
                 Debug.Log("Targeting");
                 GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
             }
+        }
+
+        if(GetComponent<Xerion_Shooting_Skill>().isSkillon)
+        {
+            CheckEnemy = false;
         }
 
     }
