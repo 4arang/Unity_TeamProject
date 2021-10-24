@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68138b3686e6f446931beb5e8977ac5, type: 3}
+  m_Name: ColD
+  m_EditorClassIdentifier: 
+  CharacterType: 0
+  Skill1: 0
+  Skill2: 0
+  Skill3: 0
+  Skill4: 0
+  Skill5: 0
+  IsNpc: 0
+  DetectRange: 0
+  DisplayedName: 
+  ClassBannerLit: {fileID: 0}
+  ClassBannerUnlit: {fileID: 0}

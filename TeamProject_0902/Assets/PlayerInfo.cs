@@ -9,6 +9,9 @@ public class PlayerInfo : MonoBehaviour
     public int myTeam = 0;
     //Ingame Avatar
     public int mySelectedChampion;
+
+    [Tooltip("All CharacterClass data should be slotted in here")]
+    [SerializeField]
     public GameObject[] allCharacters;
 
     //Lobby Avatar
@@ -20,7 +23,7 @@ public class PlayerInfo : MonoBehaviour
     public int mySelectedSpell2;
     public GameObject[] allSpells;
 
-    private void OnEnable()
+    private void Awake()
     {
         if (PlayerInfo.PI == null)
         {

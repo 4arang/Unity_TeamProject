@@ -25,10 +25,10 @@ public class TeamManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         Debug.Log("Add Champions to TeamManager");
-        if(PlayerInfo.PI.myTeam==this.TeamID)
-        {
-            Champions.Add(GameObject.FindGameObjectWithTag("Player"));
-        }        
+        //if(PlayerInfo.PI.myTeam==this.TeamID)
+        //{
+        //    Champions.Add(GameObject.FindGameObjectWithTag("Player"));
+        //}        
     }
 
     private void Update()
