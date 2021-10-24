@@ -34,25 +34,4 @@ public static class GameConsts
     public const string PLAYER_TEAM = "PlayerTeam";
     public const string PLAYER_SPELL1 = "D Spell";
     public const string PLAYER_SPELL2 = "F Spell";
-
-    public enum CharacterTypeEnum
-    {
-        //heroes
-        BaekRang,
-        ColD,
-        Xerion,
-
-        //minions
-        MeleeMinion,
-        CastMinion,
-        CannonMinion,
-        SuperMinion
-    }
-
-    public enum Champions
-    {
-        BaekRang,
-        ColD,
-        Xerion
-    }
 }
