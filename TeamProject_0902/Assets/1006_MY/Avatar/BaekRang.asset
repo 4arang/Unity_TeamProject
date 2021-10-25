@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a05ef33e681deb42bb435533c4063d3, type: 3}
+  m_Name: BaekRang
+  m_EditorClassIdentifier: 
+  m_Guid: e0e8148b0561e64b8bd2936ced06384d
+  CharacterClass: {fileID: 11400000, guid: 36eecd86aeda1fd4584ee6ddc5b65098, type: 2}
+  Graphics: {fileID: 5002886031893236844, guid: 4b26102ddfee0f84a9e2a635db8e0f66, type: 3}
+  GraphicsCharacterSelect: {fileID: 5732699308233884933, guid: 235c6028ae5c8bf4e9c016b93b23308d, type: 3}
+  Portrait: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
