@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316d0653a23052043be8e8dee7b76bf5, type: 3}
+  m_Name: Xerion Skill 2
+  m_EditorClassIdentifier: 
+  ActionTypeEnum: 14
+  Logic: 0
+  Amount: 0
+  ManaCost: 0
+  Range: 0
+  DurationSeconds: 0
+  ExecTimeSeconds: 0
+  EffectDurationSeconds: 0
+  ReuseTimeSeconds: 0
+  AnimAnticipation: 
+  Anim: 
+  Anim2: 
+  ReactAnim: 
+  OtherAnimatorVariable: 
+  SplashDamage: 0
+  MoveSpeed: 0
+  KnockbackSpeed: 0
+  KnockbackDuration: 0
+  Radius: 0
+  ActionInput: {fileID: 0}
+  ActionInterruptible: 0
+  BlockingMode: 0
+  Projectiles: []
+  Spawns: []
+  IsFriendly: 0
+  Icon: {fileID: 5149994773384609285, guid: 0ed1c418ce8280e4392153ceaddf40a8, type: 3}
+  DisplayedName: "\uC57C\uC131\uC758 \uD3EC\uC2DD\uC790"
+  Description: "\uBC31\uB791\uC774 \uC801 \uCC54\uD53C\uC5B8\uC5D0\uAC8C \uC811\uADFC
+    \uD560 \uB54C \uC774\uB3D9 \uC18D\uB3C4\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."

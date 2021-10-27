@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameData/CharacterClass", order = 1)]
 
-public class CharacterClass : ScriptableObject
+public class ChampionData : ScriptableObject
 {
     [Tooltip("which character this data represents")]
     public CharacterTypeEnum CharacterType;
@@ -48,4 +48,8 @@ public class CharacterClass : ScriptableObject
 
     [Tooltip("For players, this is the class banner (when inactive). (Not used for monsters)")]
     public Sprite ClassBannerUnlit;
+
+    //public GameObject InGameAvatar;
+
+    //public GameObject LobbyAvatar;
 }

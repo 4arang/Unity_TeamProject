@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4637cc6b826ff5408863e07d281fcd9, type: 3}
-  m_Name: BaekRang
+  m_Name: Xerion
   m_EditorClassIdentifier: 
-  CharacterType: 0
-  Skill1: 4
-  Skill2: 5
-  Skill3: 6
-  Skill4: 7
-  Skill5: 8
+  CharacterType: 2
+  Skill1: 14
+  Skill2: 15
+  Skill3: 16
+  Skill4: 17
+  Skill5: 18
   IsChampion: 1
   IsNpc: 0
   DetectRange: 0

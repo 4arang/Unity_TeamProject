@@ -5,13 +5,13 @@ public class GameDataSource : MonoBehaviour
 {
     [Tooltip("All CharacterClass data should be slotted in here")]
     [SerializeField]
-    private CharacterClass[] m_CharacterData;
+    private ChampionData[] m_CharacterData;
 
     [Tooltip("All ActionDescription data should be slotted in here")]
     [SerializeField]
     private ActionDatabase[] m_ActionData;
 
-    private Dictionary<CharacterTypeEnum, CharacterClass> m_CharacterDataMap;
+    private Dictionary<CharacterTypeEnum, ChampionData> m_CharacterDataMap;
     private Dictionary<ActionType, ActionDatabase> m_ActionDataMap;
 
     /// <summary>
@@ -22,14 +22,14 @@ public class GameDataSource : MonoBehaviour
     /// <summary>
     /// Contents of the CharacterData list, indexed by CharacterType for convenience.
     /// </summary>
-    public Dictionary<CharacterTypeEnum, CharacterClass> CharacterDataByType
+    public Dictionary<CharacterTypeEnum, ChampionData> CharacterDataByType
     {
         get
         {
             if (m_CharacterDataMap == null)
             {
-                m_CharacterDataMap = new Dictionary<CharacterTypeEnum, CharacterClass>();
-                foreach (CharacterClass data in m_CharacterData)
+                m_CharacterDataMap = new Dictionary<CharacterTypeEnum, ChampionData>();
+                foreach (ChampionData data in m_CharacterData)
                 {
                     if (m_CharacterDataMap.ContainsKey(data.CharacterType))
                     {
@@ -74,6 +74,7 @@ public class GameDataSource : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         Instance = this;
+
     }
 }
 

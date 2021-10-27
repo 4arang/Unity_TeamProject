@@ -5732,6 +5732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74f358eb96c42d408233805adb2adae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkillon: 0
   Direction: {fileID: 7032595763819201768}
   Range: {fileID: 6278385431581782857}
   Laser: {fileID: 6278385432355989832}

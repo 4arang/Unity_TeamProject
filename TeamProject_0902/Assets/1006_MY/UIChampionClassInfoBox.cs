@@ -63,7 +63,7 @@ public class UIChampionClassInfoBox : MonoBehaviour
         m_Checkmark.SetActive(lockedIn);
     }
 
-    public void ConfigureForClass(CharacterClass characterClass)
+    public void ConfigureForClass(ChampionData characterClass)
     {
         m_HideWhenNoClassSelected.SetActive(true);
 
@@ -75,10 +75,13 @@ public class UIChampionClassInfoBox : MonoBehaviour
         ConfigureSkillIcon(m_Skill1, characterClass.Skill1);
         ConfigureSkillIcon(m_Skill2, characterClass.Skill2);
         ConfigureSkillIcon(m_Skill3, characterClass.Skill3);
+        ConfigureSkillIcon(m_Skill3, characterClass.Skill4);
+        ConfigureSkillIcon(m_Skill3, characterClass.Skill5);
     }
 
     private void ConfigureSkillIcon(Image iconSlot, ActionType type)
     {
+        Debug.Log("ConfigureSkillIcon!!");
         if (type == ActionType.None)
         {
             iconSlot.gameObject.SetActive(false);

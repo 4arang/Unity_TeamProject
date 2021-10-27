@@ -45,6 +45,12 @@ MonoBehaviour:
   - RPC_LoadedGameScene
   - RPC_AddCharacter
   - RPC_AddLobbyCharacter
+  - RecvCancelActionsByTypeClientRpc
+  - RecvCancelAllActionsClientRpc
+  - RecvDoActionClientRPC
+  - RecvDoActionServerRPC
+  - RecvStopChargingUpClientRpc
+  - RecvStopChargingUpServerRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

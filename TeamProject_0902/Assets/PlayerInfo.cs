@@ -20,6 +20,7 @@ public class PlayerInfo : MonoBehaviour
     public int mySelectedSpell2;
     public GameObject[] allSpells;
 
+    //Character 
     private void OnEnable()
     {
         if (PlayerInfo.PI == null)
@@ -37,6 +38,10 @@ public class PlayerInfo : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void LobbyInit()
+    {
+
+    }
     private void Start()
     {        
         //Character Select
@@ -93,5 +98,10 @@ public class PlayerInfo : MonoBehaviour
             PlayerPrefs.SetInt("MySpell2", mySelectedSpell2);
             Debug.Log("MySpells =" + mySelectedSpell1 + ", " + mySelectedSpell2);
         }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

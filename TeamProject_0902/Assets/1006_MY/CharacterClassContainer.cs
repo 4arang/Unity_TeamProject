@@ -3,9 +3,9 @@ using UnityEngine;
 public class CharacterClassContainer : MonoBehaviour
 {
     [SerializeField]
-    CharacterClass m_CharacterClass;
+    ChampionData m_CharacterClass;
 
-    public CharacterClass CharacterClass
+    public ChampionData CharacterClass
     {
         get
         {

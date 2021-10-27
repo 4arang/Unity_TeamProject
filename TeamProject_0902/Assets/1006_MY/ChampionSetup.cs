@@ -3,7 +3,6 @@ using System;
 using UnityEngine.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 public class ChampionSetup : MonoBehaviour
 {
     private PhotonView PV;

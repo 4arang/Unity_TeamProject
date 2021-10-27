@@ -1,15 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using System.Collections.Generic;
 public class LobbyController : MonoBehaviour
 {
-    /// <summary>
-    /// Called directly by UI elements!
-    /// </summary>
-    /// <param name="seatIdx"></param>
-    public void OnPlayerClickedSeat(int seatIdx)
+    [SerializeField]
+    private GameObject champInfoContainer;
+
+    [SerializeField]
+    private List<UITooltipDetector> champAbilities;
+    private int selectedChamp;
+    private void Start()
     {
+        champInfoContainer.SetActive(false);
+        selectedChamp = -1;
+    }
+
+    public void OnChampInfoButtonClicked(int whichChamp)
+    {
+        champInfoContainer.SetActive(true);
+        selectedChamp = whichChamp;
+
+        UpdateAbilityInfo();
+    }
+
+    private void UpdateAbilityInfo()
+    {
+        foreach (var skill in champAbilities)
+        {
+            Image img=skill.GetComponent<Image>();
+            GameDataSource.Instance.
+        }
 
     }
 }
