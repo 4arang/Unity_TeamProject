@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75910b0f7eef26548be838e9587d0b4c, type: 3}
+  m_Name: Boots
+  m_EditorClassIdentifier: 
+  itemName: "\uC7A5"
+  itemDescription: "\uC774\uB3D9 \uC18D\uB3C4 +25"
+  itemCost: 300
+  itemIcon: {fileID: 0}
+  HP: 0
+  HPperLevel: 0
+  MP: 0
+  MPperLevel: 0
+  AP: 0
+  APperLevel: 0
+  AD: 0
+  ADperLevel: 0
+  MRP: 0
+  MRPperLevel: 0
+  AttackSpeed: 0
+  AttackSpeedperLevel: 0
+  MoveSpeed: 25
+  AttackRange: 0
+  HPregen: 0
+  HPregenperLevel: 0
+  MPregen: 0
+  MPregenperLevel: 0

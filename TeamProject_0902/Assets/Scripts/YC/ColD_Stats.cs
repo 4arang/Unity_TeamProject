@@ -102,7 +102,7 @@ public class ColD_Stats : MonoBehaviour
         {
             isZero = true;
         }
-        Debug.Log("Helium " + Helium);
+        //Debug.Log("Helium " + Helium);
     }
 
     public void DropHe()

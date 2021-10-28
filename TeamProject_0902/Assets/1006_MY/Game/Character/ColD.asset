@@ -21,6 +21,6 @@ MonoBehaviour:
   IsChampion: 1
   IsNpc: 0
   DetectRange: 0
-  DisplayedName: BaekRang
-  ClassBannerLit: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
-  ClassBannerUnlit: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
+  DisplayedName: ColD
+  ClassBannerLit: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}
+  ClassBannerUnlit: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}

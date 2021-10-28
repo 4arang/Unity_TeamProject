@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
 public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    LobbyController lobbyController;
     [SerializeField]
     [Tooltip("The actual Tooltip that should be triggered")]
     private UITooltipPopup m_TooltipPopup;
@@ -23,7 +25,6 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private float m_PointerEnterTime = 0;
     private bool m_IsShowingTooltip;
-
     public void SetText(string text)
     {
         bool wasChanged = text != m_TooltipText;
@@ -41,10 +42,15 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         m_PointerEnterTime = Time.time;
+        Debug.Log("TooltipActive");
+        AbilityData ability = GetComponent<UISlot>().abilityData;
+
+        m_TooltipPopup.SetupTooltip(ability.name, ability.Description,ability.Icon);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Debug.Log("TooltipUnActive");
         m_PointerEnterTime = 0;
         HideTooltip();
     }
@@ -69,8 +75,11 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (!m_IsShowingTooltip)
         {
+            Debug.Log("tooltiptext=" + m_TooltipText);
+            Debug.Log("MousePos=" + Input.mousePosition);
             m_TooltipPopup.ShowTooltip(m_TooltipText, Input.mousePosition);
             m_IsShowingTooltip = true;
+            
         }
     }
 

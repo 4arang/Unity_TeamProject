@@ -16,14 +16,14 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int multiplayScene;
     //Player Info
     Player[] photonPlayers;
-    public int playersInRoom;
+    //public int playersInRoom;
     public int mynumberInRoom;
 
     [Header("Spell Settings")]
     public GameObject spellSelectBox;
     public int currentSpellBtn = 0;
 
-    public int playersInGame;
+    //public int playersInGame;
 
     private void Awake()
     {

@@ -9,6 +9,10 @@ public class GameSetup : MonoBehaviour
     public static GameSetup GS;
 
     public int nextPlayersTeam;
+    public Transform[] redLobbySpawnPoints;
+    public Transform[] blueLobbySpawnPoints;
+
+
     public Transform[] redSpawnPoints;
     public Transform[] blueSpawnPoints;
 
@@ -34,7 +38,6 @@ public class GameSetup : MonoBehaviour
         }
         //SceneManager.LoadScene()
     }
-
     public void UpdateTeam()
     {
         if (nextPlayersTeam == 1)
@@ -45,6 +48,9 @@ public class GameSetup : MonoBehaviour
         {
             nextPlayersTeam = 1;
         }
-
     }
+
+    #region GAMESETTING
+   
+    #endregion
 }

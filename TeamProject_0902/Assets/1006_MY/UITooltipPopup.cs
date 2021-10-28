@@ -1,6 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Assertions;
 
 /// <summary>
 /// This controls the tooltip popup -- the little text blurb that appears when you hover your mouse
@@ -13,27 +13,41 @@ public class UITooltipPopup : MonoBehaviour
     [SerializeField]
     [Tooltip("This transform is shown/hidden to show/hide the popup box")]
     private GameObject m_WindowRoot;
+
+    public TextMeshProUGUI nameTxt;
+    public TextMeshProUGUI descriptionTxt;
+    public TextMeshProUGUI valueTxt;
+    public Image Icon;
+
     [SerializeField]
     private TextMeshProUGUI m_TextField;
     [SerializeField]
     private Vector3 m_CursorOffset;
 
-    private void Awake()
+    float halfwidth;
+    RectTransform rt;
+    private void Start()
     {
-        Assert.IsNotNull(m_Canvas);
+        //halfwidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
+        //rt = GetComponent<RectTransform>();
     }
+    private void Update()
+    {
+        //transform.position = Input.mousePosition;
 
+        //if (rt.anchoredPosition.x + rt.sizeDelta.x > halfwidth)
+        //    rt.pivot = new Vector2(1, 1);
+        //else
+        //    rt.pivot = new Vector2(0, 1);
+    }
     /// <summary>
-    /// Shows a tooltip at the given mouse coordinates.
+    /// Show the current tooltip.
     /// </summary>
-    public void ShowTooltip(string text, Vector3 screenXy)
+    public void ShowTooltip(string text, Vector2 mousePos)
     {
-        screenXy += m_CursorOffset;
-        m_WindowRoot.transform.position = GetCanvasCoords(screenXy);
-        m_TextField.text = text;
         m_WindowRoot.SetActive(true);
-    }
 
+    }
     /// <summary>
     /// Hides the current tooltip.
     /// </summary>
@@ -41,33 +55,11 @@ public class UITooltipPopup : MonoBehaviour
     {
         m_WindowRoot.SetActive(false);
     }
-
-    /// <summary>
-    /// Maps screen coordinates (e.g. Input.mousePosition) to coordinates on our Canvas.
-    /// </summary>
-    private Vector3 GetCanvasCoords(Vector3 screenCoords)
+    public void SetupTooltip(string name, string des, Sprite icon)
     {
-        Vector2 canvasCoords;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            m_Canvas.transform as RectTransform,
-            screenCoords,
-            m_Canvas.worldCamera,
-            out canvasCoords);
-        return m_Canvas.transform.TransformPoint(canvasCoords);
+        Debug.Log("툴팁 업데이트 완료");
+        nameTxt.text = name;
+        descriptionTxt.text = des;
+        Icon.sprite = icon;
     }
-
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (gameObject.scene.rootCount > 1) // Hacky way for checking if this is a scene object or a prefab instance and not a prefab definition.
-        {
-            if (!m_Canvas)
-            {
-                // typically there's only one canvas in the scene, so pick that
-                m_Canvas = FindObjectOfType<Canvas>();
-            }
-        }
-    }
-#endif
-
 }

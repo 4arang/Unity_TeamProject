@@ -89,13 +89,8 @@ public class UIChampionClassInfoBox : MonoBehaviour
         else
         {
             iconSlot.gameObject.SetActive(true);
-            var data = GameDataSource.Instance.ActionDataByType[type];
-            iconSlot.sprite = data.Icon;
             UITooltipDetector tooltipDetector = iconSlot.GetComponent<UITooltipDetector>();
-            if (tooltipDetector)
-            {
-                tooltipDetector.SetText(string.Format(m_TooltipFormat, data.DisplayedName, data.Description));
-            }
+
         }
     }
 }

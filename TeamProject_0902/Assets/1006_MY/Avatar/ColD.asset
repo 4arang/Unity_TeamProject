@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c66d52e876b5bb4a8688cec5c2b22a3, type: 3}
+  m_Name: ColD
+  m_EditorClassIdentifier: 
+  CharacterClass: {fileID: 11400000, guid: e4fc926e7c5c641418628d108fe02fa5, type: 2}
+  Graphics: {fileID: 7907610454655204328, guid: d3ee7480a85b7a1468f4a587f6aec9a6, type: 3}
+  GraphicsCharacterSelect: {fileID: 5732699308233884933, guid: 0420669c62e0d0c4fa0f9a6ae23f9c59, type: 3}
+  Portrait: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}

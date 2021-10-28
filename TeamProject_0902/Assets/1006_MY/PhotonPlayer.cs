@@ -11,7 +11,7 @@ public class PhotonPlayer : MonoBehaviour
     public int myTeam;
     private void Start()
     {
-        Debug.Log(myTeam == 1 ? "Red team" : "Blue Team");
+        Debug.Log(myTeam == 0 ? "Red team" : "Blue Team");
         PV = GetComponent<PhotonView>();
         if (PV.IsMine)
         {
@@ -30,8 +30,9 @@ public class PhotonPlayer : MonoBehaviour
                 if (PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
-                               GameSetup.GS.redSpawnPoints[spawnPicker].position,
-                               GameSetup.GS.redSpawnPoints[spawnPicker].rotation, 0);
+                               GameSetup.GS.redLobbySpawnPoints[spawnPicker].position,
+                               GameSetup.GS.redLobbySpawnPoints[spawnPicker].rotation, 0);
+                    Debug.Log("RedTeam Player Avatar Spawned");
                 }
             }
             else
@@ -40,8 +41,9 @@ public class PhotonPlayer : MonoBehaviour
                 if (PV.IsMine)
                 {
                     myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
-                               GameSetup.GS.blueSpawnPoints[spawnPicker].position,
-                               GameSetup.GS.blueSpawnPoints[spawnPicker].rotation, 0);
+                               GameSetup.GS.blueLobbySpawnPoints[spawnPicker].position,
+                               GameSetup.GS.blueLobbySpawnPoints[spawnPicker].rotation, 0);
+                    Debug.Log("BlueTeam Player Avatar Spawned");
                 }
             }
         }        

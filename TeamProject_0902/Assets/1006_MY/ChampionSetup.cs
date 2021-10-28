@@ -28,6 +28,7 @@ public class ChampionSetup : MonoBehaviour
         if (PV.IsMine) 
         {
             PV.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
+            //PV.RPC("RPC_ActionbarSetup", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
         }
     }
 
@@ -35,8 +36,6 @@ public class ChampionSetup : MonoBehaviour
     {
         if (PhotonRoom.room.currentScene == PhotonRoom.room.multiplayScene)
         {
-            Debug.Log("Update Character");
-
             if (myCharacter.activeSelf==false)
             {
                 myCharacter.SetActive(true);
@@ -62,8 +61,28 @@ public class ChampionSetup : MonoBehaviour
         {
             myLobbyCharacter.transform.SetParent(NetworkManager.Instance.RoomPanel.transform);
         }
-        
-        playerNickname.text = NetworkManager.Instance.playerNickname.ToString();
-        Debug.Log("PlayerNickname=" + NetworkManager.Instance.playerNickname.ToString());
+    }
+
+    [PunRPC]
+    public void ActionBarSetup()
+    {
+        switch (PlayerInfo.PI.mySelectedChampion)
+        {
+            case 0: //BaekRang
+                {
+                    Debug.Log("백랑 액션바 세팅");
+                    break;
+                }
+            case 1: //ColD
+                {
+                    Debug.Log("콜디 액션바 세팅");
+                    break;
+                }
+            case 2: //Xerion
+                {
+                    Debug.Log("제리온 액션바 세팅");
+                    break;
+                }
+        }
     }
 }

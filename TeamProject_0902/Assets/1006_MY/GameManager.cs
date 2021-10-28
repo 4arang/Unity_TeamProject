@@ -49,14 +49,14 @@ public class GameManager : MonoBehaviourPunCallbacks
     public float GameTime;
     public int CurrentPlayerID = 0;
     public List<TeamManager> Teams;
-
+    public List<PhotonPlayer> Players;
     public override void OnEnable()
     {
         base.OnEnable();
     }
     public void Start()
     {
-
+        TeamSetup();
     }
 
     private bool CheckAllPlayerLoadedLevel()        //Get Hash table CustomProperties
@@ -100,6 +100,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         //Debug.Log(myCharacter.GetComponent<Transform>());
     }
 
+    public void TeamSetup()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            
+        }
+    }
+    
     #endregion
 
     #region PUN CALLBACKS
@@ -112,6 +120,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         PhotonNetwork.Disconnect();
+    }
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
     public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)

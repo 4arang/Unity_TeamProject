@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilityButton : MonoBehaviour
 {
-    public ActionDatabase abilityData;
+    public AbilityData abilityData;
 
     public void Print()
     {
