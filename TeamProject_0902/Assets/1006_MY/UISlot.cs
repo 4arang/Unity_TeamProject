@@ -17,11 +17,9 @@ public class UISlot : MonoBehaviour
     public AbilityData abilityData=null;
     public string abilityDescription;
     public string abilityName;
-    public Image abilityImage; 
     private void LateUpdate()
     {
         abilityDescription = abilityData.Description;
         abilityName = abilityData.DisplayedName;
-        abilityImage.sprite = abilityData.Icon;
     }
 }

@@ -17,7 +17,6 @@ public class UITooltipPopup : MonoBehaviour
     public TextMeshProUGUI nameTxt;
     public TextMeshProUGUI descriptionTxt;
     public TextMeshProUGUI valueTxt;
-    public Image Icon;
 
     [SerializeField]
     private TextMeshProUGUI m_TextField;
@@ -28,25 +27,28 @@ public class UITooltipPopup : MonoBehaviour
     RectTransform rt;
     private void Start()
     {
-        //halfwidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
-        //rt = GetComponent<RectTransform>();
+        halfwidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
+        rt = GetComponent<RectTransform>();
     }
     private void Update()
     {
-        //transform.position = Input.mousePosition;
+        transform.position = Input.mousePosition;
 
-        //if (rt.anchoredPosition.x + rt.sizeDelta.x > halfwidth)
-        //    rt.pivot = new Vector2(1, 1);
-        //else
-        //    rt.pivot = new Vector2(0, 1);
+        if (rt.anchoredPosition.x + rt.sizeDelta.x > halfwidth)
+            rt.pivot = new Vector2(1, 1);
+        else
+            rt.pivot = new Vector2(0, 1);
     }
+
     /// <summary>
     /// Show the current tooltip.
     /// </summary>
     public void ShowTooltip(string text, Vector2 mousePos)
     {
-        m_WindowRoot.SetActive(true);
-
+        if(m_WindowRoot)
+        {
+            m_WindowRoot.SetActive(true);
+        }        
     }
     /// <summary>
     /// Hides the current tooltip.
@@ -60,6 +62,5 @@ public class UITooltipPopup : MonoBehaviour
         Debug.Log("툴팁 업데이트 완료");
         nameTxt.text = name;
         descriptionTxt.text = des;
-        Icon.sprite = icon;
     }
 }

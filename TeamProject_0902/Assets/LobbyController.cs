@@ -24,17 +24,7 @@ public class LobbyController : MonoBehaviour
     private void Start()
     {
         champInfoContainer.SetActive(false);
-        foreach (Image skill in skillImage)
-        {
-            if (skill.sprite == null)
-                continue;
-            else
-            { 
-                skill.sprite = GetComponent<Image>().sprite;
-            }
-            
-            Debug.Log(skill.name);
-        }
+
         selectedChamp = -1;
     }
 
