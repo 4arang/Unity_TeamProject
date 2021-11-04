@@ -77,7 +77,7 @@ public class Turret : MonoBehaviour
 
         if(bullet!=null)
         {
-            bullet.Seek(target);
+            bullet.Seek(target, GetComponent<Turret_Stats>().AD);
         }
         Destroy(shootEffGo);
     }

@@ -11,6 +11,7 @@ public class WhiteTiger_Stats : MonoBehaviour
     public byte Difficulty;
 
     //Game Stats
+    public bool TeamColor; //true = blue, false = red
     public float HP;             //Health Point
     public float MaxHP;
     public int HPperLevel;     //HP increasement per Level
@@ -39,7 +40,8 @@ public class WhiteTiger_Stats : MonoBehaviour
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 
-
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false; //빼도되는거 player return에 공통적으로 구현
 
         //AttackAbility = (byte)data[1]["infoattack"];    //unboxing porblem?
         AttackAbility = byte.Parse(data[1]["infoattack"].ToString());
@@ -66,25 +68,9 @@ public class WhiteTiger_Stats : MonoBehaviour
         MPregen = int.Parse(data[1]["statsmpregen"].ToString());
         MPregenperLevel = float.Parse(data[1]["statsmpregenperlevel"].ToString());
 
-        MaxHP = HP;
+      
     }
 
 
-    void Update()
-    {
-        
-    }
 
-    public void DropHP(float Damage)
-    {
-        HP -= Damage;
-        StartCoroutine("StoreDamage", Damage);
-    }
-
-    IEnumerator StoreDamage(float Damage)
-    {
-        DamageStorage += Damage;
-        yield return new WaitForSeconds(1.5f);
-        DamageStorage -= Damage;
-    }
 }

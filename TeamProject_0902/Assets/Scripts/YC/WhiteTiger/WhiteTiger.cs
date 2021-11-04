@@ -74,20 +74,20 @@ public class WhiteTiger : MonoBehaviour
         onSkill = false;
         TargetPos = movingManager.Instance.PlayerTargetPos;
 
-        agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
+        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
         originalSpeed = agent.speed;
 
-        //Enemy = GameObject.FindWithTag("Minion").transform;
+        Enemy = GameObject.FindWithTag("Minion").transform;
 
         BasicRange.SetActive(false);
         BasicRange_Col.SetActive(false);
-        BasicRangef = GetComponent<WhiteTiger_Stats>().AttackRange * BasicRange_Ref;
+        BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
         BasicAttack_Effect_L.SetActive(false);
         BasicAttack_Effect_R.SetActive(false);
       //  BasicAttack_Effect_Slash.SetActive(false);
 
-        AttackSpeed = GetComponent<WhiteTiger_Stats>().AttackSpeed;
+        AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
 
         Q_Punch_L.SetActive(false);
         Q_Punch_R.SetActive(false);
@@ -102,9 +102,9 @@ public class WhiteTiger : MonoBehaviour
     private void Update()
     {
 
-        //Debug.Log("Tiger speed " + agent.speed);
+        Debug.Log("Tiger speed " + agent.speed);
 
-        agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100;
+        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
 
         RightMouseClicked();
 
@@ -123,7 +123,7 @@ public class WhiteTiger : MonoBehaviour
 
         if(!onSkill)
         {
-            agent.speed = GetComponent<WhiteTiger_Stats>().MoveSpeed / 100; //스킬x일때 스피드값받기
+            agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100; //스킬x일때 스피드값받기
         }
 
 
@@ -224,7 +224,7 @@ public class WhiteTiger : MonoBehaviour
         {
             if ((transform.position - Enemy.position).magnitude < 10/*범위 태그minion->Enemy 수정요*/)
             {
-                GetComponent<WhiteTiger_Stats>().MoveSpeed += 30;
+                GetComponent<Player_Stats>().MoveSpeed += 30;
                 SpeedFull = true; //한번만 가능
                 Debug.Log("Tiger speedup " + agent.speed);
             }
@@ -233,7 +233,7 @@ public class WhiteTiger : MonoBehaviour
         {
             if ((transform.position - Enemy.position).magnitude >= 10/*범위 태그minion->Enemy 수정요*/)
             {
-                GetComponent<WhiteTiger_Stats>().MoveSpeed -= 30;
+                GetComponent<Player_Stats>().MoveSpeed -= 30;
                 SpeedFull = false; //한번만 가능
                 Debug.Log("Tiger speeddown " + agent.speed);
             }
@@ -360,23 +360,23 @@ public class WhiteTiger : MonoBehaviour
         
             if (!GetComponent<WhiteTiger_Skill>().isWild)
             {
-                GetComponent<WhiteTiger_Stats>().AD += 10 * Q_SkillLevel;
+                GetComponent<Player_Stats>().AD += 10 * Q_SkillLevel;
                 Q_Punch_L.SetActive(true);
                 Q_Punch_R.SetActive(true);
                 yield return new WaitForSeconds(10.0f);
                 Q_Punch_L.SetActive(false);
                 Q_Punch_R.SetActive(false);
-                GetComponent<WhiteTiger_Stats>().AD -= 10 * Q_SkillLevel;
+                GetComponent<Player_Stats>().AD -= 10 * Q_SkillLevel;
                 break;
             }
             else
             {
                 On_adv_Q = true;    //true일경우 펀치->물어뜯기
-                GetComponent<WhiteTiger_Stats>().AD += 20 * Q_SkillLevel;
+                GetComponent<Player_Stats>().AD += 20 * Q_SkillLevel;
                 adv_Q_Punch.SetActive(true);
                 yield return new WaitForSeconds(10.0f);
                 adv_Q_Punch.SetActive(false);
-                GetComponent<WhiteTiger_Stats>().AD -= 20 * Q_SkillLevel;
+                GetComponent<Player_Stats>().AD -= 20 * Q_SkillLevel;
                 On_adv_Q = false;
                 //yield return new WaitForSeconds(10.0f);
                 //adv_Q_Punch.SetActive(false);

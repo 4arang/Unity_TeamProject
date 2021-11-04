@@ -1,9 +1,15 @@
-index,id,blurb,tags,partype,infoattack,infodefense,infomagic,infodifficulty,imagefull,runemain,runesub1,runesub2,runesub3,statshp,statshpperlevel,statsmp,statsmpperlevel,statsmovespeed,statsarmor,statsarmorperlevel,statsspellblock,statsspellblockperlevel,statsattackrange,statshpregen,statshpregenperlevel,statsmpregen,statsmpregenperlevel,statscrit,statscritperlevel,statsattackdamage,statsattackdamageperlevel,statsattackspeed,statsattackspeedperlevel
-1,Dummy,,"['Tank', 'Support']",,,,,,Dummy.png,,,,,500,50,500,,,,,,,,,,,,,,,,,
-2,Baekrang,,"['Fighter', 'Tank']",,8,6,2,5,Aatrox.png,conqueror,triumph,legend_tenacity,last_Stand,600,93,0,0,340,33,4,32,1.25,125,9,0.5,0,0,0,0,60,4,0.625,1.75
-3,Coldy,,"['Mage', 'Fighter']",liquid helium,3,4,8,5,Coldy.png,electrocute,taste_of_Blood,eyeball_collection,ultimate Hunter,589,85,0,0,345,31,3.5,28,0.75,125,8,0.6,0,0,0,0,61,3.2,0.644,1.85
-4,Zerion,,['Mage'],electric power,2,3,8,7,Zerion.png,arcane_Comet,manaflow_Band,excellence,celerity,526,92,459,22,340,22,3.5,30,0.5,525,5.5,0.55,8,0.8,0,0,55,3,0.625,1.36
-5,Minion1,,1,,,,,,,,,,,477,,,,325,0,1.5,,,0,22,0.3,,,,,12,3.4,1.25,
-6,Minion2,,2,,,,,,,,,,,296,,,,325,,,,,550,7,,,,,,24,3,0.667,
-7,Minion3,,3,,,,,,,,,,,900,,,,325,,,,,300,75,,,,,,41,1.5,0.667,
-8,Minion4,,4,,,,,,,,,,,1600,,,,325,100,,-30,,170,100,,,,,,230,5,0.85,
+index,id,blurb,tags,partype,infoattack,infodefense,infomagic,infodifficulty,imagefull,runemain,runesub1,runesub2,runesub3,statshp,statshpperlevel,statsmp,statsmpperlevel,statsmovespeed,statsarmor,statsarmorperlevel,statsspellblock,statsspellblockperlevel,statsattackrange,statshpregen,statshpregenperlevel,statsmpregen,statsmpregenperlevel,statscrit,statscritperlevel,statsattackdamage,statsattackdamageperlevel,statsattackspeed,statsattackspeedperlevel,gold,exp
+1,Dummy,,"['Tank', 'Support']",,,,,,Dummy.png,,,,,500,50,500,,,,,,,,,,,,,,,,,,,
+2,Baekrang,,"['Fighter', 'Tank']",,8,6,2,5,Aatrox.png,conqueror,triumph,legend_tenacity,last_Stand,600,93,0,0,340,33,4,32,1.25,125,9,0.5,0,0,0,0,60,4,0.625,1.75,,
+3,Coldy,,"['Mage', 'Fighter']",liquid helium,3,4,8,5,Coldy.png,electrocute,taste_of_Blood,eyeball_collection,ultimate Hunter,589,85,0,0,345,31,3.5,28,0.75,125,8,0.6,0,0,0,0,61,3.2,0.644,1.85,,
+4,Zerion,,['Mage'],electric power,2,3,8,7,Zerion.png,arcane_Comet,manaflow_Band,excellence,celerity,526,92,459,22,340,22,3.5,30,0.5,525,5.5,0.55,8,0.8,0,0,55,3,0.625,1.36,,
+5,Minion1,,1,,,,,,,,,,,477,,,,325,0,1.5,,,110,22,0.3,,,,,12,3.4,1.25,,,
+6,Minion2,,2,,,,,,,,,,,296,,,,325,,,,,550,7,,,,,,24,3,0.667,,,
+7,Minion3,,3,,,,,,,,,,,900,,,,325,,,,,300,75,,,,,,41,1.5,0.667,,,
+8,Minion4,,4,,,,,,,,,,,1600,,,,325,100,,-30,,170,100,,,,,,230,5,0.85,,,
+9,Turret1,,,,,,,,,,,,,5000,,,,,15,0,15,0,775,0,,,,,,152,9,0.83,,150,60
+10,Turret2,,,,,,,,,,,,,3600,,,,,55,1,55,1,775,0,,,,,,170,9,0.83,,150,70
+11,Turret3,,,,,,,,,,,,,3300,,,,,70,0,70,0,775,15,,,,,,170,9,0.83,,150,70
+12,Turret4,,,,,,,,,,,,,2700,,,,,70,,70,,775,6,,,,,,150,9,0.83,,150,120
+13,Turret5,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+14,Minion5,,,,,,,,,,,,,3500,,,,325,50,5,50,5,500,100,1,,,,,80,15,0.5,,300,150

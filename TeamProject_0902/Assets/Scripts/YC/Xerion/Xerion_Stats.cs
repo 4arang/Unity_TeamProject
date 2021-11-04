@@ -11,6 +11,7 @@ public class Xerion_Stats : MonoBehaviour
     public byte Difficulty;
 
     //Game Stats
+    public bool TeamColor; //true = blue, false = red
     public float HP;             //Health Point
     public int HPperLevel;     //HP increasement per Level
     public int MP;             //Mana Point
@@ -31,10 +32,18 @@ public class Xerion_Stats : MonoBehaviour
     public float MPregenperLevel;
 
     public float hp; 
-    public float mp; 
+    public float mp;
+
+    public float EXP=0;
+    public int Gold=0;
+    public int Level = 1;
+
     //Xerion special
     public int Energy=0;
     private float TimeCheck = 0.0f;
+    private float TimeCheck2 = 0.0f;
+
+    
 
 
     void Start()
@@ -46,6 +55,9 @@ public class Xerion_Stats : MonoBehaviour
         DefenseAbility = byte.Parse(data[3]["infodefense"].ToString());
         MagicAbility = byte.Parse(data[3]["infomagic"].ToString());
         Difficulty = byte.Parse(data[3]["infodifficulty"].ToString());
+
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false; //빼도되는거 player return에 공통적으로 구현
 
         HP = int.Parse(data[3]["statshp"].ToString());  //max hp
         HPperLevel = int.Parse(data[3]["statshpperlevel"].ToString());
@@ -70,45 +82,7 @@ public class Xerion_Stats : MonoBehaviour
         hp = HP;
         mp = MP;
     }
-    private void Update()
-    {
+  
 
-      //  Debug.Log("Xerion energy " + mp);
 
-        if (Energy >= 100)
-        {
-            Energy = 100;
-            GetComponent<Xerion>().OnPassive();
-        }
-
-        Regen();
-        
-        
-    }
-    public void DropMP(float energy)
-    {
-        if (mp >= energy)
-        {
-            mp -= energy;
-        }
-        if (mp > MP) mp = MP;
-    }
-    void Regen()
-    {
-        TimeCheck += Time.deltaTime;
-        if (TimeCheck > 1.0f)
-        {
-            if(hp<HP)
-            {
-                hp += HPregen;
-                if (hp > HP) hp = HP;
-            }
-            if(mp<MP)
-            {
-                mp += MPregen;
-                if (mp > MP) mp = MP;
-            }
-            TimeCheck = 0;
-        }
-    }
 }

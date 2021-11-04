@@ -36,6 +36,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4993102116657296845, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5624243250466354054, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_RootOrder
       value: 0

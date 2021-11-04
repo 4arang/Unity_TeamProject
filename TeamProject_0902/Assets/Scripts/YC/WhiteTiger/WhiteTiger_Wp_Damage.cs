@@ -11,13 +11,13 @@ public class WhiteTiger_Wp_Damage : MonoBehaviour
 
     private void Start()
     {       //hp 회복 ; max보다 작을경우 실행 -> max넘어가는경우 max로
-        MaxHP = GetComponentInParent<WhiteTiger_Stats>().MaxHP;
-        HP = GetComponentInParent<WhiteTiger_Stats>().HP;
+        MaxHP = GetComponentInParent<Player_Stats>().HP;
+        HP = GetComponentInParent<Player_Stats>().hp;
         if (HP < MaxHP)
         {
-            HP += GetComponentInParent<WhiteTiger_Stats>().DamageStorage * WT_WP_Recover;
+            HP += GetComponentInParent<Player_Stats>().DamageStorage * WT_WP_Recover;
             if (HP >= MaxHP) HP = MaxHP;
-            GetComponentInParent<WhiteTiger_Stats>().HP = HP;
+            GetComponentInParent<Player_Stats>().HP = HP;
         }
     }
     private void OnTriggerEnter(Collider other)

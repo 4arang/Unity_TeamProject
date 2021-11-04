@@ -23,6 +23,7 @@ public class Minion1_Stats : MonoBehaviour
     public float APp;   //Armor point per level
     public int APPtime = 180000;
 
+    public float AttackSpeed;
     public float MaxMoveSpeed;
     public float MoveSpeed;
     public float AttackRange;
@@ -30,8 +31,14 @@ public class Minion1_Stats : MonoBehaviour
     public int MoveSpeedptime = 300000; //300초마다 ms증가
     private float Recover_MoveSpeed;
 
-    public byte Minion_Number;
 
+    public byte Minion_Number;
+    public bool TeamColor; //true = blue, false = red
+
+    public int Gold_Normal =6;
+    public int Gold_Advanced = 20;
+    public float EXP = 60.45f;
+    public float EXPperTime = 1.53f;
 
 
    
@@ -55,14 +62,15 @@ public class Minion1_Stats : MonoBehaviour
         AP = float.Parse(data[4]["statsarmor"].ToString());
         APp = float.Parse(data[4]["statsarmorperlevel"].ToString());
 
+        AttackSpeed = float.Parse(data[4]["statsattackspeed"].ToString());
         MaxMoveSpeed = 425;
         MoveSpeed = float.Parse(data[4]["statsmovespeed"].ToString());
         AttackRange = int.Parse(data[4]["statsattackrange"].ToString());
         Recover_MoveSpeed = MoveSpeed;
 
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false;
 
-
-        stopwatch.Start();
     }
 
     //private void FixedUpdate()

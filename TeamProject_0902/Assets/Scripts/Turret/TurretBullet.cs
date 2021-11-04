@@ -5,11 +5,12 @@ using UnityEngine;
 public class TurretBullet : MonoBehaviour
 {
     private Transform target;
-
+    private float turretAD;
     public float speed = 50f;
-    public void Seek(Transform _target)
+    public void Seek(Transform _target, float AD)
     {
         target = _target;
+        turretAD = AD;
     }
 
     void Update()
@@ -25,18 +26,27 @@ public class TurretBullet : MonoBehaviour
 
         if(dir.magnitude<=distanceThisFrame)
         {
-            HitTarget();
+            HitTarget(target);
             return;
         }
 
         transform.Translate(dir.normalized * distanceThisFrame, Space.World);
     }
 
-    void HitTarget()
+    void HitTarget(Transform target)
     {
         //Need to add damaged effect
         //Debug.Log("Hit Something");
         //Destroy(target.gameObject);     //Stats추가해서 제거 부분
+
+        if (target.CompareTag("Minion"))
+        {
+            target.GetComponent<Minion_Stats>().DropHP(turretAD);
+        }
+        else if (target.CompareTag("Player"))
+        {
+            target.GetComponent<Player_Stats>().DropHP(turretAD);
+        }
         Destroy(gameObject);
     }
 }

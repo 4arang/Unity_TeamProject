@@ -7,6 +7,7 @@ using System.Diagnostics;//unity 내장시간함수? 어떻게 처리해야하는지 게임내 멈춰
 public class Minion_Stats : MonoBehaviour
 {
     Stopwatch stopwatch = new Stopwatch();
+    public bool TeamColor;
 
     public float MaxHP;
     public float HP;   
@@ -24,6 +25,7 @@ public class Minion_Stats : MonoBehaviour
     public float APp;   
     public int APPtime;
 
+    public float AttackSpeed;
     public float MaxMoveSpeed;
     public float MoveSpeed;
     public float AttackRange;
@@ -31,14 +33,28 @@ public class Minion_Stats : MonoBehaviour
     public int MoveSpeedptime;
     public float Recover_MoveSpeed;
 
-    private byte MinionNum;
+    public byte MinionNum;
+
+    public int Gold_Normal;
+    public int Gold_Advanced;
+    public float EXP;
+    public float EXPperTime;
+
+    public Vector3 MyPos;
+
+    //for minion target setting
+    public bool isAttack_Minion;
+    public bool isAttack_Player;
 
     [SerializeField] private GameObject DamagedEffect;
 
+  
     void Start()
     {
        if(TryGetComponent(out Minion1_Stats Minion_Num1))
         {
+            //TeamColor = GetComponent<Minion1_Stats>().TeamColor;
+
             MaxHP = GetComponent<Minion1_Stats>().MaxHP;
             HP = GetComponent<Minion1_Stats>().HP;
             HPregen = GetComponent<Minion1_Stats>().HPregen;
@@ -55,6 +71,7 @@ public class Minion_Stats : MonoBehaviour
             APp = GetComponent<Minion1_Stats>().APp;
             APPtime = GetComponent<Minion1_Stats>().APPtime;
 
+            AttackSpeed = GetComponent<Minion1_Stats>().AttackSpeed;
             MaxMoveSpeed = GetComponent<Minion1_Stats>().MaxMoveSpeed;
             MoveSpeed = GetComponent<Minion1_Stats>().MoveSpeed;
             AttackRange = GetComponent<Minion1_Stats>().AttackRange;
@@ -63,9 +80,18 @@ public class Minion_Stats : MonoBehaviour
             Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion1_Stats>().Minion_Number;
+
+            Gold_Normal = GetComponent<Minion1_Stats>().Gold_Normal;
+            Gold_Advanced = GetComponent<Minion1_Stats>().Gold_Advanced;
+            EXP = GetComponent<Minion1_Stats>().EXP;
+            EXPperTime = GetComponent<Minion1_Stats>().EXPperTime;
+
+
         }
         else if (TryGetComponent(out Minion2_Stats Minion_Num2))
         {
+           // TeamColor = GetComponent<Minion2_Stats>().TeamColor;
+
             MaxHP = GetComponent<Minion2_Stats>().MaxHP;
             HP = GetComponent<Minion2_Stats>().HP;
             HPregen = GetComponent<Minion2_Stats>().HPregen;
@@ -76,6 +102,7 @@ public class Minion_Stats : MonoBehaviour
             ADperTime = GetComponent<Minion2_Stats>().ADperTime;
             ADPtime = GetComponent<Minion2_Stats>().ADPtime;
 
+            AttackSpeed = GetComponent<Minion2_Stats>().AttackSpeed;
             MaxMoveSpeed = GetComponent<Minion2_Stats>().MaxMoveSpeed;
             MoveSpeed = GetComponent<Minion2_Stats>().MoveSpeed;
             AttackRange = GetComponent<Minion2_Stats>().AttackRange;
@@ -84,9 +111,16 @@ public class Minion_Stats : MonoBehaviour
             Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion2_Stats>().Minion_Number;
+
+            Gold_Normal = GetComponent<Minion2_Stats>().Gold_Normal;
+            Gold_Advanced = GetComponent<Minion2_Stats>().Gold_Advanced;
+            EXP = GetComponent<Minion2_Stats>().EXP;
+            EXPperTime = GetComponent<Minion2_Stats>().EXPperTime;
         }
         else if (TryGetComponent(out Minion3_Stats Minion_Num3))
         {
+           // TeamColor = GetComponent<Minion3_Stats>().TeamColor;
+
             MaxHP = GetComponent<Minion3_Stats>().MaxHP;
             HP = GetComponent<Minion3_Stats>().HP;
             HPregen = GetComponent<Minion3_Stats>().HPregen;
@@ -97,6 +131,7 @@ public class Minion_Stats : MonoBehaviour
             ADperTime = GetComponent<Minion3_Stats>().ADperTime;
             ADPtime = GetComponent<Minion3_Stats>().ADPtime;
 
+            AttackSpeed = GetComponent<Minion3_Stats>().AttackSpeed;
             MaxMoveSpeed = GetComponent<Minion3_Stats>().MaxMoveSpeed;
             MoveSpeed = GetComponent<Minion3_Stats>().MoveSpeed;
             AttackRange = GetComponent<Minion3_Stats>().AttackRange;
@@ -105,9 +140,15 @@ public class Minion_Stats : MonoBehaviour
             Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion3_Stats>().Minion_Number;
+
+            Gold_Normal = GetComponent<Minion3_Stats>().Gold_Normal;
+            Gold_Advanced = GetComponent<Minion3_Stats>().Gold_Advanced;
+            EXP = GetComponent<Minion3_Stats>().EXP;
+            EXPperTime = GetComponent<Minion3_Stats>().EXPperTime;
         }
         else if (TryGetComponent(out Minion4_Stats Minion_Num4))
         {
+           // TeamColor = GetComponent<Minion4_Stats>().TeamColor;
 
             HP = GetComponent<Minion4_Stats>().HP;
             HPregen = GetComponent<Minion4_Stats>().HPregen;
@@ -117,6 +158,7 @@ public class Minion_Stats : MonoBehaviour
             ADperTime = GetComponent<Minion4_Stats>().ADperTime;
             ADPtime = GetComponent<Minion4_Stats>().ADPtime;
 
+            AttackSpeed = GetComponent<Minion4_Stats>().AttackSpeed;
             MaxMoveSpeed = GetComponent<Minion4_Stats>().MaxMoveSpeed;
             MoveSpeed = GetComponent<Minion4_Stats>().MoveSpeed;
             AttackRange = GetComponent<Minion4_Stats>().AttackRange;
@@ -125,6 +167,11 @@ public class Minion_Stats : MonoBehaviour
             Recover_MoveSpeed = MoveSpeed;
 
             MinionNum = GetComponent<Minion4_Stats>().Minion_Number;
+
+            Gold_Normal = GetComponent<Minion4_Stats>().Gold_Normal;
+            Gold_Advanced = GetComponent<Minion4_Stats>().Gold_Advanced;
+            EXP = GetComponent<Minion4_Stats>().EXP;
+            EXPperTime = GetComponent<Minion4_Stats>().EXPperTime;
         }
 
 
@@ -133,6 +180,8 @@ public class Minion_Stats : MonoBehaviour
 
     private void Awake()
     {
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false;
         stopwatch.Start();
     }
 
@@ -140,6 +189,7 @@ public class Minion_Stats : MonoBehaviour
     {
         UnityEngine.Debug.Log("Minion." + MinionNum + " HP " + HP);
         UnityEngine.Debug.Log("Minion." + MinionNum + " Speed " + MoveSpeed);
+
     }
 
     private void FixedUpdate()
@@ -262,6 +312,7 @@ public class Minion_Stats : MonoBehaviour
 
     public void DropHP(float damage)
     {
+        damage *= (1-AP/(100+AP));
         HP -= damage;
     }
 

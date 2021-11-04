@@ -96,10 +96,10 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && GetComponent<Xerion_Stats>().mp >= Q_MP)
+        if(Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().mp >= Q_MP)
         {
             isSkillon = true;
-            GetComponent<Xerion_Stats>().DropMP(Q_MP);
+            GetComponent<Player_Stats>().DropMP(Q_MP);
             Q_On = true;
         }
 
@@ -156,11 +156,11 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             Q_On = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.W) && GetComponent<Xerion_Stats>().mp >= W_MP)
+        if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().mp >= W_MP)
         {
             isSkillon = true;
             W_On = true;
-            GetComponent<Xerion_Stats>().DropMP(W_MP);
+            GetComponent<Player_Stats>().DropMP(W_MP);
             satellite_range.SetActive(true);    //위성공격 범위 active
             Range.SetActive(true); //스킬범위 active
         }
@@ -203,10 +203,10 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             isW_ready = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && GetComponent<Xerion_Stats>().mp >= E_MP)
+        if (Input.GetKeyDown(KeyCode.E) && GetComponent<Player_Stats>().mp >= E_MP)
         {
             isSkillon = true;
-            GetComponent<Xerion_Stats>().DropMP(E_MP);
+            GetComponent<Player_Stats>().DropMP(E_MP);
             E_On = true;
         }
 
@@ -220,7 +220,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.E)&&E_On)  //E키 떼는 순간 스킬 시작
         {
-            GetComponent<Xerion_Stats>().DropMP(E_MP);
+            GetComponent<Player_Stats>().DropMP(E_MP);
             Direction.SetActive(false);
 
             Transform grenadeTransform = Instantiate(grenade, grenadeEffect.transform.position,
@@ -240,10 +240,10 @@ Quaternion.identity); //유탄발사 and transform 저장
         }
         if (!R_active)
         {
-            if (Input.GetKeyDown(KeyCode.R) && GetComponent<Xerion_Stats>().mp >= R_MP)
+            if (Input.GetKeyDown(KeyCode.R) && GetComponent<Player_Stats>().mp >= R_MP)
             {
                 isSkillon = true;
-                GetComponent<Xerion_Stats>().DropMP(R_MP);
+                GetComponent<Player_Stats>().DropMP(R_MP);
                 satellite_range.SetActive(true);
                 Drone_Range.SetActive(true);
                 if (animator.GetBool("R_Xerion") == false)

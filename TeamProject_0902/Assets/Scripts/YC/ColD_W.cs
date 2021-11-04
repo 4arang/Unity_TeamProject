@@ -61,21 +61,21 @@ public class ColD_W : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.W) && GetComponent<ColD_Stats>().Helium >= 20)
+        if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().Helium >= 20)
         {
             if (animator.GetBool("W_ColD") == false)
                 StartCoroutine("Active_W");
             animator.SetBool("W_ColD", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && GetComponent<ColD_Stats>().Helium >= 20)
+        if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().Helium >= 20)
         {
             if (animator.GetBool("Q_ColD") == false)
                 StartCoroutine("Active_Q");
             animator.SetBool("Q_ColD", true);
         }
 
-        if (Input.GetKey(KeyCode.E) && GetComponent<ColD_Stats>().Helium >= 20)
+        if (Input.GetKey(KeyCode.E) && GetComponent<Player_Stats>().Helium >= 20)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //위치고정
             Direction.transform.position = Range.transform.position; //캐릭터가운데로 화살이동
@@ -87,7 +87,7 @@ public class ColD_W : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E))  //E키 떼는 순간 스킬 시작
         {
             Direction.SetActive(false);
-            GetComponent<ColD_Stats>().DropHe();
+            GetComponent<Player_Stats>().DropHe();
 
             if (grenade_Left)   //첫탄
             {
@@ -165,7 +165,7 @@ Quaternion.identity); //유탄발사 and transform 저장
     {
         while (true)
         {
-            GetComponent<ColD_Stats>().DropHe();
+            GetComponent<Player_Stats>().DropHe();
             yield return new WaitForSeconds(0.1f);
             flame.SetActive(true);
             yield return new WaitForSeconds(2.5f);
@@ -180,25 +180,25 @@ Quaternion.identity); //유탄발사 and transform 저장
     {
         while (true)
         {
-            GetComponent<ColD_Stats>().DropHe();
+            GetComponent<Player_Stats>().DropHe();
             aura.SetActive(true);
             shield.SetActive(true);
 
-            if (GetComponent<ColD_Stats>().isDanger)
+            if (GetComponent<Player_Stats>().isDanger)
             {
-                GetComponent<ColD_Stats>().MoveSpeed *= W_SpeedUp*1.5f;
-                GetComponent<ColD_Stats>().HP += W_HP*1.5f;
+                GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp*1.5f;
+                GetComponent<Player_Stats>().HP += W_HP*1.5f;
                 yield return new WaitForSeconds(1.5f);
-                GetComponent<ColD_Stats>().MoveSpeed *= 1 / (W_SpeedUp*1.5f);
-                GetComponent<ColD_Stats>().HP -= W_HP * 1.5f;
+                GetComponent<Player_Stats>().MoveSpeed *= 1 / (W_SpeedUp*1.5f);
+                GetComponent<Player_Stats>().HP -= W_HP * 1.5f;
             }
             else
             {
-                GetComponent<ColD_Stats>().MoveSpeed *= W_SpeedUp;
-                GetComponent<ColD_Stats>().HP += W_HP;
+                GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp;
+                GetComponent<Player_Stats>().HP += W_HP;
                 yield return new WaitForSeconds(1.5f);
-                GetComponent<ColD_Stats>().MoveSpeed *= 1 / W_SpeedUp;
-                GetComponent<ColD_Stats>().HP -= W_HP;
+                GetComponent<Player_Stats>().MoveSpeed *= 1 / W_SpeedUp;
+                GetComponent<Player_Stats>().HP -= W_HP;
             }
 
 

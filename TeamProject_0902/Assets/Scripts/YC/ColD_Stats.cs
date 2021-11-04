@@ -11,6 +11,7 @@ public class ColD_Stats : MonoBehaviour
     public byte Difficulty;
 
     //Game Stats
+    public bool TeamColor; //true = blue, false = red
     public float HP;             //Health Point
     public int HPperLevel;     //HP increasement per Level
     public int MP;             //Mana Point
@@ -43,7 +44,8 @@ public class ColD_Stats : MonoBehaviour
     void Start()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
-
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false; //빼도되는거 player return에 공통적으로 구현
 
 
         AttackAbility = byte.Parse(data[2]["infoattack"].ToString());
@@ -70,60 +72,9 @@ public class ColD_Stats : MonoBehaviour
         MPregen = int.Parse(data[2]["statsmpregen"].ToString());
         MPregenperLevel = float.Parse(data[2]["statsmpregenperlevel"].ToString());
 
-        Helium = 100;
-        Charging = true;
-        isDanger = false;
-        isZero = false;
+  
     }
 
-    private void Update()
-    {
 
-        if(Charging)        //충전가능한 상태인 경우 1초마다 충전
-        {
-            TimeCheck += Time.deltaTime;
-            if (TimeCheck > 1.0f)
-            {
-                ChargeHe();
-                TimeCheck = 0;
-            }
-        }
 
-        if(Helium<=50)
-        {
-            isDanger = true; //->스킬 수정?
-        }
-        else
-        {
-            isDanger = false;
-        }
-
-        if(Helium==0)
-        {
-            isZero = true;
-        }
-        //Debug.Log("Helium " + Helium);
-    }
-
-    public void DropHe()
-    {
-        if(Helium >= 20)
-        Helium -= 20;
-        StartCoroutine("ConsumeHe");
-    }
-
-    IEnumerator ConsumeHe()
-    {
-        Charging = false;
-        yield return new WaitForSeconds(4.0f);
-        Charging = true;
-    }
-     private void ChargeHe()
-    {
-        if (Helium < maxHelium)
-        {
-            Helium += 10;
-            if (Helium > maxHelium) Helium = maxHelium;
-        }
-    }
 }

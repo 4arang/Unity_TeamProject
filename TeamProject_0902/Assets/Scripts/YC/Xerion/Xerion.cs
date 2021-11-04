@@ -35,17 +35,19 @@ public class Xerion : MonoBehaviour
     [SerializeField] private GameObject BasicRange_col;
     [SerializeField] private GameObject GunShot_Effect;
     [SerializeField] private Transform BasicShot;
-    private bool isBasicAttack=false;
+    private bool isBasicAttack = false;
     public bool CheckEnemy = false;
-    public Collider TargetEnemy;
+    public Transform TargetEnemy;
     private float BasicRangef;
     private float AttackSpeed;
     private float BasicRange_Ref = 0.004f;
     private bool OnAttack = false;
+    private float Xerion_BasicAD;
+    private byte Xerion_BasicAD_Level = 1;
 
     //Pasiive
     [SerializeField] private GameObject PassiveEffect;
-    private float TotalAgentDistance=0;
+    private float TotalAgentDistance = 0;
     private bool passiveOn = false;
 
     private void Start()
@@ -59,9 +61,9 @@ public class Xerion : MonoBehaviour
 
         BasicRange.SetActive(false);
         BasicRange_col.SetActive(false);
-        BasicRangef = GetComponent<Xerion_Stats>().AttackRange*BasicRange_Ref;
+        BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
-        AttackSpeed = GetComponent<Xerion_Stats>().AttackSpeed;
+        AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
 
         PassiveEffect.SetActive(false);
     }
@@ -69,20 +71,20 @@ public class Xerion : MonoBehaviour
 
     private void Update()
     {
-        agent.speed = GetComponent<Xerion_Stats>().MoveSpeed / 100;
+        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
 
         RightMouseClicked();
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
-        if(animator.GetFloat("Speed")>0.1f)
+        if (animator.GetFloat("Speed") > 0.1f)
         {
             TotalAgentDistance += Time.deltaTime;
         }
-        if(TotalAgentDistance>2.0f)
+        if (TotalAgentDistance > 2.0f)
         {
             TotalAgentDistance = 0;
-            GetComponent<Xerion_Stats>().Energy += 1;
-          //  Debug.Log("Xerion_Energy " + GetComponent<Xerion_Stats>().Energy);
+            GetComponent<Player_Stats>().Energy += 1;
+            //  Debug.Log("Xerion_Energy " + GetComponent<Player_Stats>().Energy);
         }
 
         if (skillDir != movingManager.Instance.PlayerDirection)
@@ -94,7 +96,7 @@ public class Xerion : MonoBehaviour
 
 
         if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
-        else { movingManager.Instance.isFree = false;} //전투모드
+        else { movingManager.Instance.isFree = false; } //전투모드
 
 
         //////////////기본어택땅/////////////
@@ -116,7 +118,7 @@ public class Xerion : MonoBehaviour
                 Debug.Log("Targeted");
                 GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
                 agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                AttackTargetEnemy(); //타겟 공격
+                AttackTargetEnemy(TargetEnemy); //타겟 공격
             }
             else
             {       //타겟이 없으면 재설정
@@ -125,7 +127,7 @@ public class Xerion : MonoBehaviour
             }
         }
 
-        if(GetComponent<Xerion_Shooting_Skill>().isSkillon)
+        if (GetComponent<Xerion_Shooting_Skill>().isSkillon)
         {
             CheckEnemy = false;
         }
@@ -137,7 +139,7 @@ public class Xerion : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-      
+
             isBasicAttack = false;
 
             BasicRange_col.SetActive(false);
@@ -190,7 +192,7 @@ public class Xerion : MonoBehaviour
 
     void PlayerMove()
     {
-        if (hit_.collider.tag == "Floor")
+        if (hit_.collider.CompareTag("Floor"))
         {
 
             //Move
@@ -209,48 +211,49 @@ public class Xerion : MonoBehaviour
 
             Xerion.path = agent.path.corners;
         }
-       
-    }
-    
+        else return;
 
-    void AttackTargetEnemy()
+    }
+
+
+    void AttackTargetEnemy(Transform target)
     {
-        if((transform.position - TargetEnemy.transform.position).magnitude<
-            TargetEnemy.transform.localScale.magnitude*10.0f)
+        if ((transform.position - target.transform.position).magnitude <
+            target.transform.localScale.magnitude * 10.0f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position;
             Debug.Log("TargetSet, Player Stop");
             if (animator.GetBool("A_Xerion") == false)
             {
-    
-                float shootDir = GetDirection(transform.position, TargetEnemy.transform.position);
+
+                float shootDir = GetDirection(transform.position, target.transform.position);
                 movingManager.Instance.PlayerDirection = shootDir;
-                agent.transform.rotation = Quaternion.AngleAxis(shootDir+45, Vector3.up);
-         
+                agent.transform.rotation = Quaternion.AngleAxis(shootDir + 45, Vector3.up);
+
                 if (!OnAttack)
                 {
-                    GetComponent<Xerion_Stats>().Energy += 10;
+                    GetComponent<Player_Stats>().Energy += 10;
 
                     Transform BasicShotTransform = Instantiate(BasicShot, GunShot_Effect.transform.position,
                      Quaternion.identity);
-                    Vector3 shootingDir = (TargetEnemy.transform.position - transform.position).normalized;
+                    Vector3 shootingDir = (target.transform.position - transform.position).normalized;
                     BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir);
                     Debug.Log("Fire!");
-                    
-                    if(passiveOn)
+
+                    if (passiveOn)
                     {
-                        GetComponent<Xerion_Stats>().Energy = 0;    //패시브 사용
-                        GetComponent<Xerion_Stats>().DropMP(-GetComponent<Xerion_Stats>().MP / 10); //최대MP/10 충전
+                        GetComponent<Player_Stats>().Energy = 0;    //패시브 사용
+                        GetComponent<Player_Stats>().DropMP(-GetComponent<Player_Stats>().MP / 10); //최대MP/10 충전
                         PassiveEffect.SetActive(false);
                         passiveOn = false;
                     }
-                    StartCoroutine("Active_A");
+                    StartCoroutine("Active_A", target);
                 }
-      
+
             }
         }
     }
-    IEnumerator Active_A()
+    IEnumerator Active_A(Transform target)
     {
         OnAttack = true;
         while (true)
@@ -260,6 +263,7 @@ public class Xerion : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             GunShot_Effect.SetActive(false);
             animator.SetBool("A_Xerion", false);
+            damageEnemy(target);
             yield return new WaitForSeconds(AttackSpeed);
             break;
         }
@@ -267,7 +271,7 @@ public class Xerion : MonoBehaviour
     }
     float GetDirection(Vector3 home, Vector3 away)
     {
-       return Mathf.Atan2(away.x-home.x,away.z-home.z) * Mathf.Rad2Deg;
+        return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
     }
 
     public void OnPassive()
@@ -276,6 +280,22 @@ public class Xerion : MonoBehaviour
         PassiveEffect.SetActive(true);
     }
 
+    private void damageEnemy(Transform target)
+    {
+        Xerion_BasicAD = GetComponent<Xerion_Stats>().AD;
 
+        if (target.CompareTag("Minion"))
+        {
+            target.GetComponent<Minion_Stats>().DropHP(Xerion_BasicAD);
+        }
+        else if (target.CompareTag("Player"))
+        {
+            target.GetComponent<Player_Stats>().DropHP(Xerion_BasicAD);
+        }
+        else if (target.CompareTag("Turret"))
+        {
+            target.GetComponent<Turret_Stats>().DropHP(Xerion_BasicAD);
+        }
 
+    }
 }

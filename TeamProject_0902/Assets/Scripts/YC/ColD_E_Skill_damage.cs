@@ -15,7 +15,7 @@ public class ColD_E_Skill_damage : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            IsDanger = other.GetComponent<ColD_Stats>().isDanger;
+            IsDanger = other.GetComponent<Player_Stats>().isDanger;
             if (IsDanger)
             {
                 ColD_Grenade_AD *= 1.5f; //위험상태 50% 증가
