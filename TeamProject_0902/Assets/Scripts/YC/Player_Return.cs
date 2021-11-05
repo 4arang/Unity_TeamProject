@@ -13,6 +13,10 @@ public class Player_Return : MonoBehaviour
     private bool isFree;
     private bool Return_isReady;
     private Vector3 StartPoint;
+
+
+    public bool TeamColor; //true = blue, false = red
+
     void Start()
     {
         //CameraOrgPos = MainCamera.transform.position;
@@ -20,6 +24,9 @@ public class Player_Return : MonoBehaviour
         isFree = true; //인게임 매니저에서 관리해야 할듯
         StartPoint = new Vector3(0, 0, 0);
         Return_Aura.SetActive(false);
+
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false; //decided by start position
     }
 
     void Update()

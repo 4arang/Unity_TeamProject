@@ -12,6 +12,7 @@ TagManager:
   - Smoke
   - UI
   - Effect
+  - Turret
   layers:
   - Default
   - TransparentFX

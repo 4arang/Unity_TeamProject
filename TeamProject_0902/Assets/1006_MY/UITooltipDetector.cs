@@ -90,18 +90,18 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
     }
 
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        if (gameObject.scene.rootCount > 1) // Hacky way for checking if this is a scene object or a prefab instance and not a prefab definition.
-        {
-            if (!m_TooltipPopup)
-            {
-                // typically there's only one tooltip popup in the scene, so pick that
-                m_TooltipPopup = FindObjectOfType<UITooltipPopup>();
-            }
-        }
-    }
-#endif
+//#if UNITY_EDITOR
+//    private void OnValidate()
+//    {
+//        if (gameObject.scene.rootCount > 1) // Hacky way for checking if this is a scene object or a prefab instance and not a prefab definition.
+//        {
+//            if (!m_TooltipPopup)
+//            {
+//                // typically there's only one tooltip popup in the scene, so pick that
+//                m_TooltipPopup = FindObjectOfType<UITooltipPopup>();
+//            }
+//        }
+//    }
+//#endif
 }
 

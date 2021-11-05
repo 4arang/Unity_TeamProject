@@ -11,7 +11,7 @@ public class ColD_Punch_Collider : MonoBehaviour
     public void Skill()
     {
         onSkill = true;
-        ColD_BasicAD = GetComponentInParent<ColD_Stats>().AD;
+        ColD_BasicAD = GetComponentInParent<Player_Stats>().AD;
     }
 
     private void OnTriggerEnter(Collider other)

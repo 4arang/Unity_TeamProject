@@ -17,7 +17,7 @@ public class Minion3_Stats : MonoBehaviour
     public float ADperTime; //AD increasement per every 90s
     public int ADPtime = 90000;
 
-
+    public float AttackSpeed;
     public float MaxMoveSpeed;
     public float MoveSpeed;
     public float AttackRange;
@@ -26,7 +26,12 @@ public class Minion3_Stats : MonoBehaviour
     private float Recover_MoveSpeed;
 
     public byte Minion_Number;
+    public bool TeamColor; //true = blue, false = red
 
+    public int Gold_Normal = 6;
+    public int Gold_Advanced = 45;
+    public float EXP = 92;
+    public float EXPperTime = 0.0f;
 
 
     private void Awake()
@@ -45,15 +50,18 @@ public class Minion3_Stats : MonoBehaviour
         ADperTime = float.Parse(data[6]["statsattackdamageperlevel"].ToString());
 
 
-
+        AttackSpeed = float.Parse(data[6]["statsattackspeed"].ToString());
         MaxMoveSpeed = 425;
         MoveSpeed = float.Parse(data[6]["statsmovespeed"].ToString());
         AttackRange = int.Parse(data[6]["statsattackrange"].ToString());
         Recover_MoveSpeed = MoveSpeed;
 
 
+        if (transform.position.x < 0) TeamColor = true;
+        else TeamColor = false;
 
-        stopwatch.Start();
+
+     
     }
 
     //private void FixedUpdate()

@@ -55,12 +55,12 @@ public class ColD : MonoBehaviour
 
         BasicRange.SetActive(false);
         BasicRange_Col.SetActive(false);
-        BasicRangef = GetComponent<ColD_Stats>().AttackRange * BasicRange_Ref;
+        BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
         BasicAttack_Effect.SetActive(false);
         BasicAttack_Effect_Slash.SetActive(false);
 
-        AttackSpeed = GetComponent<ColD_Stats>().AttackSpeed;
+        AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
     }
 
 
@@ -68,7 +68,7 @@ public class ColD : MonoBehaviour
     {
 
 
-        agent.speed = GetComponent<ColD_Stats>().MoveSpeed / 100;
+        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
         //Debug.Log("Speed " + agent.speed);
         RightMouseClicked();
 

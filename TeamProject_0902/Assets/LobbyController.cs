@@ -24,6 +24,7 @@ public class LobbyController : MonoBehaviour
     private void Start()
     {
         champInfoContainer.SetActive(false);
+
         selectedChamp = -1;
     }
 

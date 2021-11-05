@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6163818047001915829}
   - component: {fileID: 4627235676398538070}
   - component: {fileID: 2147713021248287173}
-  - component: {fileID: 3647901639187302563}
+  - component: {fileID: 8887769639022324603}
   m_Layer: 0
   m_Name: Xerion_A_Bullet
   m_TagString: Untagged
@@ -4919,7 +4919,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.28419214, y: 0.28418812, z: 0.28419077}
   m_Center: {x: 0.0000006854534, y: -0.000001177192, z: 0.0000009164214}
---- !u!114 &3647901639187302563
+--- !u!114 &8887769639022324603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

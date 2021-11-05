@@ -24,18 +24,11 @@ public class UISlot : MonoBehaviour
     {
         abilityDescription = abilityData.Description;
         abilityName = abilityData.DisplayedName;
-        //if (abilityImage==null)        {
-
-        //    abilityImage.GetComponentInChildren<Image>().sprite = abilityData.Icon;
-        //}
     }
-    //private void LateUpdate()
-    //{
-    //    if(tooltipDetector.m_IsShowingTooltip==true)
-    //    {
-    //        abilityDescription = abilityData.Description;
-    //        abilityName = abilityData.DisplayedName;
-    //        abilityImage.sprite = abilityData.Icon;
-    //    }
-    //}
+    private void LateUpdate()
+    {
+        abilityDescription = abilityData.Description;
+        abilityName = abilityData.DisplayedName;
+    }
+        
 }

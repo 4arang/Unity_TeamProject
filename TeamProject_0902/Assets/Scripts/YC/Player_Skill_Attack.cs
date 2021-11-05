@@ -30,7 +30,7 @@ public class Player_Skill_Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetComponentInParent<ColD_Stats>().isDanger)  ColD_Flame_AD *= 1.5f; //위험상태 50% 증가
+        if (GetComponentInParent<Player_Stats>().isDanger)  ColD_Flame_AD *= 1.5f; //위험상태 50% 증가
         else ColD_Flame_AD = 30; //복구용
     }
 

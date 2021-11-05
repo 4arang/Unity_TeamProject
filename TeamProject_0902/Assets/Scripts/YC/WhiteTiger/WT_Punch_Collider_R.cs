@@ -11,7 +11,7 @@ public class WT_Punch_Collider_R : MonoBehaviour
     public void Skill()
     {
         onSkill = true;
-        WT_BasicAD = GetComponentInParent<WhiteTiger_Stats>().AD;
+        WT_BasicAD = GetComponentInParent<Player_Stats>().AD;
     }
 
     private void OnTriggerEnter(Collider other)
