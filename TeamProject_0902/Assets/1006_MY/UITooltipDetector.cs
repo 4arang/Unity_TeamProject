@@ -24,7 +24,7 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private const float k_TooltipDelay = 0.5f;
 
     private float m_PointerEnterTime = 0;
-    private bool m_IsShowingTooltip;
+    public bool m_IsShowingTooltip=false;
     public void SetText(string text)
     {
         bool wasChanged = text != m_TooltipText;
@@ -59,6 +59,7 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (m_ActivateOnClick)
         {
+            Debug.Log("OnPointer Clicked");
             ShowTooltip();
         }
     }
@@ -75,11 +76,8 @@ public class UITooltipDetector : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (!m_IsShowingTooltip)
         {
-            Debug.Log("tooltiptext=" + m_TooltipText);
-            Debug.Log("MousePos=" + Input.mousePosition);
             m_TooltipPopup.ShowTooltip(m_TooltipText, Input.mousePosition);
-            m_IsShowingTooltip = true;
-            
+            m_IsShowingTooltip = true;            
         }
     }
 

@@ -5,11 +5,11 @@ using Photon.Pun;
 using Photon.Realtime;
 
 using UnityEngine.UI;
-public class TeamManager : MonoBehaviourPunCallbacks
+public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public int TeamID = 0;
 
-    public List<GameObject> Champions;
+    public List<GameObject> Champions=new List<GameObject>();
     
     public Transform MinionSpawnPoints;
 
@@ -22,25 +22,31 @@ public class TeamManager : MonoBehaviourPunCallbacks
     public float WaveTimer = GameConsts.MINION_WAVESTART_TIME;          //countdown
     public bool Inhibitor = false;
 
-    private void Start()
-    {
-        //Debug.Log("Add Champions to TeamManager");
-        //if(PlayerInfo.PI.myTeam==this.TeamID)
-        //{
-        //    Champions.Add(GameObject.FindGameObjectWithTag("Player"));
-        //}        
-    }
 
     private void Update()
     {
-        //Return until MINION _WAVESTART_TIME
+        ///<summary>
+        ///Champion Add to Team when Game Started
+        ///</summary>
+        if(PlayerInfo.PI.isOnTeam==false)
+        {
+            if (PlayerInfo.PI.myTeam == this.TeamID)
+            {
+                //StartCoroutine(AddChampions());
+                PlayerInfo.PI.isOnTeam = true;      //isOnTeam true and no more need to add TeamManager list
+                Debug.Log("플레이어 인포 isOnTeam=" + PlayerInfo.PI.isOnTeam);
+            }
+        }        
+
+        ///<summary>
+        ///Minion Creep Spawning region. Get Instance from GameManager gametime and spawn with courutione.
+        ///</summary>
         if (GameManager.Instance.GameTime < GameConsts.MINION_WAVESTART_TIME)       
         {
             return;
         }
         else
         {
-            //Instantiate Minion After WAVESTART_TIME and Spawn every MINION_SPAWNINTERVAL_TIME
             if (WaveTimer <= 0f)
             {
                 //StartCoroutine(SpawnWave());
@@ -55,6 +61,16 @@ public class TeamManager : MonoBehaviourPunCallbacks
         
         
     }
+
+    #region GAME SETTING
+    IEnumerator AddChampions()
+    {
+        GameObject player = GameObject.Find("PlayerAvatar(Clone)");
+        Debug.Log("추가해야하는 오브젝트 이름"+player.name);
+        Champions.Add(player);
+        yield return null;
+    }
+    #endregion
 
     #region Wave Spawner
     IEnumerator SpawnWave()
@@ -100,6 +116,11 @@ public class TeamManager : MonoBehaviourPunCallbacks
     private void SpawnUnits(GameObject prefab)
     {
         Instantiate(prefab, MinionSpawnPoints.transform.position, Quaternion.identity);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
     #endregion
 }

@@ -52,6 +52,8 @@ MonoBehaviour:
   - RecvStopChargingUpClientRpc
   - RecvStopChargingUpServerRpc
   - ActionBarSetup
+  - RPC_CreatePlayer
+  - RPC_GameInit
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Xerion
   m_EditorClassIdentifier: 
   CharacterClass: {fileID: 11400000, guid: d6c7027e15457c74290547cdb804d744, type: 2}
-  Graphics: {fileID: 1464998985006854029, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+  Graphics: {fileID: 6658670562735108070, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
   GraphicsCharacterSelect: {fileID: 5732699308233884933, guid: 129703e377bdfa24f8edb0ea5be972c5, type: 3}
   Portrait: {fileID: 21300000, guid: 03eb552d9c1e28e4b88d90c6c110b551, type: 3}

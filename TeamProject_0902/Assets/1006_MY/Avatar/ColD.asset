@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ColD
   m_EditorClassIdentifier: 
   CharacterClass: {fileID: 11400000, guid: e4fc926e7c5c641418628d108fe02fa5, type: 2}
-  Graphics: {fileID: 7907610454655204328, guid: d3ee7480a85b7a1468f4a587f6aec9a6, type: 3}
+  Graphics: {fileID: 8539249220999487228, guid: d3ee7480a85b7a1468f4a587f6aec9a6, type: 3}
   GraphicsCharacterSelect: {fileID: 5732699308233884933, guid: 0420669c62e0d0c4fa0f9a6ae23f9c59, type: 3}
   Portrait: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}

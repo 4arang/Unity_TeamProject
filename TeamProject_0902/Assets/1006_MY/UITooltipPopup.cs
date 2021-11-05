@@ -28,17 +28,17 @@ public class UITooltipPopup : MonoBehaviour
     RectTransform rt;
     private void Start()
     {
-        //halfwidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
-        //rt = GetComponent<RectTransform>();
+        halfwidth = GetComponentInParent<CanvasScaler>().referenceResolution.x * 0.5f;
+        rt = GetComponent<RectTransform>();
     }
     private void Update()
     {
-        //transform.position = Input.mousePosition;
+        transform.position = Input.mousePosition;
 
-        //if (rt.anchoredPosition.x + rt.sizeDelta.x > halfwidth)
-        //    rt.pivot = new Vector2(1, 1);
-        //else
-        //    rt.pivot = new Vector2(0, 1);
+        if (rt.anchoredPosition.x + rt.sizeDelta.x > halfwidth)
+            rt.pivot = new Vector2(1, 1);
+        else
+            rt.pivot = new Vector2(0, 1);
     }
     /// <summary>
     /// Show the current tooltip.

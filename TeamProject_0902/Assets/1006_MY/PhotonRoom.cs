@@ -67,14 +67,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         currentScene = scene.buildIndex;
         if (currentScene == multiplayScene)
         {
-            CreatePlayer();
+            PV.RPC("RPC_LoadedGameScene", RpcTarget.All);
         }
-    }
-
-    private void CreatePlayer()
-    {
-        Debug.Log("CreatePlayer");
-        PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"), transform.position, Quaternion.identity, 0);
     }
 
     #region UI_BUTTONS CALLBACKS
@@ -93,5 +87,15 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private void RPC_LoadedGameScene()
     {
         PV.RPC("RPC_CreatePlayer", RpcTarget.All);
+
+        //Make more Abilities
+    }
+
+    [PunRPC]
+    private void RPC_CreatePlayer()
+    {
+        Debug.Log("CreatePlayer");
+        PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"),
+            transform.position, Quaternion.identity, 0);
     }
 }

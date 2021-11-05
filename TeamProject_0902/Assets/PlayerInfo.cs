@@ -7,6 +7,7 @@ public class PlayerInfo : MonoBehaviour
     public static PlayerInfo PI;
     private int selectIdx = 0;
     public int myTeam = 0;
+    public bool isOnTeam = false;
     //Ingame Avatar
     public int mySelectedChampion;
     public GameObject[] allCharacters;

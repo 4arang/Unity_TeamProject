@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BaekRang
   m_EditorClassIdentifier: 
   CharacterClass: {fileID: 11400000, guid: 36eecd86aeda1fd4584ee6ddc5b65098, type: 2}
-  Graphics: {fileID: 5002886031893236844, guid: 4b26102ddfee0f84a9e2a635db8e0f66, type: 3}
+  Graphics: {fileID: 6179456376769081258, guid: 3a3159ebdd873074d98719c57837bf41, type: 3}
   GraphicsCharacterSelect: {fileID: 5732699308233884933, guid: 235c6028ae5c8bf4e9c016b93b23308d, type: 3}
   Portrait: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}

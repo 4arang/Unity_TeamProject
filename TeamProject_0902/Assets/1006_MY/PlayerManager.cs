@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
 #if UNITY_5_4_OR_NEWER
         // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+        //UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
 #endif
     }
 
@@ -80,7 +80,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
         base.OnDisable();
 
 #if UNITY_5_4_OR_NEWER
-        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+        //UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
 #endif
     }
 
@@ -176,10 +176,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
 
 #if UNITY_5_4_OR_NEWER
-    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
-    {
-        this.CalledOnLevelWasLoaded(scene.buildIndex);
-    }
+    //void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode loadingMode)
+    //{
+     //   this.CalledOnLevelWasLoaded(scene.buildIndex);
+    //}
 #endif
 
     /// <summary>

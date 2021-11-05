@@ -12,9 +12,9 @@ public class GameSetup : MonoBehaviour
     public Transform[] redLobbySpawnPoints;
     public Transform[] blueLobbySpawnPoints;
 
-
     public Transform[] redSpawnPoints;
     public Transform[] blueSpawnPoints;
+
 
     private void OnEnable()
     {
@@ -51,6 +51,6 @@ public class GameSetup : MonoBehaviour
     }
 
     #region GAMESETTING
-   
+    
     #endregion
 }

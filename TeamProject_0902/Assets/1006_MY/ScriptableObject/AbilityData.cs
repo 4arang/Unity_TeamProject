@@ -112,7 +112,6 @@ public class AbilityData : ScriptableObject
     [Multiline]
     public string Description;
 
-
     public void Print()
     {
         Debug.Log(DisplayedName+", " + Description);

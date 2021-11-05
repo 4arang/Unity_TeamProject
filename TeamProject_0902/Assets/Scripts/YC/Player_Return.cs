@@ -15,7 +15,7 @@ public class Player_Return : MonoBehaviour
     private Vector3 StartPoint;
     void Start()
     {
-        CameraOrgPos = MainCamera.transform.position;
+        //CameraOrgPos = MainCamera.transform.position;
         Return_isReady = true;
         isFree = true; //인게임 매니저에서 관리해야 할듯
         StartPoint = new Vector3(0, 0, 0);

@@ -18,6 +18,9 @@ public class GameDataSource : MonoBehaviour
     [Tooltip("All ActionDescription data should be slotted in here")]
     public List<AbilityData> m_XerionSkillData;
 
+    [Tooltip("All SummonerSpellDescription data should be slotted in here")]
+    public List<AbilityData> m_SpellData;
+
     [Tooltip("All ActionDescription data should be slotted in here")]
     public List<AbilityData> m_ItemData;
 

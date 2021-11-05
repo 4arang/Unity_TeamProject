@@ -1,18 +1,56 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-public class PlayerUI : MonoBehaviour
+public class PlayerUI : MonoBehaviour, IPunObservable
 {
-	public AbilityData actionAbilities;
+	private PhotonView PV;
+	public AbilityData castingAbilitiy;
 	int myChampIdx;
+
+	[SerializeField]
+	private GameObject myChampObj;
+
 	[SerializeField]
 	private Image champPortrait;
+
+	[SerializeField]
+	private List<AbilityData> selectedChampAbilities;
+
+	[SerializeField]
+	private List<AbilityData> selectedSummonerSpells;
 
 	/// <summary>
 	/// Player UI. Constraint the UI to follow a PlayerManager GameObject in the world,
 	/// Affect a slider and text to display Player's name and health
 	/// </summary>
 	#region Private Fields
+	[Header("Stats")]
+
+	[SerializeField]
+	private Text ADText;
+
+	[SerializeField]
+	private Text APText;
+
+	[SerializeField]
+	private Text ArmorText;
+
+	[SerializeField]
+	private Text MagicResistText;
+
+	[SerializeField]
+	private Text AbilityHasteText;
+
+	[SerializeField]
+	private Text MoveSpeedText;
+
+	[SerializeField]
+	private Text CriticalStrikeText;
+
+	[SerializeField]
+	private Text AttackSpeedText;
+
 
 	[Tooltip("Pixel offset from the player target")]
 	[SerializeField]
@@ -65,10 +103,14 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
+		PV = GetComponent<PhotonView>();
+		PV.RPC("RPC_GameInit", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
+		if (PV.IsMine)
+		{
+			//PV.RPC("RPC_GameInit", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
+		}
 		myChampIdx = PlayerInfo.PI.mySelectedChampion;
 		champPortrait = GameObject.Find("Portrait Image").GetComponent<Image>();
-		Debug.Log(champPortrait.name);
-		GameInit();
 	}
     /// <summary>
     /// MonoBehaviour method called on GameObject by Unity on every frame.
@@ -105,14 +147,9 @@ public class PlayerUI : MonoBehaviour
 	/// Assigns a Player Target to Follow and represent.
 	/// </summary>
 	/// <param name="target">Target.</param>
-	
-	public void GameInit()
-    {
-		SetPortrait();
-    }
+
 	public void SetTarget(PlayerManager _target)
 	{
-
 		if (_target == null)
 		{
 			Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
@@ -138,16 +175,97 @@ public class PlayerUI : MonoBehaviour
 		champPortrait.sprite = GameDataSource.Instance.m_AvatarData[myChampIdx].Portrait;
 		Debug.Log(GameDataSource.Instance.m_AvatarData[myChampIdx].Portrait.name);
     }
-	public void SetActionBar(PlayerManager whichChamp)
+	public void SetActionBar(int whichChamp)
     {
+		switch(whichChamp)
+        {
+			case 0: //Baekrang
+                {
+					for (int i = 0; i < abilityButtonSeats.Count; i++)
+					{
+						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_BaekRangSkillData[i].Icon;
+					}
+					break;
+                }
+			case 1: //ColD
+                {
+					for (int i = 0; i < abilityButtonSeats.Count; i++)
+					{
+						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_ColDSkillData[i].Icon;
+					}
+					break;
+                }
+			case 2: //Xerion
+                {
+					for (int i = 0; i < abilityButtonSeats.Count; i++)
+					{
+						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_XerionSkillData[i].Icon;
+					}
+					break;
+                }
 
-    }
+        }
+		
+	}
 
-	public void SetStatus(PlayerManager whichChamp)
+	public void SetSpells()
     {
+		selectedSummonerSpells[0].Icon = 
+			GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell1].Icon;
+		selectedSummonerSpells[1].Icon =
+			GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell2].Icon;
+	}
+	public void SetStatus()
+    {
+		//ADText=;
 
+
+		//APText;
+
+
+		//ArmorText;
+
+		//MagicResistText;
+
+		//AbilityHasteText;
+
+		//MoveSpeedText;
+
+		//CriticalStrikeText;
+
+		//AttackSpeedText;
+	}
+
+	public void SetChampion()
+    {
+		GameObject champ = GameObject.Find("PlayerAvatar(Clone)");
+		ChampionSetup myChampSetup = champ.GetComponent<ChampionSetup>();
+		PhotonView PV = champ.GetPhotonView();
+		Debug.Log("나의 아바타는 ="+champ.name);
+		if(PV.IsMine)
+        {
+			myChampObj = myChampSetup.myCharacter;
+			Debug.Log("오브젝트 이게 바인딩 됨" + myChampObj.name);
+        }
+			
     }
 	#endregion
 
+
+	#region PHOTON CALLBACKS
+	[PunRPC]
+	public void RPC_GameInit()
+	{
+		SetChampion();					//UI, Champ Binding.
+		SetPortrait();					//Champ Portrait Update
+		SetActionBar(myChampIdx);		//Champ Actionbar Init
+		SetStatus();					//Champ status Update
+	}
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        throw new System.NotImplementedException();
+    }
+    #endregion
 
 }

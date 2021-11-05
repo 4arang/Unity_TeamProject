@@ -1,9 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class RoomController : MonoBehaviour
 {
+    UISlot uiSlot;
+    [SerializeField]
+    private List<GameObject> spellSlots;
+    [SerializeField]
+    private List<Image> spellSlotsImg;
+    [SerializeField]
+    private List<GameObject> spellSelectSlots;
+
     public void OnClickCharacterPick(int whichCharacter)
     {
         if (PlayerInfo.PI != null)
@@ -15,58 +23,38 @@ public class RoomController : MonoBehaviour
         }
     }
 
-
     public void OnClickSpellPick(int whichSpell)
     {
         if(PlayerInfo.PI!=null)
         {
             if(PhotonRoom.room.currentSpellBtn==0)
             {
-                switch (whichSpell)
-                {
-                    case 0:
-                        {
-                            PlayerInfo.PI.mySelectedSpell1 = whichSpell;
-                            PlayerPrefs.SetInt("MySpell1", whichSpell);
+                PlayerInfo.PI.mySelectedSpell1 = whichSpell;
+                PlayerPrefs.SetInt("MySpell1", whichSpell);
+                
+                var obj = spellSlotsImg[whichSpell].GetComponent<Image>().sprite;
+                Debug.Log(obj.name);
+                spellSlotsImg[0].sprite = obj;
 
-                            PhotonRoom.room.OnSpellSetBoxClose();
-                            Debug.Log("Spell1 Setting = " + PlayerInfo.PI.mySelectedSpell1);
-                            break;
-                        }
-                    case 1:
-                        {
-                            PlayerInfo.PI.mySelectedSpell2 = whichSpell;
-                            PlayerPrefs.SetInt("MySpell2", whichSpell);
-
-                            PhotonRoom.room.OnSpellSetBoxClose();
-                            Debug.Log("Spell2 Setting = " + PlayerInfo.PI.mySelectedSpell2);
-                            break;
-                        }
-                }
+                PhotonRoom.room.OnSpellSetBoxClose();
+                Debug.Log("Spell1 Setting = " + PlayerInfo.PI.mySelectedSpell1);
             }
             if (PhotonRoom.room.currentSpellBtn == 1)
             {
-                switch (whichSpell)
-                {
-                    case 0:
-                        {
-                            PlayerInfo.PI.mySelectedSpell1 = whichSpell;
-                            PlayerPrefs.SetInt("MySpell1", whichSpell);
+                PlayerInfo.PI.mySelectedSpell2 = whichSpell;
+                PlayerPrefs.SetInt("MySpell2", whichSpell);
 
-                            PhotonRoom.room.OnSpellSetBoxClose();
-                            Debug.Log("Spell1 Setting = " + PlayerInfo.PI.mySelectedSpell1);
-                            break;
-                        }
-                    case 1:
-                        {
-                            PlayerInfo.PI.mySelectedSpell2 = whichSpell;
-                            PlayerPrefs.SetInt("MySpell2", whichSpell);
+                var obj = spellSlotsImg[whichSpell].GetComponent<Image>().sprite;
+                Debug.Log(obj.name);
+                spellSlotsImg[1].sprite = obj;
 
-                            PhotonRoom.room.OnSpellSetBoxClose();
-                            Debug.Log("Spell2 Setting = " + PlayerInfo.PI.mySelectedSpell2);
-                            break;
-                        }
-                }
+                PhotonRoom.room.OnSpellSetBoxClose();
+                Debug.Log("Spell2 Setting = " + PlayerInfo.PI.mySelectedSpell2);
+            }
+            else
+            {
+                PhotonRoom.room.spellSelectBox.SetActive(false);
+                return;
             }
         }
     }
