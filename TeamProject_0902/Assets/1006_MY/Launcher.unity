@@ -4393,7 +4393,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999556}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4924,9 +4924,9 @@ MonoBehaviour:
   isOnTeam: 0
   mySelectedChampion: 0
   allCharacters:
-  - {fileID: 6179456376769081258, guid: 3a3159ebdd873074d98719c57837bf41, type: 3}
-  - {fileID: 8539249220999487228, guid: d3ee7480a85b7a1468f4a587f6aec9a6, type: 3}
-  - {fileID: 6658670562735108070, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+  - {fileID: 7599431101685634140, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
+  - {fileID: 3798062587085106343, guid: acabd31a4078d7645bd1b08db2454d33, type: 3}
+  - {fileID: 1464998985006854029, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
   allLobbyCharacters:
   - {fileID: 5732699308233884933, guid: 235c6028ae5c8bf4e9c016b93b23308d, type: 3}
   - {fileID: 5732699308233884933, guid: 0420669c62e0d0c4fa0f9a6ae23f9c59, type: 3}
@@ -7018,7 +7018,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 620690165}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999556
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11010,7 +11010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2014915948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12096,17 +12096,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145641455}
   m_CullTransparentMesh: 1
---- !u!114 &626833284410653547 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8556759825996426927, guid: 2c8fd196cad091243a371125ea17e29e, type: 3}
-  m_PrefabInstance: {fileID: 9082988818648896964}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &4197949083253235158 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4922256580635117586, guid: 2c8fd196cad091243a371125ea17e29e, type: 3}
@@ -12315,7 +12304,7 @@ PrefabInstance:
     - target: {fileID: 9082988817636885095, guid: 2c8fd196cad091243a371125ea17e29e, type: 3}
       propertyPath: Icon
       value: 
-      objectReference: {fileID: 626833284410653547}
+      objectReference: {fileID: 0}
     - target: {fileID: 9082988817636885095, guid: 2c8fd196cad091243a371125ea17e29e, type: 3}
       propertyPath: m_Canvas
       value: 

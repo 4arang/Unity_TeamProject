@@ -10072,7 +10072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3736ebe9b92fb1a4097586e21ef5d93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackCollider: {fileID: 1669983198}
+  AttakEffect: {fileID: 4624704855578336610, guid: 111f769a0df9b0640bd3c925e5ea8b81, type: 3}
+  Turret1: {fileID: 0}
+  Turret2: {fileID: 0}
+  Turret3: {fileID: 0}
   TeamColor: 0
 --- !u!195 &8696388092300130172
 NavMeshAgent:

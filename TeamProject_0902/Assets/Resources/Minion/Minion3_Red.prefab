@@ -5700,6 +5700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TeamColor: 0
   MaxHP: 0
   HP: 0
   HPregen: 0
@@ -5713,12 +5714,21 @@ MonoBehaviour:
   AP: 0
   APp: 0
   APPtime: 0
+  AttackSpeed: 0
   MaxMoveSpeed: 0
   MoveSpeed: 0
   AttackRange: 0
   MoveSpeedp: 0
   MoveSpeedptime: 0
   Recover_MoveSpeed: 0
+  MinionNum: 0
+  Gold_Normal: 0
+  Gold_Advanced: 0
+  EXP: 0
+  EXPperTime: 0
+  MyPos: {x: 0, y: 0, z: 0}
+  isAttack_Minion: 0
+  isAttack_Player: 0
   DamagedEffect: {fileID: 270084451553974162}
 --- !u!114 &4651353015974607070
 MonoBehaviour:
@@ -5740,12 +5750,18 @@ MonoBehaviour:
   AD: 0
   ADperTime: 0
   ADPtime: 90000
+  AttackSpeed: 0
   MaxMoveSpeed: 0
   MoveSpeed: 0
   AttackRange: 0
   MoveSpeedp: 25
   MoveSpeedptime: 300000
   Minion_Number: 0
+  TeamColor: 0
+  Gold_Normal: 6
+  Gold_Advanced: 45
+  EXP: 92
+  EXPperTime: 0
 --- !u!114 &953743456082655374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5758,9 +5774,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00329de330485764e9a6a2f4b2a0b4de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Laser: {fileID: 3155950057333198645, guid: ff4f464fbaff7be41960b1033eef24e7, type: 3}
+  AttackBullet: {fileID: 2021877755249250356, guid: d6c4bf8a096cfd347944878b219ce75c, type: 3}
   Barrel: {fileID: 2587396972722505381}
   BarrelArm: {fileID: 9008389943970765599}
+  TeamColor: 0
 --- !u!1 &5319042447104716064
 GameObject:
   m_ObjectHideFlags: 0

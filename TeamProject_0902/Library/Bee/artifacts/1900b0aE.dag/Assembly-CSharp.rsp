@@ -27,6 +27,7 @@
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
 -define:UNITY_INCLUDE_TESTS
+-define:UNITY_ANALYTICS
 -define:USE_SEARCH_ENGINE_API
 -define:USE_QUICK_SEARCH_MODULE
 -define:SCENE_TEMPLATE_MODULE
@@ -603,6 +604,10 @@
 "Assets/Scripts/UI/Abilities.cs"
 "Assets/Scripts/UI/Health.cs"
 "Assets/Scripts/UI/LevelUpStats.cs"
+"Assets/Scripts/YC/Building/Nexus_Spawn.cs"
+"Assets/Scripts/YC/Building/TurretTargeting.cs"
+"Assets/Scripts/YC/Building/Turret_Manager.cs"
+"Assets/Scripts/YC/Building/Turret_Stats.cs"
 "Assets/Scripts/YC/ColD.cs"
 "Assets/Scripts/YC/ColD_Basic_Range_collider.cs"
 "Assets/Scripts/YC/ColD_E.cs"
@@ -635,8 +640,6 @@
 "Assets/Scripts/YC/Player_Skill_Attack.cs"
 "Assets/Scripts/YC/Player_Stats.cs"
 "Assets/Scripts/YC/Test_MaterialChange.cs"
-"Assets/Scripts/YC/TurretTargeting.cs"
-"Assets/Scripts/YC/Turret_Stats.cs"
 "Assets/Scripts/YC/WhiteTiger/WhiteTiger.cs"
 "Assets/Scripts/YC/WhiteTiger/WhiteTiger_Basic_Range_Collider.cs"
 "Assets/Scripts/YC/WhiteTiger/WhiteTiger_Bite_Damage.cs"

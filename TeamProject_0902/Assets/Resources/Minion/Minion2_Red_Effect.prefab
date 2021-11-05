@@ -4760,10 +4760,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5453496235855121920}
   - component: {fileID: 5343813774955888078}
-  - component: {fileID: 5429291575240782810}
   - component: {fileID: 5439704050758535192}
   - component: {fileID: 5386402542067863498}
   - component: {fileID: 5375388054680839896}
+  - component: {fileID: 608487001323246339}
   m_Layer: 0
   m_Name: Minion2_Red_Effect
   m_TagString: Untagged
@@ -4808,19 +4808,6 @@ MonoBehaviour:
   hitPrefab: {fileID: 1784833961111810, guid: 759ff118155e770458604a9ec5778dfb, type: 3}
   shotFX: {fileID: 8300000, guid: aa5010ca36d23124197433731a6d29b2, type: 3}
   trails: []
---- !u!65 &5429291575240782810
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456488200606817092}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.4, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5439704050758535192
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4995,6 +4982,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!135 &608487001323246339
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456488200606817092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5456616315273981982
 GameObject:
   m_ObjectHideFlags: 0

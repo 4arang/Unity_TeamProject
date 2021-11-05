@@ -19269,9 +19269,9 @@ GameObject:
   - component: {fileID: 582719429894779890}
   - component: {fileID: 684752521892150584}
   - component: {fileID: 637673532495197068}
-  - component: {fileID: 644140251980482426}
   - component: {fileID: 692013012299678760}
   - component: {fileID: 665890982849130984}
+  - component: {fileID: 481916706185537559}
   m_Layer: 0
   m_Name: Minion3_Blue_Effect
   m_TagString: FX
@@ -19334,19 +19334,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &644140251980482426
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 585164824419808478}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!108 &692013012299678760
 Light:
   m_ObjectHideFlags: 0
@@ -19505,3 +19492,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!135 &481916706185537559
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585164824419808478}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0, z: 0}

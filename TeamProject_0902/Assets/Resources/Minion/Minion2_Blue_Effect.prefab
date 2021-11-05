@@ -14245,6 +14245,7 @@ GameObject:
   - component: {fileID: 1971562771007233236}
   - component: {fileID: 1881992373007766144}
   - component: {fileID: 1926235312594899720}
+  - component: {fileID: 6264842152238044432}
   m_Layer: 0
   m_Name: Minion2_Blue_Effect
   m_TagString: Untagged
@@ -14477,3 +14478,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!135 &6264842152238044432
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989752080570841912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Center: {x: 0, y: 0, z: 0}

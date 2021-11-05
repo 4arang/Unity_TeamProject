@@ -266,12 +266,18 @@ MonoBehaviour:
   AP: 0
   APp: 0
   APPtime: 180000
+  AttackSpeed: 0
   MaxMoveSpeed: 0
   MoveSpeed: 0
   AttackRange: 0
   MoveSpeedp: 25
   MoveSpeedptime: 300000
   Minion_Number: 0
+  TeamColor: 0
+  Gold_Normal: 6
+  Gold_Advanced: 20
+  EXP: 60.45
+  EXPperTime: 1.53
 --- !u!114 &724345334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +290,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3736ebe9b92fb1a4097586e21ef5d93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AttakEffect: {fileID: 4624704855578336610, guid: 111f769a0df9b0640bd3c925e5ea8b81, type: 3}
+  Turret1: {fileID: 0}
+  Turret2: {fileID: 0}
+  Turret3: {fileID: 0}
+  TeamColor: 0
 --- !u!195 &724345335
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -318,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TeamColor: 0
   MaxHP: 0
   HP: 0
   HPregen: 0
@@ -331,12 +343,21 @@ MonoBehaviour:
   AP: 0
   APp: 0
   APPtime: 0
+  AttackSpeed: 0
   MaxMoveSpeed: 0
   MoveSpeed: 0
   AttackRange: 0
   MoveSpeedp: 0
   MoveSpeedptime: 0
   Recover_MoveSpeed: 0
+  MinionNum: 0
+  Gold_Normal: 0
+  Gold_Advanced: 0
+  EXP: 0
+  EXPperTime: 0
+  MyPos: {x: 0, y: 0, z: 0}
+  isAttack_Minion: 0
+  isAttack_Player: 0
   DamagedEffect: {fileID: 2389679743667058932}
 --- !u!1 &4015881265962946478
 GameObject:

@@ -251,7 +251,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             return;
         }
-        PhotonNetwork.LoadLevel("MapScene_Test");
+        PhotonNetwork.LoadLevel(1);
     }
     void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
     {

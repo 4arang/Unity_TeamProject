@@ -18,6 +18,10 @@ public class Minion2 : MonoBehaviour
     private float AttackSpeed;
     private float Minion2_AD;
 
+    [SerializeField] private Transform Turret1;
+    [SerializeField] private Transform Turret2;
+    [SerializeField] private Transform Turret3;
+
     public bool TeamColor;
     private bool OnUpdateTarget = true;
 
@@ -34,12 +38,17 @@ public class Minion2 : MonoBehaviour
 
         TeamColor = GetComponent<Minion_Stats>().TeamColor;
 
+        Turret1 = Turret_Manager.Instance.TargetBuilding1;
+        Turret2 = Turret_Manager.Instance.TargetBuilding2;
+        Turret3 = Turret_Manager.Instance.TargetBuilding3;
+
         InvokeRepeating("FindTarget", 0f, 0.5f);
     }
 
 
     void Update()
     {
+        agent.speed = GetComponent<Minion_Stats>().MoveSpeed / 100;
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
         if (GetComponent<Minion_Stats>().HP <= 0)
@@ -80,7 +89,12 @@ public class Minion2 : MonoBehaviour
                     GetComponent<Minion_Stats>().isAttack_Minion = true;
                     Debug.Log("Target Priority 2 " + Target);
                 }
-                //else if (col/* 아군 미니언을 공격하는 적 포탑*/)
+                else if (col.TryGetComponent<Turret_Stats>(out Turret_Stats turret)
+         && (turret.TeamColor != TeamColor) && turret.isAttack_Minion)
+                {
+                    Target = turret.transform;
+                    Debug.Log("Target priority 4 " + Target);
+                }
 
                 else if (col.TryGetComponent<Player_Stats>(out Player_Stats player_)
                     && player_.isAttack_Minion && (player_.TeamColor != TeamColor))
@@ -103,6 +117,14 @@ public class Minion2 : MonoBehaviour
                     GetComponent<Minion_Stats>().isAttack_Player = true;
                     Debug.Log("Target Priority 7 " + Target);
                 }
+                else
+                {
+                    if (Turret1) Target = Turret1;
+                    else if (Turret2) Target = Turret2;
+                    else if (Turret3) Target = Turret3;
+
+                    agent.SetDestination(Target.position);
+                }
             }
         }
         else
@@ -118,8 +140,6 @@ public class Minion2 : MonoBehaviour
     private void AttackTarget(Transform target)
     {
         agent.SetDestination(target.position);
-        Debug.Log("Targetpos " + target.position);
-        Debug.Log("Mypos " + transform.position);
 
         if (Vector3.Distance(agent.transform.position, target.position) <= TargetRange)
         {

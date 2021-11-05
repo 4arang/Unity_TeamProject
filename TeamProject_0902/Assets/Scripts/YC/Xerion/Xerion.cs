@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Realtime;
+using Photon.Pun;
 
 public class Xerion : MonoBehaviour
 {
+    //Network Components
+    PhotonView PV;
+    
     //Animation
     Animator animator;
     public float runSpeed = 10.0f;
@@ -52,6 +57,7 @@ public class Xerion : MonoBehaviour
 
     private void Start()
     {
+        PV = GetComponent<PhotonView>();
         animator = GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         lr = linerenderobj.GetComponent<LineRenderer>();
@@ -73,7 +79,10 @@ public class Xerion : MonoBehaviour
     {
         agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
 
-        RightMouseClicked();
+        if(PV.IsMine)
+        {
+            RightMouseClicked();
+        }
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
         if (animator.GetFloat("Speed") > 0.1f)
