@@ -2,81 +2,91 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-public class PlayerUI : MonoBehaviour, IPunObservable
+public class PlayerUI : MonoBehaviour
 {
-	private PhotonView PV;
-	public AbilityData castingAbilitiy;
+	#region SINGLETON
+	private static PlayerUI instance;
+
+	public static PlayerUI Instance
+	{
+		get
+		{
+			if (instance == null)
+			{
+				var obj = FindObjectOfType<PlayerUI>();
+				if (obj != null)
+				{
+					instance = obj;
+				}
+				else
+				{
+					var newObj = new GameObject().AddComponent<PlayerUI>();        //배포 시, 활성화
+					instance = newObj;
+				}
+			}
+			return instance;
+		}
+	}
+
+	private void Awake()
+	{
+		var objs = FindObjectsOfType<PlayerUI>();
+		if (objs.Length != 1)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		DontDestroyOnLoad(gameObject);
+	}
+	#endregion
+
+	#region SEATS
 	int myChampIdx;
+	float deltaTime = 0.0f; //Check FPS
+
+	[SerializeField] private Text FPSText;
+	[SerializeField] private Text MSText;
+	[SerializeField] private Text TimeText;
+	[SerializeField] private Text redKills;
+	[SerializeField] private Text blueKills;
+	[SerializeField] private Text playerScore;
+	[SerializeField] private Text playerMinionScore;
+	[SerializeField] private Text playerHealth;
+	[SerializeField] private Text playerResource;
+	[SerializeField] private Text playerGold;
+	[SerializeField] private Image scoreBoardPanel;
+
+	[SerializeField] private GameObject myChampObj;
+	[SerializeField] private Image champPortrait;
+
+	[SerializeField] private List<Image> selectedChampAbilities;
+	[SerializeField] private List<Image> selectedChampAbilities_BW;
+	[SerializeField] private List<Image> selectedSummonerSpells;
 
 	[SerializeField]
-	private GameObject myChampObj;
-
-	[SerializeField]
-	private Image champPortrait;
-
-	[SerializeField]
-	private List<AbilityData> selectedChampAbilities;
-
-	[SerializeField]
-	private List<AbilityData> selectedSummonerSpells;
-
+	private Image recallButton;
+	#region Private Fields
 	/// <summary>
 	/// Player UI. Constraint the UI to follow a PlayerManager GameObject in the world,
 	/// Affect a slider and text to display Player's name and health
 	/// </summary>
-	#region Private Fields
 	[Header("Stats")]
+	[SerializeField] private Text LevelText;
+	[SerializeField] private Text ADText;
+	[SerializeField] private Text APText;
+	[SerializeField] private Text ArmorText;
+	[SerializeField] private Text MagicResistText;
+	[SerializeField] private Text AbilityHasteText;
+	[SerializeField] private Text MoveSpeedText;
+	[SerializeField] private Text CriticalStrikeText;
+	[SerializeField] private Text AttackSpeedText;
 
-	[SerializeField]
-	private Text ADText;
+	[SerializeField] private GameObject playerActionBox;
+	[SerializeField] private GameObject playerStatusBox;
 
-	[SerializeField]
-	private Text APText;
+    #endregion
 
-	[SerializeField]
-	private Text ArmorText;
-
-	[SerializeField]
-	private Text MagicResistText;
-
-	[SerializeField]
-	private Text AbilityHasteText;
-
-	[SerializeField]
-	private Text MoveSpeedText;
-
-	[SerializeField]
-	private Text CriticalStrikeText;
-
-	[SerializeField]
-	private Text AttackSpeedText;
-
-
-	[Tooltip("Pixel offset from the player target")]
-	[SerializeField]
-	private Vector3 screenOffset = new Vector3(0f, 30f, 0f);
-
-	[Tooltip("Champion Action bar")]
-	[SerializeField]
-	private GameObject playerActionBox;
-
-	[Tooltip("UI display Player's Status")]
-	[SerializeField]
-	private GameObject playerStatusBox;
-
-	[Tooltip("Abilities Seat")]
-	[SerializeField]
-	private List<Image> abilityButtonSeats;
-
-	[Tooltip("Summoner's Spell Seat")]
-	[SerializeField]
-	private List<Image> spellButtonSeats;
-
-	[Tooltip("Summoner's Spell Seat")]
-	[SerializeField]
-	private Image recallButton;
-
-	PlayerManager localPlayer;
+    AvatarManager localPlayer;
 
 	float characterControllerHeight;
 
@@ -86,31 +96,17 @@ public class PlayerUI : MonoBehaviour, IPunObservable
 
 	CanvasGroup _canvasGroup;
 
+    #endregion
 
-	#endregion
-
-	#region MonoBehaviour Messages
-
-	/// <summary>
-	/// MonoBehaviour method called on GameObject by Unity during early initialization phase
-	/// </summary>
-	void Awake()
-	{
-		_canvasGroup = this.GetComponent<CanvasGroup>();
-
-		this.transform.SetParent(GameObject.Find("UICanvas").GetComponent<Transform>(), false);
-	}
+    #region MonoBehaviour Messages
 
     private void Start()
     {
-		PV = GetComponent<PhotonView>();
-		PV.RPC("RPC_GameInit", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
-		if (PV.IsMine)
-		{
-			//PV.RPC("RPC_GameInit", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
-		}
-		myChampIdx = PlayerInfo.PI.mySelectedChampion;
-		champPortrait = GameObject.Find("Portrait Image").GetComponent<Image>();
+		_canvasGroup = this.GetComponent<CanvasGroup>();
+		this.transform.SetParent(GameObject.Find("Canvas").GetComponent<Transform>(), false);
+		GameInit();
+
+		myChampIdx = TestInfo.PI.mySelectedChampion;
 	}
     /// <summary>
     /// MonoBehaviour method called on GameObject by Unity on every frame.
@@ -118,6 +114,9 @@ public class PlayerUI : MonoBehaviour, IPunObservable
     /// </summary>
     void Update()
 	{
+		UpdateGameStatus();
+
+
 		// Destroy itself if the target is null, It's a fail safe when Photon is destroying Instances of a Player over the network
 		if (localPlayer == null)
 		{
@@ -125,121 +124,99 @@ public class PlayerUI : MonoBehaviour, IPunObservable
 			return;
 		}
 	}
+    #region Public Methods
 
-	/// <summary>
-	/// MonoBehaviour method called after all Update functions have been called. This is useful to order script execution.
-	/// In our case since we are following a moving GameObject, we need to proceed after the player was moved during a particular frame.
-	/// </summary>
-	void LateUpdate()
-	{
+    /// <summary>
+    /// Assigns a Player Target to Follow and represent.
+    /// </summary>
+    /// <param name="target">Target.</param>
 
-		// Do not show the UI if we are not visible to the camera, thus avoid potential bugs with seeing the UI, but not the player itself.
-		if (targetRenderer != null)
-		{
-			this._canvasGroup.alpha = targetRenderer.isVisible ? 1f : 0f;
-		}
-	}
-	#endregion
-
-	#region Public Methods
-
-	/// <summary>
-	/// Assigns a Player Target to Follow and represent.
-	/// </summary>
-	/// <param name="target">Target.</param>
-
-	public void SetTarget(PlayerManager _target)
-	{
-		if (_target == null)
-		{
-			Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
-			return;
-		}
-
-		// Cache references for efficiency because we are going to reuse them.
-		this.localPlayer = _target;
-		targetTransform = this.localPlayer.GetComponent<Transform>();
-		targetRenderer = this.localPlayer.GetComponentInChildren<Renderer>();
-
-
-		CharacterController _characterController = this.localPlayer.GetComponent<CharacterController>();
-
-		// Get data from the Player that won't change during the lifetime of this Component
-		if (_characterController != null)
-		{
-			characterControllerHeight = _characterController.height;
-		}
-	}
-	public void SetPortrait()
+    public void SetTarget(AvatarManager _target)
     {
-		champPortrait.sprite = GameDataSource.Instance.m_AvatarData[myChampIdx].Portrait;
-		Debug.Log(GameDataSource.Instance.m_AvatarData[myChampIdx].Portrait.name);
+        if (_target == null)
+        {
+            Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
+            return;
+        }
+
+        // Cache references for efficiency because we are going to reuse them.
+        this.localPlayer = _target;
+        targetTransform = this.localPlayer.GetComponent<Transform>();
+    }
+
+    public void SetPortrait()
+    {
+		champPortrait.sprite = GameDataSource.Instance.m_CharacterData[myChampIdx].Portrait;
+		Debug.Log(GameDataSource.Instance.m_CharacterData[myChampIdx].Portrait.name);
     }
 	public void SetActionBar(int whichChamp)
     {
-		switch(whichChamp)
+        switch (whichChamp)
         {
-			case 0: //Baekrang
+            case 0: //Baekrang
                 {
-					for (int i = 0; i < abilityButtonSeats.Count; i++)
-					{
-						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_BaekRangSkillData[i].Icon;
+                    for (int i = 0; i < selectedChampAbilities.Count; i++)
+                    {
+						selectedChampAbilities[i].sprite = GameDataSource.Instance.m_BaekRangSkillData[i].Icon;
+						selectedChampAbilities_BW[i].sprite = GameDataSource.Instance.m_BaekRangSkillData[i].Icon;
+
+						selectedChampAbilities_BW[i].fillAmount = 1;
+					}
+                    break;
+                }
+            case 1: //ColD
+                {
+                    for (int i = 0; i < selectedChampAbilities.Count; i++)
+                    {
+						selectedChampAbilities[i].sprite = GameDataSource.Instance.m_ColDSkillData[i].Icon;
+						selectedChampAbilities_BW[i].sprite = GameDataSource.Instance.m_ColDSkillData[i].Icon;
+
+						selectedChampAbilities_BW[i].fillAmount = 1;
 					}
 					break;
                 }
-			case 1: //ColD
+            case 2: //Xerion
                 {
-					for (int i = 0; i < abilityButtonSeats.Count; i++)
-					{
-						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_ColDSkillData[i].Icon;
-					}
-					break;
-                }
-			case 2: //Xerion
-                {
-					for (int i = 0; i < abilityButtonSeats.Count; i++)
-					{
-						abilityButtonSeats[i].sprite = GameDataSource.Instance.m_XerionSkillData[i].Icon;
+                    for (int i = 0; i < selectedChampAbilities.Count; i++)
+                    {
+						selectedChampAbilities[i].sprite = GameDataSource.Instance.m_XerionSkillData[i].Icon;
+						selectedChampAbilities_BW[i].sprite = GameDataSource.Instance.m_XerionSkillData[i].Icon;
+
+						selectedChampAbilities_BW[i].fillAmount = 1;
 					}
 					break;
                 }
 
         }
-		
-	}
+
+    }
 
 	public void SetSpells()
     {
-		selectedSummonerSpells[0].Icon = 
-			GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell1].Icon;
-		selectedSummonerSpells[1].Icon =
-			GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell2].Icon;
+		//selectedSummonerSpells[0].Icon = 
+		//	GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell1].Icon;
+		//selectedSummonerSpells[1].Icon =
+		//	GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell2].Icon;
 	}
 	public void SetStatus()
     {
-		//ADText=;
+		Player_Stats stats=myChampObj.GetComponent<Player_Stats>();
 
-
-		//APText;
-
-
-		//ArmorText;
-
-		//MagicResistText;
-
-		//AbilityHasteText;
-
-		//MoveSpeedText;
-
-		//CriticalStrikeText;
-
-		//AttackSpeedText;
-	}
+		ADText.text = stats.AD.ToString();
+		APText.text = stats.AP.ToString();
+		ArmorText.text = stats.Armor.ToString();
+		MagicResistText.text = stats.Armor.ToString();
+		AbilityHasteText.text = stats.Armor.ToString();
+		MoveSpeedText.text = stats.Armor.ToString();
+		CriticalStrikeText.text = stats.Armor.ToString();
+		AttackSpeedText.text = stats.Armor.ToString();
+		LevelText.text = stats.Level.ToString();
+    }
 
 	public void SetChampion()
     {
 		GameObject champ = GameObject.Find("PlayerAvatar(Clone)");
-		ChampionSetup myChampSetup = champ.GetComponent<ChampionSetup>();
+		TestSetup myChampSetup = champ.GetComponent<TestSetup>();
 		PhotonView PV = champ.GetPhotonView();
 		Debug.Log("나의 아바타는 ="+champ.name);
 		if(PV.IsMine)
@@ -249,12 +226,7 @@ public class PlayerUI : MonoBehaviour, IPunObservable
         }
 			
     }
-	#endregion
-
-
-	#region PHOTON CALLBACKS
-	[PunRPC]
-	public void RPC_GameInit()
+	public void GameInit()
 	{
 		SetChampion();					//UI, Champ Binding.
 		SetPortrait();					//Champ Portrait Update
@@ -262,10 +234,14 @@ public class PlayerUI : MonoBehaviour, IPunObservable
 		SetStatus();					//Champ status Update
 	}
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+	public void UpdateGameStatus()
     {
-        throw new System.NotImplementedException();
-    }
+		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+		MSText.text = (deltaTime * 1000.0f).ToString("0.0" + "ms");
+		FPSText.text = (1.0f / deltaTime).ToString("0." + "fps");
+		TimeText.text = GameManager.Instance.GameTime.ToString("00:00");
+	}
     #endregion
-
+    #endregion
 }
+

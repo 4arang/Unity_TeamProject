@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5214915101317473854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5214915101317473848}
+  - component: {fileID: 5214915101317473855}
+  m_Layer: 0
+  m_Name: GameDataSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5214915101317473848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214915101317473854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 740.98553, y: 63.503845, z: -82.454285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5214915101317473855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214915101317473854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dabd7d7da88c94192f11ea8e600ab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CharacterData: []
+  m_BaekRangSkillData:
+  - {fileID: 11400000, guid: 25dd81a504571044fb34f0e1cf573615, type: 2}
+  - {fileID: 11400000, guid: 4f51b576097f4d642b483192ebf6124e, type: 2}
+  - {fileID: 11400000, guid: 7287062e8ac8bc7438c02fec87af60ef, type: 2}
+  - {fileID: 11400000, guid: be290553e9a5527498d06f26ef77ef33, type: 2}
+  - {fileID: 11400000, guid: 8d9b6f72efb779148879049739456091, type: 2}
+  m_ColDSkillData:
+  - {fileID: 11400000, guid: ecefc61ea1e5f7e49b63645272e2bf87, type: 2}
+  - {fileID: 11400000, guid: 6e9086548fc8bd848bb7c392fd0d1946, type: 2}
+  - {fileID: 11400000, guid: df2251abe9fd6f84ca0247a7ed66b13c, type: 2}
+  - {fileID: 11400000, guid: f6fb6569d06dbd943b1d4cbd888b0a42, type: 2}
+  - {fileID: 11400000, guid: 0477be31c2b017141a747cf0fdd72861, type: 2}
+  m_XerionSkillData:
+  - {fileID: 11400000, guid: 715ac7920ab9ae446add684497e402e9, type: 2}
+  - {fileID: 11400000, guid: c070ca9335b704043ae76f11e90b1247, type: 2}
+  - {fileID: 11400000, guid: 3f665dbcdb1e4444186e36f2229e4b29, type: 2}
+  - {fileID: 11400000, guid: 7e67100b7966c024586d7fa812ee5404, type: 2}
+  - {fileID: 11400000, guid: e95d52b117c814b45a26b38a3ad21e90, type: 2}
+  m_SpellData:
+  - {fileID: 11400000, guid: 34867669ba647ce47968ea10c79ca4af, type: 2}
+  - {fileID: 11400000, guid: 663f27df1bad3b24995e5a8970139692, type: 2}
+  - {fileID: 11400000, guid: e449d3d4fc105f34fb6c5e637e72a35c, type: 2}
+  m_ItemData:
+  - {fileID: 0}
+  - {fileID: 0}

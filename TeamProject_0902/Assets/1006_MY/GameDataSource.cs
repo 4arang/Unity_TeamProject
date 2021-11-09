@@ -6,9 +6,6 @@ public class GameDataSource : MonoBehaviour
     [Tooltip("All CharacterClass data should be slotted in here")]
     public List<ChampionData> m_CharacterData;
 
-    [Tooltip("All Champion Avatar data should be slotted in here")]
-    public List<ChampionAvatarData> m_AvatarData;
-
     [Tooltip("All ActionDescription data should be slotted in here")]
     public List<AbilityData> m_BaekRangSkillData;
 

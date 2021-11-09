@@ -1,9 +1,10 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class WhiteTiger : MonoBehaviour
+public class WhiteTiger : MonoBehaviourPunCallbacks
 {
     //Animation
     Animator animator;
@@ -77,7 +78,7 @@ public class WhiteTiger : MonoBehaviour
         agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
         originalSpeed = agent.speed;
 
-        Enemy = GameObject.FindWithTag("Minion").transform;
+        //Enemy = GameObject.FindWithTag("Minion").transform;
 
         BasicRange.SetActive(false);
         BasicRange_Col.SetActive(false);
@@ -101,74 +102,76 @@ public class WhiteTiger : MonoBehaviour
 
     private void Update()
     {
-
-        Debug.Log("Tiger speed " + agent.speed);
-
-        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
-
-        RightMouseClicked();
-
-        animator.SetFloat("Speed", agent.velocity.magnitude);
-
-        if (playerDir != movingManager.Instance.PlayerDirection) //플레이어 방향
+        if (photonView.IsMine)
         {
-            playerDir = movingManager.Instance.PlayerDirection;
-            agent.transform.rotation = Quaternion.AngleAxis(playerDir, Vector3.up);
-        }
-        if (TargetPos != movingManager.Instance.PlayerTargetPos) //플레이어 이동(R스킬시 이동제한)
-        {
-            TargetPos = movingManager.Instance.PlayerTargetPos;
-            onSkill = true;
-        }
+            //Debug.Log("Tiger speed " + agent.speed);
 
-        if(!onSkill)
-        {
-            agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100; //스킬x일때 스피드값받기
-        }
+            agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
 
+            RightMouseClicked();
 
-        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
-        else { movingManager.Instance.isFree = false; } //전투모드
+            animator.SetFloat("Speed", agent.velocity.magnitude);
 
-        if (Enemy) //적 타겟이 있는경우
-        {
-            SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
-        }
-
-        //////////////기본어택땅/////////////
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            BasicRange_Col.SetActive(true);
-            BasicRange.SetActive(true);
-            isBasicAttack = true;
-        }
-        if (isBasicAttack) //A키 입력 이후에 활성화
-        {
-            LeftMouseClicked(); //왼쪽마우스 클릭
-        }
-        if (CheckEnemy) //적 체크 완료한경우
-        {
-            if (TargetEnemy)//타겟설정이 되었다면 
+            if (playerDir != movingManager.Instance.PlayerDirection) //플레이어 방향
             {
-                Debug.Log("Targeted");
-                GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
-                agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                AttackTargetEnemy(); //타겟 공격
+                playerDir = movingManager.Instance.PlayerDirection;
+                agent.transform.rotation = Quaternion.AngleAxis(playerDir, Vector3.up);
             }
-            else if(!isBasicAttack)
-            {       //타겟이 없으면 재설정
-                Debug.Log("Targeting");
-                GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
+            if (TargetPos != movingManager.Instance.PlayerTargetPos) //플레이어 이동(R스킬시 이동제한)
+            {
+                TargetPos = movingManager.Instance.PlayerTargetPos;
+                onSkill = true;
             }
-        }
+
+            if (!onSkill)
+            {
+                agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100; //스킬x일때 스피드값받기
+            }
 
 
-        /////Q사용시 공격력up A공격////
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
+            if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+            else { movingManager.Instance.isFree = false; } //전투모드
+
+            if (Enemy) //적 타겟이 있는경우
+            {
+                SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
+            }
+
+            //////////////기본어택땅/////////////
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                BasicRange_Col.SetActive(true);
+                BasicRange.SetActive(true);
+                isBasicAttack = true;
+            }
+            if (isBasicAttack) //A키 입력 이후에 활성화
+            {
+                LeftMouseClicked(); //왼쪽마우스 클릭
+            }
+            if (CheckEnemy) //적 체크 완료한경우
+            {
+                if (TargetEnemy)//타겟설정이 되었다면 
+                {
+                    Debug.Log("Targeted");
+                    GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
+                    agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
+                    AttackTargetEnemy(); //타겟 공격
+                }
+                else if (!isBasicAttack)
+                {       //타겟이 없으면 재설정
+                    Debug.Log("Targeting");
+                    GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
+                }
+            }
+
+
+            /////Q사용시 공격력up A공격////
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
                 StartCoroutine("Active_Q");
-            if (!GetComponent<WhiteTiger_Skill>().isWild) GetComponent<WhiteTiger_Skill>().WildPoint++;
-        }
+                if (!GetComponent<WhiteTiger_Skill>().isWild) GetComponent<WhiteTiger_Skill>().WildPoint++;
+            }
+        }        
     }
 
     void LeftMouseClicked()
@@ -279,7 +282,7 @@ public class WhiteTiger : MonoBehaviour
         }
         if (isupdate&&!onSkill)
         {
-            PlayerMove();
+                PlayerMove();
         }
     }
 

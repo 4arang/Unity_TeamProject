@@ -24,13 +24,17 @@ public class MainCamera_CameraRoam : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        //player = GameObject.FindWithTag("Player").transform;
         camHeight = transform.position.y;
     }
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if(player==null)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+        }
+        if (Input.GetKey(KeyCode.Space))
         {
             cameraOffset = player.transform.position;
             cameraOffset.y = camHeight;

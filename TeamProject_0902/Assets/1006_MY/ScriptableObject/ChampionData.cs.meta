@@ -3,7 +3,12 @@ guid: b4637cc6b826ff5408863e07d281fcd9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ClassBannerLit: {instanceID: 0}
+  - ClassBannerUnlit: {instanceID: 0}
+  - InGameAvatar: {instanceID: 0}
+  - LobbyAvatar: {instanceID: 0}
+  - Portrait: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

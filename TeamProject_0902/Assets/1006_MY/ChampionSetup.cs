@@ -6,59 +6,51 @@ using UnityEngine.UI;
 public class ChampionSetup : MonoBehaviour
 {
     private PhotonView PV;
-    public int characterValue;
-    public Text playerNickname;
+
     //GameScene Avatar;
     public GameObject myCharacter;
 
     //LobbyScene Avatar;
     public GameObject myLobbyCharacter;
-
-    //Stats
-    //public int playerHealth;
-    //public int playerDamage;
-
-    //public Camera myCamera;
-    //public AudioListener myAL;
-
   
     private void Start()
     {
         PV = GetComponent<PhotonView>();
-        if (PV.IsMine) 
-        {
-            PV.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
-        }
     }
 
     private void Update()
     {
-        if (PhotonRoom.room.currentScene == PhotonRoom.room.multiplayScene)
+        if (PhotonNetwork.InRoom && myLobbyCharacter == null)
         {
-            if (myCharacter.activeSelf==false)
+            if (PV.IsMine && PhotonRoom.room.currentScene == 0) //Lobby Spawn
             {
-                myCharacter.SetActive(true);
-                myLobbyCharacter.SetActive(false);
-            }  
+                PV.RPC("RPC_AddLobbyCharacter", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
+            }
+
+            if (PV.IsMine && PhotonRoom.room.currentScene == 1 && myCharacter == null)   //InGame Spawn
+            {
+                PV.RPC("RPC_AddGameCharacter", RpcTarget.AllBuffered, PlayerInfo.PI.mySelectedChampion);
+            }
         }
     }
-    [PunRPC]
-     void RPC_AddCharacter(int whichCharacter)
-    {
-        characterValue = whichCharacter;
 
-        myCharacter = Instantiate(PlayerInfo.PI.allCharacters[whichCharacter],
+    [PunRPC]
+     void RPC_AddLobbyCharacter(int whichCharacter)
+    {
+        myLobbyCharacter=Instantiate(GameDataSource.Instance.m_CharacterData[whichCharacter].LobbyAvatar,
+           PhotonRoom.room.spawnPoints[PhotonRoom.room.mynumberInRoom].position,
+           transform.rotation);
+
+        myLobbyCharacter.transform.SetParent(GameObject.Find("Room Panel").transform);
+    }
+
+    [PunRPC]
+    void RPC_AddGameCharacter(int whichCharacter)
+    {
+        Destroy(myLobbyCharacter);
+
+        myCharacter = Instantiate(GameDataSource.Instance.m_CharacterData[whichCharacter].InGameAvatar,
            transform.position,
            transform.rotation);
-        myLobbyCharacter = Instantiate(PlayerInfo.PI.allLobbyCharacters[whichCharacter],
-            transform.position,
-            transform.rotation);
-
-        myCharacter.SetActive(false);
-
-        if(PhotonRoom.room.currentScene!=PhotonRoom.room.multiplayScene)
-        {
-            myLobbyCharacter.transform.SetParent(NetworkManager.Instance.RoomPanel.transform);
-        }
     }
 }

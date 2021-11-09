@@ -24,3 +24,12 @@ MonoBehaviour:
   DisplayedName: BaekRang
   ClassBannerLit: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
   ClassBannerUnlit: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
+  InGameAvatar: {fileID: 7599431101685634140, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
+  LobbyAvatar: {fileID: 5732699308233884933, guid: 235c6028ae5c8bf4e9c016b93b23308d, type: 3}
+  Portrait: {fileID: 21300000, guid: 8b2d33d9c9d8c90488613eb52e8f548f, type: 3}
+  abilityData:
+  - {fileID: 11400000, guid: 25dd81a504571044fb34f0e1cf573615, type: 2}
+  - {fileID: 11400000, guid: 4f51b576097f4d642b483192ebf6124e, type: 2}
+  - {fileID: 11400000, guid: 7287062e8ac8bc7438c02fec87af60ef, type: 2}
+  - {fileID: 11400000, guid: be290553e9a5527498d06f26ef77ef33, type: 2}
+  - {fileID: 11400000, guid: 8d9b6f72efb779148879049739456091, type: 2}

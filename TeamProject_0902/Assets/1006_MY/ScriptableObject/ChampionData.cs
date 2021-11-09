@@ -22,15 +22,6 @@ public class ChampionData : ScriptableObject
     [Tooltip("skill3 is usually the character's unique or ultimate attack")]
     public ActionType Skill5;
 
-    //[Tooltip("Starting HP of this character class")]
-    //public StatVariable BaseHP;
-
-    //[Tooltip("Starting Mana of this character class")]
-    //public int BaseMana;
-
-    //[Tooltip("Base movement speed of this character class (in meters/sec)")]
-    //public float Speed;
-
     [Tooltip("Set to true if this represents an Champion, as opposed to a player.")]
     public bool IsChampion;
 
@@ -49,7 +40,11 @@ public class ChampionData : ScriptableObject
     [Tooltip("For players, this is the class banner (when inactive). (Not used for monsters)")]
     public Sprite ClassBannerUnlit;
 
-    //public GameObject InGameAvatar;
+    public GameObject InGameAvatar;
 
-    //public GameObject LobbyAvatar;
+    public GameObject LobbyAvatar;
+
+    public Sprite Portrait;
+
+    [SerializeField] private AbilityData[] abilityData;
 }

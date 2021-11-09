@@ -17,10 +17,12 @@ public class Player_Stats : MonoBehaviour
     public int HPperLevel;     //HP increasement per Level
     public int MP;             //Mana Point
     public int MPperLevel;
-    public int AP;             //Armor Point
+    public int AP;             //Ability Power
     public float APperLevel;
     public int AD;             //Attack Damage
     public float ADperLevel;
+    public int Armor;           //Deffense
+    public float AromrperLevel;
     public int MRP;             //Magic Resistance Point
     public float MRPperLevel;
     public float AttackSpeed;
@@ -193,7 +195,7 @@ public class Player_Stats : MonoBehaviour
             {
                 isZero = true;
             }
-            Debug.Log("Helium " + Helium);
+            //Debug.Log("Helium " + Helium);
         }
 
         if (AttackAbility == 2) //xerion

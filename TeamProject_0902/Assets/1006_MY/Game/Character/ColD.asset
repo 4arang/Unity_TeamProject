@@ -24,3 +24,12 @@ MonoBehaviour:
   DisplayedName: ColD
   ClassBannerLit: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}
   ClassBannerUnlit: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}
+  InGameAvatar: {fileID: 3798062587085106343, guid: acabd31a4078d7645bd1b08db2454d33, type: 3}
+  LobbyAvatar: {fileID: 5732699308233884933, guid: 0420669c62e0d0c4fa0f9a6ae23f9c59, type: 3}
+  Portrait: {fileID: 21300000, guid: ff5053d6f6e99ae4188957774241cc12, type: 3}
+  abilityData:
+  - {fileID: 11400000, guid: ecefc61ea1e5f7e49b63645272e2bf87, type: 2}
+  - {fileID: 11400000, guid: 6e9086548fc8bd848bb7c392fd0d1946, type: 2}
+  - {fileID: 11400000, guid: df2251abe9fd6f84ca0247a7ed66b13c, type: 2}
+  - {fileID: 11400000, guid: f6fb6569d06dbd943b1d4cbd888b0a42, type: 2}
+  - {fileID: 11400000, guid: 0477be31c2b017141a747cf0fdd72861, type: 2}

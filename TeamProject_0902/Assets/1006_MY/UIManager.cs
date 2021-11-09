@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,9 +9,6 @@ public class UIManager : MonoBehaviour
    // public ChampionStats CurrentPlayer;
 
     public Text TimeText;
-
-    //public float gameTime;
-    //public Text timeText;
 
     public Text FPSText;
     public Text MSText;
@@ -47,7 +43,6 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-
         MSText.text = (deltaTime * 1000.0f).ToString("0.0" + "ms");
         FPSText.text = (1.0f / deltaTime).ToString("0." + "fps");
         TimeText.text = GameManager.Instance.GameTime.ToString("00:00");

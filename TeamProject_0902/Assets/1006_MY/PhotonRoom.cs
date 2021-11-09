@@ -1,10 +1,9 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
 {
@@ -13,18 +12,33 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
 
     public bool isGameLoaded;
     public int currentScene;
-    public int multiplayScene;
-    //Player Info
-    Player[] photonPlayers;
+    public int multiplayScene=1;
+    public int nextPlayersTeam=1;
+
     //public int playersInRoom;
     public int mynumberInRoom;
+
+    [Header("Room Setting")]
+    public Transform[] spawnPoints;
 
     [Header("Spell Settings")]
     public GameObject spellSelectBox;
     public int currentSpellBtn = 0;
 
-    //public int playersInGame;
+    [Header("Loading Panel")]
+    [SerializeField]
+    private GameObject ChattingScrollView;
+    [SerializeField]
+    private GameObject LoadingPanel;
+    [SerializeField]
+    private Text ProgressText;
+    [SerializeField]
+    private Slider LoadingSlider;
+    [SerializeField]
+    private GameObject LoadingTextBox;
 
+    //public int playersInGame;
+    #region SINGLETON
     private void Awake()
     {
         if (PhotonRoom.room == null)
@@ -42,36 +56,73 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         DontDestroyOnLoad(this.gameObject);
         PV = GetComponent<PhotonView>();
     }
+    #endregion
+    //public override void OnEnable()
+    //{
+    //    base.OnEnable();
+    //    PhotonNetwork.AddCallbackTarget(this);
+    //    SceneManager.sceneLoaded += OnSceneFinishedLoading;
+    //}
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        PhotonNetwork.AddCallbackTarget(this);
-        SceneManager.sceneLoaded += OnSceneFinishedLoading;
-    }
+    //public override void OnDisable()
+    //{
+    //    base.OnDisable();
+    //    PhotonNetwork.RemoveCallbackTarget(this);
+    //    SceneManager.sceneLoaded -= OnSceneFinishedLoading;
+    //}
+    //void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
+    //{
+    //    currentScene = scene.buildIndex;
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        PhotonNetwork.RemoveCallbackTarget(this);
-        SceneManager.sceneLoaded -= OnSceneFinishedLoading;
-    }
+    //}
 
     private void Start()
     {
         PV = GetComponent<PhotonView>();
+
+        //Loading Components Disable
+        ChattingScrollView.SetActive(true);
+        LoadingPanel.SetActive(false);
     }
 
-    void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
+    private void Update()
     {
-        currentScene = scene.buildIndex;
-        if (currentScene == multiplayScene)
-        {
-            PV.RPC("RPC_LoadedGameScene", RpcTarget.All);
-        }
+
+        //if (PV.IsMine && PhotonNetwork)  //CreatePlayer when entered room
+        //{
+        //    Debug.Log("방에 들어왔을 때, 캐릭터를 생성합니다");
+        //    PV.RPC("RPC_CreatePlayer", RpcTarget.All);
+        //}
     }
+
 
     #region UI_BUTTONS CALLBACKS
+    public void OnStartGameButton() //Call by StartGame Button
+    {
+        LoadingPanel.SetActive(true);
+
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+        //Loading Progress
+        //AsyncOperation operation = SceneManager.LoadSceneAsync(multiplayScene);
+
+        //while (!operation.isDone)
+        //{
+        //    float progress = Mathf.Clamp01(operation.progress / .9f);
+
+        //    LoadingSlider.value = progress;
+        //    ProgressText.text = progress * 100f + "%";
+        //    Debug.Log(progress);
+        //}
+        PhotonNetwork.LoadLevel(multiplayScene);
+    }
+
     public void OnSpellSetBoxOpen(int whichBtn)
     {
         spellSelectBox.SetActive(true);
@@ -83,19 +134,23 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     }
 
     #endregion
-    [PunRPC]
-    private void RPC_LoadedGameScene()
+    public void UpdateTeam()
     {
-        PV.RPC("RPC_CreatePlayer", RpcTarget.All);
-
-        //Make more Abilities
+        if (nextPlayersTeam == 1)
+        {
+            nextPlayersTeam = 2;
+        }
+        else
+        {
+            nextPlayersTeam = 1;
+        }
     }
 
-    [PunRPC]
-    private void RPC_CreatePlayer()
-    {
-        Debug.Log("CreatePlayer");
-        PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"),
-            transform.position, Quaternion.identity, 0);
-    }
+    //[PunRPC]
+    //private void RPC_CreatePlayer()
+    //{
+    //    Debug.Log("CreatePlayer");
+    //    PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PhotonNetworkPlayer"),
+    //        transform.position, Quaternion.identity, 0);
+    //}
 }

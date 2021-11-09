@@ -24,3 +24,12 @@ MonoBehaviour:
   DisplayedName: Xerion
   ClassBannerLit: {fileID: 21300000, guid: 03eb552d9c1e28e4b88d90c6c110b551, type: 3}
   ClassBannerUnlit: {fileID: 21300000, guid: 03eb552d9c1e28e4b88d90c6c110b551, type: 3}
+  InGameAvatar: {fileID: 1464998985006854029, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+  LobbyAvatar: {fileID: 5732699308233884933, guid: 129703e377bdfa24f8edb0ea5be972c5, type: 3}
+  Portrait: {fileID: 21300000, guid: 03eb552d9c1e28e4b88d90c6c110b551, type: 3}
+  abilityData:
+  - {fileID: 11400000, guid: 715ac7920ab9ae446add684497e402e9, type: 2}
+  - {fileID: 11400000, guid: c070ca9335b704043ae76f11e90b1247, type: 2}
+  - {fileID: 11400000, guid: 3f665dbcdb1e4444186e36f2229e4b29, type: 2}
+  - {fileID: 11400000, guid: 7e67100b7966c024586d7fa812ee5404, type: 2}
+  - {fileID: 11400000, guid: e95d52b117c814b45a26b38a3ad21e90, type: 2}
