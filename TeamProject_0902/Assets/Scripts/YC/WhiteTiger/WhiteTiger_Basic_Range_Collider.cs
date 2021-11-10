@@ -5,24 +5,24 @@ using UnityEngine;
 public class WhiteTiger_Basic_Range_Collider : MonoBehaviour
 {
     private bool CheckEnemy = false;
-
-    private Collider Enemy;
+    private bool myTeamColor;
 
     public void isAttackReady()
     {
 
         CheckEnemy = true;
+        myTeamColor = GetComponentInParent<Player_Stats>().TeamColor;
     }
 
     private void OnTriggerStay(Collider other)
     {
-
         if (CheckEnemy)
         {
-            if (other.CompareTag("Minion") || other.CompareTag("Enemy"))
+            if ((other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor != myTeamColor)
+                || ((other.CompareTag("Player")) && other.GetComponent<Player_Stats>().TeamColor != myTeamColor)
+                 || ((other.CompareTag("Turret")) && other.GetComponent<Turret_Stats>().TeamColor != myTeamColor))
             {
-                Debug.Log("Checking Enemy");
-                GetComponentInParent<WhiteTiger>().TargetEnemy = other;
+                GetComponentInParent<WhiteTiger>().TargetEnemy = other.transform;
                 CheckEnemy = false;
             }
         }

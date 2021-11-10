@@ -5,24 +5,24 @@ using UnityEngine;
 public class ColD_Basic_Range_collider : MonoBehaviour
 {
     private bool CheckEnemy = false;
+    private bool myTeamColor;
 
-    private Collider Enemy;
 
     public void isAttackReady()
     {
-
         CheckEnemy = true;
+        myTeamColor = GetComponentInParent<Player_Stats>().TeamColor;
     }
 
     private void OnTriggerStay(Collider other)
     {
-
         if (CheckEnemy)
         {
-            if (other.CompareTag("Minion") || other.CompareTag("Enemy"))
+            if ((other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor != myTeamColor)
+                || ((other.CompareTag("Player")) && other.GetComponent<Player_Stats>().TeamColor != myTeamColor)
+                 || ((other.CompareTag("Turret")) && other.GetComponent<Turret_Stats>().TeamColor != myTeamColor))
             {
-                Debug.Log("Checking Enemy");
-                GetComponentInParent<ColD>().TargetEnemy = other;
+                GetComponentInParent<ColD>().TargetEnemy = other.transform;
                 CheckEnemy = false;
             }
         }

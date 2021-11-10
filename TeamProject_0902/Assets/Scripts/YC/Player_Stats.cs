@@ -9,7 +9,7 @@ public class Player_Stats : MonoBehaviour
     public byte DefenseAbility;
     public byte MagicAbility;
     public byte Difficulty;
-    
+
 
     //Game Stats
     public bool TeamColor;
@@ -17,12 +17,10 @@ public class Player_Stats : MonoBehaviour
     public int HPperLevel;     //HP increasement per Level
     public int MP;             //Mana Point
     public int MPperLevel;
-    public int AP;             //Ability Power
+    public int AP;             //Armor Point
     public float APperLevel;
     public int AD;             //Attack Damage
     public float ADperLevel;
-    public int Armor;           //Deffense
-    public float AromrperLevel;
     public int MRP;             //Magic Resistance Point
     public float MRPperLevel;
     public float AttackSpeed;
@@ -61,6 +59,9 @@ public class Player_Stats : MonoBehaviour
     //for minion targetsetting
     public bool isAttack_Minion = false;
     public bool isAttack_Player = false;
+
+
+
 
     private void Start()
     {
@@ -127,7 +128,7 @@ public class Player_Stats : MonoBehaviour
             MPregen = GetComponent<Xerion_Stats>().MPregen;
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
-          
+
             hp = HP;
             mp = MP;
 
@@ -166,11 +167,12 @@ public class Player_Stats : MonoBehaviour
             mp = MP;
         }
 
+        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
     }
 
     private void Update()
     {
-        if(AttackAbility==8) //coldy
+        if (AttackAbility == 8) //coldy
         {
             if (Charging)        //충전가능한 상태인 경우 1초마다 충전
             {
@@ -195,7 +197,7 @@ public class Player_Stats : MonoBehaviour
             {
                 isZero = true;
             }
-            //Debug.Log("Helium " + Helium);
+            Debug.Log("Helium " + Helium);
         }
 
         if (AttackAbility == 2) //xerion
@@ -211,7 +213,7 @@ public class Player_Stats : MonoBehaviour
             Regen();
             LevelCheck();
         }
-       
+
 
     }
 
@@ -260,9 +262,12 @@ public class Player_Stats : MonoBehaviour
     {
         Damage *= (1 - AP / (100 + AP));
         hp -= Damage;
-        if(AttackAbility==3) //for whitetiger
-        StartCoroutine("StoreDamage", Damage);
+        if (AttackAbility == 3) //for whitetiger
+            StartCoroutine("StoreDamage", Damage);
         Debug.Log("player HP" + hp);
+
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
+
     }
 
     IEnumerator StoreDamage(float Damage)

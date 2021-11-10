@@ -55,6 +55,7 @@ public class Xerion : MonoBehaviour
     private float TotalAgentDistance = 0;
     private bool passiveOn = false;
 
+
     private void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -72,6 +73,7 @@ public class Xerion : MonoBehaviour
         AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
 
         PassiveEffect.SetActive(false);
+
     }
 
 
@@ -272,7 +274,8 @@ public class Xerion : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
             GunShot_Effect.SetActive(false);
             animator.SetBool("A_Xerion", false);
-            damageEnemy(target);
+            Xerion_BasicAD = GetComponent<Player_Stats>().AD;
+            if (target)damageEnemy(target);
             yield return new WaitForSeconds(AttackSpeed);
             break;
         }
@@ -291,7 +294,8 @@ public class Xerion : MonoBehaviour
 
     private void damageEnemy(Transform target)
     {
-        Xerion_BasicAD = GetComponent<Xerion_Stats>().AD;
+        Debug.Log("AD " + Xerion_BasicAD);
+
 
         if (target.CompareTag("Minion"))
         {

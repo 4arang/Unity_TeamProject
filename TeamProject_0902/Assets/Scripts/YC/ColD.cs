@@ -39,11 +39,13 @@ public class ColD : MonoBehaviour
 
     private bool isBasicAttack = false;
     public bool CheckEnemy = false;
-    public Collider TargetEnemy;
+    public Transform TargetEnemy;
     private float BasicRangef;
     private float AttackSpeed;
     private float BasicRange_Ref = 0.04f;
     private bool OnAttack = false;
+    private float ColD_BasicAD;
+    private byte ColD_BasicAD_Level = 1;
    
     private void Start()
     {
@@ -98,20 +100,24 @@ public class ColD : MonoBehaviour
         {
             LeftMouseClicked(); //왼쪽마우스 클릭
         }
-        if(CheckEnemy) //적 체크 완료한경우
+        if(CheckEnemy && !isBasicAttack) //적 체크 완료한경우
         {
             if (TargetEnemy)//타겟설정이 되었다면 
             {
                 Debug.Log("Targeted");
                 GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
                 agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                AttackTargetEnemy(); //타겟 공격
+                AttackTargetEnemy(TargetEnemy); //타겟 공격
             }
             else
             {       //타겟이 없으면 재설정
                 Debug.Log("Targeting");
                 GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
             }
+        }
+        if(GetComponent<ColD_W>().isSkillon)
+        {
+            CheckEnemy = false;
         }
                 
     }
@@ -146,6 +152,7 @@ public class ColD : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             BasicRange_Col.SetActive(false);
+            isBasicAttack = false;
             TargetEnemy = null;
             CheckEnemy = false;
             RaycastHit hit;
@@ -173,7 +180,7 @@ public class ColD : MonoBehaviour
     void PlayerMove()
     {
         if (hit_.collider.tag == "Floor")
-        { 
+        {
             //Move
             agent.SetDestination(PlayerDest);
             agent.stoppingDistance = 0;
@@ -191,32 +198,33 @@ public class ColD : MonoBehaviour
 
             ColD.path = agent.path.corners;
         }
+        else return;
     }
 
-    void AttackTargetEnemy()
+    void AttackTargetEnemy(Transform target)
     {
-        if ((transform.position - TargetEnemy.transform.position).magnitude < 
-            TargetEnemy.transform.localScale.magnitude*0.85f)
+        if ((transform.position - target.transform.position).magnitude <
+            target.transform.localScale.magnitude * 0.85f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
-
-            float shootDir = GetDirection(transform.position, TargetEnemy.transform.position);
-            agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
-
-            Debug.Log("TargetSet, Player Stop");
-            if (!OnAttack)
+            if (animator.GetBool("A_ColD") == false)
             {
-                Debug.Log("Active animation");
-                StartCoroutine("Active_A");
+                float shootDir = GetDirection(transform.position, target.transform.position);
+                movingManager.Instance.PlayerDirection = shootDir;
+                agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
+                Debug.Log("TargetSet, Player Stop");
+                if (!OnAttack)
+                {
+                    Debug.Log("Active animation");
+                    StartCoroutine("Active_A", target);
+                }
             }
         }
-        else
-        {
-            TargetEnemy = null; //공격범위 밖이면 타겟없으므로 재설정
-        }
+        else target =  null;
+
     }
 
-    IEnumerator Active_A()
+    IEnumerator Active_A(Transform target)
     {
         OnAttack = true;
         while (true)
@@ -225,15 +233,36 @@ public class ColD : MonoBehaviour
             animator.SetBool("A_ColD", true);
             yield return new WaitForSeconds(0.2f);
             BasicAttack_Effect.SetActive(true);
-            GetComponentInChildren<ColD_Punch_Collider>().Skill();
+            //GetComponentInChildren<ColD_Punch_Collider>().Skill();
             BasicAttack_Effect_Slash.SetActive(true);
             yield return new WaitForSeconds(0.6f);
             BasicAttack_Effect.SetActive(false);
             animator.SetBool("A_ColD", false);
+
+            if(target)damageEnemy(target);
             yield return new WaitForSeconds(AttackSpeed);
             break;
         }
         OnAttack = false;
+    }
+
+    private void damageEnemy(Transform target)
+    {
+        ColD_BasicAD = GetComponent<ColD_Stats>().AD;
+
+        if (target.CompareTag("Minion"))
+        {
+            target.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD);
+        }
+        else if (target.CompareTag("Player"))
+        {
+            target.GetComponent<Player_Stats>().DropHP(ColD_BasicAD);
+        }
+        else if (target.CompareTag("Turret"))
+        {
+            target.GetComponent<Turret_Stats>().DropHP(ColD_BasicAD);
+        }
+
     }
 
     float GetDirection(Vector3 home, Vector3 away)

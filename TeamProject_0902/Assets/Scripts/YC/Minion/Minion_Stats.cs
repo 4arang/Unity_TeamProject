@@ -6,6 +6,7 @@ using System.Diagnostics;//unity 내장시간함수? 어떻게 처리해야하는지 게임내 멈춰
 
 public class Minion_Stats : MonoBehaviour
 {
+    public Camera MainCamera;
     Stopwatch stopwatch = new Stopwatch();
     public bool TeamColor;
 
@@ -14,6 +15,7 @@ public class Minion_Stats : MonoBehaviour
     public float HPregen; 
     public float HPregenperLevel;
     public int HPPtime;
+    public float hp;
 
     public float MaxAD;
     public float AD; 
@@ -48,9 +50,12 @@ public class Minion_Stats : MonoBehaviour
 
     [SerializeField] private GameObject DamagedEffect;
 
+    Animator animator;
+
   
     void Start()
     {
+        animator = GetComponent<Animator>();
        if(TryGetComponent(out Minion1_Stats Minion_Num1))
         {
             //TeamColor = GetComponent<Minion1_Stats>().TeamColor;
@@ -148,7 +153,7 @@ public class Minion_Stats : MonoBehaviour
         }
         else if (TryGetComponent(out Minion4_Stats Minion_Num4))
         {
-           // TeamColor = GetComponent<Minion4_Stats>().TeamColor;
+            // TeamColor = GetComponent<Minion4_Stats>().TeamColor;
 
             HP = GetComponent<Minion4_Stats>().HP;
             HPregen = GetComponent<Minion4_Stats>().HPregen;
@@ -174,7 +179,8 @@ public class Minion_Stats : MonoBehaviour
             EXPperTime = GetComponent<Minion4_Stats>().EXPperTime;
         }
 
-
+        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        hp = HP;
         DamagedEffect.SetActive(false);
     }
 
@@ -187,8 +193,7 @@ public class Minion_Stats : MonoBehaviour
 
     void Update()
     {
-        UnityEngine.Debug.Log("Minion." + MinionNum + " HP " + HP);
-        UnityEngine.Debug.Log("Minion." + MinionNum + " Speed " + MoveSpeed);
+        UnityEngine.Debug.Log("Minion." + MinionNum + " HP " + hp);
 
     }
 
@@ -200,11 +205,12 @@ public class Minion_Stats : MonoBehaviour
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (HP <= MaxHP)
+                if (hp <= HP)
                 {
-                    HP += HPregen;
+                    hp += HPregen;
                     HPregen += HPregenperLevel;
-                    if (HP > MaxHP) HP = MaxHP;
+                    if (hp > HP) hp = HP;
+                    GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -234,10 +240,11 @@ public class Minion_Stats : MonoBehaviour
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (HP <= MaxHP)
+                if (hp <= HP)
                 {
-                    HP += HPregen;
-                    if (HP > MaxHP) HP = MaxHP;
+                    hp += HPregen;
+                    if (hp > HP) hp = HP;
+                    GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -261,10 +268,11 @@ public class Minion_Stats : MonoBehaviour
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (HP <= MaxHP)
+                if (hp <= HP)
                 {
-                    HP += HPregen;
-                    if (HP > MaxHP) HP = MaxHP;
+                    hp += HPregen;
+                    if (hp > HP) hp = HP;
+                    GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -288,8 +296,10 @@ public class Minion_Stats : MonoBehaviour
             if (elapsedTime % HPPtime == 0)
             {
 
+                hp += HPregen;
                 HP += HPregen;
-
+                GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+                GetComponentInChildren<HP_Bar>().SetHP(hp);
 
                 AD += ADperTime;
 
@@ -312,8 +322,18 @@ public class Minion_Stats : MonoBehaviour
 
     public void DropHP(float damage)
     {
+
+
         damage *= (1-AP/(100+AP));
-        HP -= damage;
+
+        hp -= damage;
+
+        if (hp <= 0)
+        {
+            animator.SetBool("Die", true);
+            StartCoroutine("Dying");
+        }
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
     }
 
     public void DropSpeed(float damage, float time)
@@ -331,5 +351,12 @@ public class Minion_Stats : MonoBehaviour
     {
         DropSpeed(0, StunTime); 
         //stop attack
+    }
+
+    IEnumerator Dying()
+    {
+        yield return new WaitForSeconds(2.5f);
+        animator.SetBool("Die", false);
+        Destroy(gameObject);
     }
 }

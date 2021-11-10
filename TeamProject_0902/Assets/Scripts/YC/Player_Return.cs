@@ -6,7 +6,7 @@ public class Player_Return : MonoBehaviour
 {
 
     [SerializeField] private GameObject Return_Aura;
-    [SerializeField] private Camera MainCamera;
+    [SerializeField] public Camera MainCamera;
     Vector3 CameraOrgPos;
     public float Return_skillTime = 6.0f;
     public float Return_coolTime = 10.0f;

@@ -52,13 +52,7 @@ public class Minion1 : MonoBehaviour
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
 
-        ///HP Check
-        if (GetComponent<Minion_Stats>().HP <= 0)
-        {
-            animator.SetBool("Die", true);
-            StartCoroutine("Dying");
-        }
-
+  
         ///TargetCheck
         if (TargetFound&&Target) AttackTarget(Target);
     }
@@ -150,10 +144,8 @@ public class Minion1 : MonoBehaviour
     private void AttackTarget(Transform target)
     {
         agent.SetDestination(target.position);
-        if (target.CompareTag("Turret")) TargetRange_ = TargetRange + 3;
+        if (target.CompareTag("Turret")) TargetRange_ = TargetRange + 1.5f;
         else TargetRange_ = TargetRange;
-        Debug.Log("TargetRange" + TargetRange_);
-        Debug.Log("originalTargetRange" + TargetRange);
 
         if (Vector3.Distance(agent.transform.position, target.position) <= TargetRange_)
         {
@@ -177,12 +169,6 @@ public class Minion1 : MonoBehaviour
     }
 
 
-    IEnumerator Dying()
-    {
-        yield return new WaitForSeconds(2.5f);
-        animator.SetBool("Die", false);
-        Destroy(gameObject);
-    }
 
     IEnumerator Attacking(Transform target)
     {

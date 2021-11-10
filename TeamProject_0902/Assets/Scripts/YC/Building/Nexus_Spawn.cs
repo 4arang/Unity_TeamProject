@@ -17,10 +17,13 @@ public class Nexus_Spawn : MonoBehaviour
     void SpawnMinion()
     {
         checkSpawnTimes++;
-        Instantiate(minion1, new Vector3(transform.position.x , transform.position.y, transform.position.z), Quaternion.identity);
+        Instantiate(minion1, new Vector3(transform.position.x+50 , transform.position.y, transform.position.z), Quaternion.identity);
+        Instantiate(minion2, new Vector3(transform.position.x + 50, transform.position.y, transform.position.z), Quaternion.identity);
+
         Instantiate(minion1, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
-  
-        Instantiate(minion2, transform.position, Quaternion.identity);
+        Instantiate(minion2, new Vector3(transform.position.x + 50, transform.position.y, transform.position.z), Quaternion.identity);
+        Instantiate(minion3, new Vector3(transform.position.x + 50, transform.position.y, transform.position.z), Quaternion.identity);
+        Instantiate(minion4, new Vector3(transform.position.x + 50, transform.position.y, transform.position.z), Quaternion.identity);
         if (checkSpawnTimes == 3)
         {
             Instantiate(minion3, transform.position, Quaternion.identity);

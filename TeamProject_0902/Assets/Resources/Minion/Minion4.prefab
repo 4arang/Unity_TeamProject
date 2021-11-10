@@ -15287,7 +15287,7 @@ Transform:
   m_GameObject: {fileID: 9045615944599616986}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -10.42, y: -0.04755211, z: -4.6327996}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 262100173148134591}
   - {fileID: 5283420011414366539}
@@ -15428,6 +15428,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttakEffect: {fileID: 3503482488806961127, guid: 489c507fecfd97b4a95b83585149e1cc, type: 3}
+  Turret1: {fileID: 0}
+  Turret2: {fileID: 0}
+  Turret3: {fileID: 0}
   TeamColor: 0
 --- !u!195 &2865288413993350502
 NavMeshAgent:

@@ -6,6 +6,8 @@ public class ColD_W : MonoBehaviour
 {
     Animator animator;
 
+    public bool isSkillon = false;
+
     [Header("Q_Skill")]
     [SerializeField] private GameObject flame;
 
@@ -63,6 +65,7 @@ public class ColD_W : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().Helium >= 20)
         {
+            isSkillon = true;
             if (animator.GetBool("W_ColD") == false)
                 StartCoroutine("Active_W");
             animator.SetBool("W_ColD", true);
@@ -70,6 +73,7 @@ public class ColD_W : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().Helium >= 20)
         {
+            isSkillon = true;
             if (animator.GetBool("Q_ColD") == false)
                 StartCoroutine("Active_Q");
             animator.SetBool("Q_ColD", true);
@@ -77,6 +81,7 @@ public class ColD_W : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && GetComponent<Player_Stats>().Helium >= 20)
         {
+            isSkillon = true;
             movingManager.Instance.PlayerClickedPos = transform.position; //위치고정
             Direction.transform.position = Range.transform.position; //캐릭터가운데로 화살이동
             Direction.SetActive(true); //화살방향 설정 -> 화살 active
@@ -122,6 +127,7 @@ Quaternion.identity); //유탄발사 and transform 저장
 
         if (Input.GetKeyDown(KeyCode.R))
         {
+            isSkillon = true;
             mouseVector = GetMousePos(); //화살 방향 마우스방향에 미리 이동
             Direction.SetActive(true); //방향화살 active
             //화살표 위치 고정
@@ -175,6 +181,7 @@ Quaternion.identity); //유탄발사 and transform 저장
 
             break;
         }
+        isSkillon = false;
     }
     IEnumerator Active_W()
     {
@@ -211,6 +218,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             animator.SetBool("W_ColD", false);
             break;
         }
+        isSkillon = false;
     }
     IEnumerator Active_E()
     {
@@ -234,6 +242,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             }
             break;
         }
+        isSkillon = false;
     }
     IEnumerator Active_R()
     {
@@ -260,6 +269,7 @@ Quaternion.identity); //유탄발사 and transform 저장
             GameObject.Destroy(Missile);
             break;
         }
+        isSkillon = false;
     }
 
     Vector3 GetMousePos()

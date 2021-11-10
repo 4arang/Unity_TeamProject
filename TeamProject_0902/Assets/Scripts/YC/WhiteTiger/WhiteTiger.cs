@@ -43,8 +43,8 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     [Header("A_Basic")]
     [SerializeField] private GameObject BasicRange;
     [SerializeField] private GameObject BasicRange_Col;
-    [SerializeField] private GameObject BasicAttack_Effect_L;
-    [SerializeField] private GameObject BasicAttack_Effect_R;
+   // [SerializeField] private GameObject BasicAttack_Effect_L;
+   // [SerializeField] private GameObject BasicAttack_Effect_R;
     [SerializeField] private GameObject BasicAttack_Effect_Slash;
     private bool isBasicAttack = false;
     public bool CheckEnemy = false;
@@ -53,17 +53,22 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     private float AttackSpeed;
     private float BasicRange_Ref = 0.004f;
     private bool OnAttack = false;
+    private float WT_BasicAD;
+    private byte WT_BasicAD_Level = 1;
+    private float PassiveRange = 2000;
+    private bool TeamColor;
 
     [Header("Q_Skill")]
     [SerializeField] private GameObject Q_Punch_L;
     [SerializeField] private GameObject Q_Punch_R;
     [SerializeField] private GameObject adv_Q_Punch;
-    [SerializeField] private GameObject adv_Q_Punch_col;
+    // [SerializeField] private GameObject adv_Q_Punch_col;
     private bool On_adv_Q = false;
     //[SerializeField] private GameObject Q_Effect;
     //[SerializeField] private GameObject adv_Q_Effect;
+    private float Q_AD;
+    private byte Q_Level = 1;
 
-    private byte Q_SkillLevel;
 
 
     private void Start()
@@ -84,8 +89,8 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         BasicRange_Col.SetActive(false);
         BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
-        BasicAttack_Effect_L.SetActive(false);
-        BasicAttack_Effect_R.SetActive(false);
+      //  BasicAttack_Effect_L.SetActive(false);
+      // BasicAttack_Effect_R.SetActive(false);
       //  BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
@@ -93,10 +98,12 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         Q_Punch_L.SetActive(false);
         Q_Punch_R.SetActive(false);
         adv_Q_Punch.SetActive(false);
-        adv_Q_Punch_col.SetActive(false);
-         //Q_Effect.SetActive(false);
-         //adv_Q_Effect.SetActive(false);
-        Q_SkillLevel = 1;
+        // adv_Q_Punch_col.SetActive(false);
+        //Q_Effect.SetActive(false);
+        //adv_Q_Effect.SetActive(false);
+
+        TeamColor = GetComponent<Player_Stats>().TeamColor;
+        InvokeRepeating("Passive", 0f, 0.5f); //passiveRange 내 챔피언발견시 속도 up
     }
 
 
@@ -132,11 +139,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
             else { movingManager.Instance.isFree = false; } //전투모드
 
-            if (Enemy) //적 타겟이 있는경우
-            {
-                SpeedUp(); //포식자 스킬 적 챔피언 접근시 이동속도 30 증가
-            }
-
+  
             //////////////기본어택땅/////////////
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -148,14 +151,14 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             {
                 LeftMouseClicked(); //왼쪽마우스 클릭
             }
-            if (CheckEnemy) //적 체크 완료한경우
+            if (CheckEnemy && !isBasicAttack) //적 체크 완료한경우
             {
                 if (TargetEnemy)//타겟설정이 되었다면 
                 {
                     Debug.Log("Targeted");
                     GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
                     agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                    AttackTargetEnemy(); //타겟 공격
+                    AttackTargetEnemy(TargetEnemy); //타겟 공격
                 }
                 else if (!isBasicAttack)
                 {       //타겟이 없으면 재설정
@@ -198,50 +201,52 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         PlayerDest = movingManager.Instance.PlayerClickedPos;
     }
 
-    void AttackTargetEnemy()
+    void AttackTargetEnemy(Transform target)
     {
-        if ((transform.position - TargetEnemy.transform.position).magnitude <
-            TargetEnemy.transform.localScale.magnitude*0.85f)
+   
+        if ((transform.position - target.transform.position).magnitude <
+            target.transform.localScale.magnitude * 0.85f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
-
-            float shootDir = GetDirection(transform.position, TargetEnemy.transform.position);
-            agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
-
-            Debug.Log("TargetSet, Player Stop");
-            if (!OnAttack)
+            if (animator.GetBool("A_WT") == false)
             {
-                Debug.Log("Active animation");
-                StartCoroutine("Active_A");
+                float shootDir = GetDirection(transform.position, target.transform.position);
+                movingManager.Instance.PlayerDirection = shootDir;
+                agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
+
+                Debug.Log("TargetSet, Player Stop");
+                if (!OnAttack)
+                {
+                    Debug.Log("Active animation");
+                    StartCoroutine("Active_A", target);
+                }
             }
         }
         else
-        {
-            TargetEnemy = null; //공격범위 밖이면 타겟없으므로 재설정
-        }
+            target = null; //타겟 재설정
     }
 
-    void SpeedUp()
-    { 
-        if (!SpeedFull)
-        {
-            if ((transform.position - Enemy.position).magnitude < 10/*범위 태그minion->Enemy 수정요*/)
-            {
-                GetComponent<Player_Stats>().MoveSpeed += 30;
-                SpeedFull = true; //한번만 가능
-                Debug.Log("Tiger speedup " + agent.speed);
-            }
-        }
-        else
-        {
-            if ((transform.position - Enemy.position).magnitude >= 10/*범위 태그minion->Enemy 수정요*/)
-            {
-                GetComponent<Player_Stats>().MoveSpeed -= 30;
-                SpeedFull = false; //한번만 가능
-                Debug.Log("Tiger speeddown " + agent.speed);
-            }
-        }
-    }
+    //void SpeedUp()
+    //{ 
+    //    if (!SpeedFull)
+    //    {
+    //        if ((transform.position - Enemy.position).magnitude < 10/*범위 태그minion->Enemy 수정요*/)
+    //        {
+    //            GetComponent<Player_Stats>().MoveSpeed += 30;
+    //            SpeedFull = true; //한번만 가능
+    //            Debug.Log("Tiger speedup " + agent.speed);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if ((transform.position - Enemy.position).magnitude >= 10/*범위 태그minion->Enemy 수정요*/)
+    //        {
+    //            GetComponent<Player_Stats>().MoveSpeed -= 30;
+    //            SpeedFull = false; //한번만 가능
+    //            Debug.Log("Tiger speeddown " + agent.speed);
+    //        }
+    //    }
+    //}
 
     void RightMouseClicked()
     {
@@ -312,7 +317,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
     }
 
-    IEnumerator Active_A()
+    IEnumerator Active_A(Transform target)
     {
         OnAttack = true;
         while (true)
@@ -320,18 +325,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (!On_adv_Q)
             {
                 animator.SetBool("A_WT", true);
-                BasicAttack_Effect_R.SetActive(true);
-                GetComponentInChildren<WT_Punch_Collider_R>().Skill();
-                yield return new WaitForSeconds(0.6f);
-                BasicAttack_Effect_R.SetActive(false);
-                yield return new WaitForSeconds(0.1f);
-                BasicAttack_Effect_L.SetActive(true);
-                GetComponentInChildren<WT_Punch_Collider_L>().Skill();
-                yield return new WaitForSeconds(0.5f);
-                BasicAttack_Effect_L.SetActive(false);
+                yield return new WaitForSeconds(1.0f);
+                if (target) damageEnemy(target);
 
-
-                //BasicAttack_Effect_Slash.SetActive(true);
                 animator.SetBool("A_WT", false);
                 yield return new WaitForSeconds(AttackSpeed);
                 OnAttack = false;
@@ -340,56 +336,54 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             else
             {
                 animator.SetBool("A_WT", true);
-                yield return new WaitForSeconds(0.2f);
-                adv_Q_Punch_col.SetActive(true);
-                GetComponentInChildren<WT_Bite_Collider>().Skill();
-                yield return new WaitForSeconds(0.3f);
-                adv_Q_Punch_col.SetActive(false);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1.0f);
+                if (target) damageEnemy(target);
                 animator.SetBool("A_WT", false);
                 yield return new WaitForSeconds(AttackSpeed);
                 OnAttack = false;
                 break;
             }
-           
+
         }
+        OnAttack = false;
 
     }
+}
 
-    IEnumerator Active_Q()
+IEnumerator Active_Q()
+{
+    while (true)
     {
-        while (true)
+
+        if (!GetComponent<WhiteTiger_Skill>().isWild)
         {
-        
-            if (!GetComponent<WhiteTiger_Skill>().isWild)
-            {
-                GetComponent<Player_Stats>().AD += 10 * Q_SkillLevel;
-                Q_Punch_L.SetActive(true);
-                Q_Punch_R.SetActive(true);
-                yield return new WaitForSeconds(10.0f);
-                Q_Punch_L.SetActive(false);
-                Q_Punch_R.SetActive(false);
-                GetComponent<Player_Stats>().AD -= 10 * Q_SkillLevel;
-                break;
-            }
-            else
-            {
-                On_adv_Q = true;    //true일경우 펀치->물어뜯기
-                GetComponent<Player_Stats>().AD += 20 * Q_SkillLevel;
-                adv_Q_Punch.SetActive(true);
-                yield return new WaitForSeconds(10.0f);
-                adv_Q_Punch.SetActive(false);
-                GetComponent<Player_Stats>().AD -= 20 * Q_SkillLevel;
-                On_adv_Q = false;
-                //yield return new WaitForSeconds(10.0f);
-                //adv_Q_Punch.SetActive(false);
-                break;
-            }
+            GetComponent<Player_Stats>().AD += 10 * Q_Level;
+            Q_Punch_L.SetActive(true);
+            Q_Punch_R.SetActive(true);
+            yield return new WaitForSeconds(10.0f);
+            Q_Punch_L.SetActive(false);
+            Q_Punch_R.SetActive(false);
+            GetComponent<Player_Stats>().AD -= 10 * Q_Level;
+            break;
+        }
+        else
+        {
+            On_adv_Q = true;    //true일경우 펀치->물어뜯기
+            GetComponent<Player_Stats>().AD += 20 * Q_Level;
+            adv_Q_Punch.SetActive(true);
+            yield return new WaitForSeconds(10.0f);
+            adv_Q_Punch.SetActive(false);
+            GetComponent<Player_Stats>().AD -= 20 * Q_Level;
+            On_adv_Q = false;
+            //yield return new WaitForSeconds(10.0f);
+            //adv_Q_Punch.SetActive(false);
+            break;
         }
     }
+}
 
 
-    float GetDirection(Vector3 home, Vector3 away)
+float GetDirection(Vector3 home, Vector3 away)
     {
         return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
     }
@@ -403,6 +397,48 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
         Debug.Log("RSkill Targeted");
     }
+private void damageEnemy(Transform target)
+{
+    WT_BasicAD = GetComponent<Player_Stats>().AD;
+
+    if (target.CompareTag("Minion"))
+    {
+        target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD);
+    }
+    else if (target.CompareTag("Player"))
+    {
+        target.GetComponent<Player_Stats>().DropHP(WT_BasicAD);
+    }
+    else if (target.CompareTag("Turret"))
+    {
+        target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
+    }
 
 }
+
+private void Passive()
+{
+    Collider[] colliderArray = Physics.OverlapSphere(transform.position, PassiveRange);
+
+    foreach (Collider col in colliderArray)
+    {
+        bool foundPlayer = false;
+
+
+        if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+             && (player.TeamColor != TeamColor))
+        {
+            if (!foundPlayer)
+            {
+                agent.speed = originalSpeed + 0.3f; //30*0.01
+                foundPlayer = true; //중복적용 방지
+            }
+        }
+        else
+            agent.speed = originalSpeed;    //원래대로
+
+    }
+}
+
+
 
