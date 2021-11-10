@@ -43,12 +43,12 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     [Header("A_Basic")]
     [SerializeField] private GameObject BasicRange;
     [SerializeField] private GameObject BasicRange_Col;
-   // [SerializeField] private GameObject BasicAttack_Effect_L;
-   // [SerializeField] private GameObject BasicAttack_Effect_R;
+    // [SerializeField] private GameObject BasicAttack_Effect_L;
+    // [SerializeField] private GameObject BasicAttack_Effect_R;
     [SerializeField] private GameObject BasicAttack_Effect_Slash;
     private bool isBasicAttack = false;
     public bool CheckEnemy = false;
-    public Collider TargetEnemy;
+    public Transform TargetEnemy;
     private float BasicRangef;
     private float AttackSpeed;
     private float BasicRange_Ref = 0.004f;
@@ -89,9 +89,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         BasicRange_Col.SetActive(false);
         BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
-      //  BasicAttack_Effect_L.SetActive(false);
-      // BasicAttack_Effect_R.SetActive(false);
-      //  BasicAttack_Effect_Slash.SetActive(false);
+        //  BasicAttack_Effect_L.SetActive(false);
+        // BasicAttack_Effect_R.SetActive(false);
+        //  BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
 
@@ -139,7 +139,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
             else { movingManager.Instance.isFree = false; } //전투모드
 
-  
+
             //////////////기본어택땅/////////////
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -174,7 +174,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
                 StartCoroutine("Active_Q");
                 if (!GetComponent<WhiteTiger_Skill>().isWild) GetComponent<WhiteTiger_Skill>().WildPoint++;
             }
-        }        
+        }
     }
 
     void LeftMouseClicked()
@@ -182,9 +182,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         if (Input.GetMouseButtonDown(0))
         {
 
-            isBasicAttack = false; 
+            isBasicAttack = false;
 
-     
+
             CheckEnemy = true;
             BasicRange_Col.SetActive(false); //콜라이더 클릭 방지
             RaycastHit hit; //캐릭터 이동
@@ -203,7 +203,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
     void AttackTargetEnemy(Transform target)
     {
-   
+
         if ((transform.position - target.transform.position).magnitude <
             target.transform.localScale.magnitude * 0.85f)
         {
@@ -268,13 +268,13 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
             isBasicAttack = false;
         }
- 
+
 
     }
 
     private void LateUpdate()       //update에서 좌표값 갱신 후에 lateupdate에서 움직임
     {
-        if(onSkill)
+        if (onSkill)
         {
             agent.speed = skillSpeed;
             agent.SetDestination(TargetPos);
@@ -285,9 +285,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
                 agent.speed = originalSpeed;
             }
         }
-        if (isupdate&&!onSkill)
+        if (isupdate && !onSkill)
         {
-                PlayerMove();
+            PlayerMove();
         }
     }
 
@@ -348,42 +348,42 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         OnAttack = false;
 
     }
-}
 
-IEnumerator Active_Q()
-{
-    while (true)
+
+    IEnumerator Active_Q()
     {
+        while (true)
+        {
 
-        if (!GetComponent<WhiteTiger_Skill>().isWild)
-        {
-            GetComponent<Player_Stats>().AD += 10 * Q_Level;
-            Q_Punch_L.SetActive(true);
-            Q_Punch_R.SetActive(true);
-            yield return new WaitForSeconds(10.0f);
-            Q_Punch_L.SetActive(false);
-            Q_Punch_R.SetActive(false);
-            GetComponent<Player_Stats>().AD -= 10 * Q_Level;
-            break;
-        }
-        else
-        {
-            On_adv_Q = true;    //true일경우 펀치->물어뜯기
-            GetComponent<Player_Stats>().AD += 20 * Q_Level;
-            adv_Q_Punch.SetActive(true);
-            yield return new WaitForSeconds(10.0f);
-            adv_Q_Punch.SetActive(false);
-            GetComponent<Player_Stats>().AD -= 20 * Q_Level;
-            On_adv_Q = false;
-            //yield return new WaitForSeconds(10.0f);
-            //adv_Q_Punch.SetActive(false);
-            break;
+            if (!GetComponent<WhiteTiger_Skill>().isWild)
+            {
+                GetComponent<Player_Stats>().AD += 10 * Q_Level;
+                Q_Punch_L.SetActive(true);
+                Q_Punch_R.SetActive(true);
+                yield return new WaitForSeconds(10.0f);
+                Q_Punch_L.SetActive(false);
+                Q_Punch_R.SetActive(false);
+                GetComponent<Player_Stats>().AD -= 10 * Q_Level;
+                break;
+            }
+            else
+            {
+                On_adv_Q = true;    //true일경우 펀치->물어뜯기
+                GetComponent<Player_Stats>().AD += 20 * Q_Level;
+                adv_Q_Punch.SetActive(true);
+                yield return new WaitForSeconds(10.0f);
+                adv_Q_Punch.SetActive(false);
+                GetComponent<Player_Stats>().AD -= 20 * Q_Level;
+                On_adv_Q = false;
+                //yield return new WaitForSeconds(10.0f);
+                //adv_Q_Punch.SetActive(false);
+                break;
+            }
         }
     }
-}
 
 
-float GetDirection(Vector3 home, Vector3 away)
+    private float GetDirection(Vector3 home, Vector3 away)
     {
         return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
     }
@@ -397,48 +397,49 @@ float GetDirection(Vector3 home, Vector3 away)
 
         Debug.Log("RSkill Targeted");
     }
-private void damageEnemy(Transform target)
-{
-    WT_BasicAD = GetComponent<Player_Stats>().AD;
-
-    if (target.CompareTag("Minion"))
+    private void damageEnemy(Transform target)
     {
-        target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD);
-    }
-    else if (target.CompareTag("Player"))
-    {
-        target.GetComponent<Player_Stats>().DropHP(WT_BasicAD);
-    }
-    else if (target.CompareTag("Turret"))
-    {
-        target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
-    }
+        WT_BasicAD = GetComponent<Player_Stats>().AD;
 
-}
-
-private void Passive()
-{
-    Collider[] colliderArray = Physics.OverlapSphere(transform.position, PassiveRange);
-
-    foreach (Collider col in colliderArray)
-    {
-        bool foundPlayer = false;
-
-
-        if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
-             && (player.TeamColor != TeamColor))
+        if (target.CompareTag("Minion"))
         {
-            if (!foundPlayer)
-            {
-                agent.speed = originalSpeed + 0.3f; //30*0.01
-                foundPlayer = true; //중복적용 방지
-            }
+            target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD);
         }
-        else
-            agent.speed = originalSpeed;    //원래대로
+        else if (target.CompareTag("Player"))
+        {
+            target.GetComponent<Player_Stats>().DropHP(WT_BasicAD);
+        }
+        else if (target.CompareTag("Turret"))
+        {
+            target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
+        }
 
     }
-}
 
+    private void Passive()
+    {
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, PassiveRange);
+
+        foreach (Collider col in colliderArray)
+        {
+            bool foundPlayer = false;
+
+
+            if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                 && (player.TeamColor != TeamColor))
+            {
+                if (!foundPlayer)
+                {
+                    agent.speed = originalSpeed + 0.3f; //30*0.01
+                    foundPlayer = true; //중복적용 방지
+                }
+            }
+            else
+                agent.speed = originalSpeed;    //원래대로
+
+        }
+    }
+
+}
 
 
