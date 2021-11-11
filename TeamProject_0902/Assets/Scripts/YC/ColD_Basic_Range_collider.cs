@@ -20,7 +20,8 @@ public class ColD_Basic_Range_collider : MonoBehaviour
         {
             if ((other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor != myTeamColor)
                 || ((other.CompareTag("Player")) && other.GetComponent<Player_Stats>().TeamColor != myTeamColor)
-                 || ((other.CompareTag("Turret")) && other.GetComponent<Turret_Stats>().TeamColor != myTeamColor))
+                 || ((other.CompareTag("Turret")) && other.GetComponent<Turret_Stats>().TeamColor != myTeamColor)
+                 || (other.CompareTag("Monster")))
             {
                 GetComponentInParent<ColD>().TargetEnemy = other.transform;
                 CheckEnemy = false;

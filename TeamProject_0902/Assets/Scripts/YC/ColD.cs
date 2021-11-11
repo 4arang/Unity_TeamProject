@@ -262,7 +262,10 @@ public class ColD : MonoBehaviour
         {
             target.GetComponent<Turret_Stats>().DropHP(ColD_BasicAD);
         }
-
+        else if (target.CompareTag("Monster"))
+        {
+            target.GetComponent<Monster_Stats>().DropHP(ColD_BasicAD);
+        }
     }
 
     float GetDirection(Vector3 home, Vector3 away)

@@ -13,6 +13,7 @@ TagManager:
   - UI
   - Effect
   - Turret
+  - Monster
   layers:
   - Default
   - TransparentFX

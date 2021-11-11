@@ -204,12 +204,12 @@ public class PlayerUI : MonoBehaviour
 
 		ADText.text = stats.AD.ToString();
 		APText.text = stats.AP.ToString();
-		ArmorText.text = stats.Armor.ToString();
-		MagicResistText.text = stats.Armor.ToString();
-		AbilityHasteText.text = stats.Armor.ToString();
-		MoveSpeedText.text = stats.Armor.ToString();
-		CriticalStrikeText.text = stats.Armor.ToString();
-		AttackSpeedText.text = stats.Armor.ToString();
+		ArmorText.text = stats.AP.ToString();
+		MagicResistText.text = stats.MRP.ToString();
+		AbilityHasteText.text = stats.AP.ToString();
+		MoveSpeedText.text = stats.MoveSpeed.ToString();
+		CriticalStrikeText.text = stats.AP.ToString();
+		AttackSpeedText.text = stats.AttackSpeed.ToString();
 		LevelText.text = stats.Level.ToString();
     }
 

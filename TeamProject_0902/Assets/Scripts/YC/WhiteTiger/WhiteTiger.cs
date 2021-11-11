@@ -36,8 +36,8 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     //to move to targetPos
     private Vector3 TargetPos;
 
-    private Transform Enemy; //적 위치 받아오기
-    private bool SpeedFull = false;
+    //private Transform Enemy; //적 위치 받아오기
+    //private bool SpeedFull = false;
 
     //Basic Attack
     [Header("A_Basic")]
@@ -413,7 +413,10 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         {
             target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
         }
-
+        else if (target.CompareTag("Monster"))
+        {
+            target.GetComponent<Monster_Stats>().DropHP(WT_BasicAD);
+        }
     }
 
     private void Passive()

@@ -309,6 +309,10 @@ public class Xerion : MonoBehaviour
         {
             target.GetComponent<Turret_Stats>().DropHP(Xerion_BasicAD);
         }
+        else if (target.CompareTag("Monster"))
+        {
+            target.GetComponent<Monster_Stats>().DropHP(Xerion_BasicAD);
+        }
 
     }
 }

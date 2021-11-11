@@ -27,6 +27,7 @@
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
 -define:UNITY_INCLUDE_TESTS
+-define:UNITY_ANALYTICS
 -define:USE_SEARCH_ENGINE_API
 -define:USE_QUICK_SEARCH_MODULE
 -define:SCENE_TEMPLATE_MODULE
@@ -410,32 +411,6 @@
 "Assets/1006_MY/UITooltipDetector.cs"
 "Assets/1006_MY/UITooltipPopup.cs"
 "Assets/AvatarSpawner.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/3rdPersonWithAimMode/ActivateOnKeypress.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/AimingRig/AimReticle.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/Anywhere Door/PlayerLookAt.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/Anywhere Door/PlayerMovement.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/Anywhere Door/TagChanger.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/CameraMagnets/CameraMagnetProperty.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/CameraMagnets/CameraMagnetTargetController.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/DualTarget/MoveAimTarget.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/DualTarget/PointAtAimTarget.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/FadeOutNearbyObjects/CinemachineFadeOutNearbyObjects.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/Scripting/ScriptingExample.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Scenes/Trigger volumes/GenericTrigger.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Models/UnityCharacter/Scripts/CharacterMovement.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Models/UnityCharacter/Scripts/CharacterMovement2D.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Models/UnityCharacter/Scripts/CharacterMovementNoCamera.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/ActivateCameraWithDistance.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/ActivateCamOnPlay.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/ExampleHelpWindow.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/InvokeEventFromInspector.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/MixingCameraBlend.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/PlayerMove.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/PlayerMoveOnSphere.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/PlayerMovePhysics.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/SimpleElevator.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/SpawnInCircle.cs"
-"Assets/Cinemachine/Cinemachine/2.7.9/Cinemachine Example Scenes/Shared/Scripts/ThirdPersonFollowDistanceModifier.cs"
 "Assets/FixFrame.cs"
 "Assets/FORGE3D/PoolManager/F3DPool.cs"
 "Assets/FORGE3D/PoolManager/F3DPoolContainer.cs"
@@ -655,6 +630,8 @@
 "Assets/Scripts/YC/Minion/Minion4_Stats.cs"
 "Assets/Scripts/YC/Minion/Minion_Attack.cs"
 "Assets/Scripts/YC/Minion/Minion_Stats.cs"
+"Assets/Scripts/YC/Minion/Monster.cs"
+"Assets/Scripts/YC/Minion/Monster_Stats.cs"
 "Assets/Scripts/YC/MovingManager.cs"
 "Assets/Scripts/YC/PlayerStats/PlayerStatManager.cs"
 "Assets/Scripts/YC/PlayerStats/StatCSVimplement.cs"
