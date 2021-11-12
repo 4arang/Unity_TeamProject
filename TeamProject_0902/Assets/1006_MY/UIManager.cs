@@ -6,30 +6,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-   // public ChampionStats CurrentPlayer;
+    [SerializeField]
+    private UISetting uiSetting;
 
-    public Text TimeText;
-
-    public Text FPSText;
-    public Text MSText;
-    float deltaTime = 0.0f; //Check FPS
-
-    public Text RedKills;
-    public Text BlueKills;    
-
-    public Text PlayerScore;
-    public Text PlayerMinionScore;
-
-    public Text PlayerHealth;
-    public Text PlayerResource;
-    public Text PlayerLevel;
-    public Text PlayerGold;
-
-    public Image PlayerHealthImage;
-    public Image PlayerResourceImage;
-    public Image PlayerExp;
-
-    public Image ScoreBoardPanel;
     private void Awake()
     {
         if (Instance != this)
@@ -38,15 +17,10 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        //CurrentPlayer = InGameManager.Instance.Teams[InGameManager.Instance.CurrentPlayerID].Champions[0];
+        uiSetting = GetComponent<UISetting>();
     }
     private void Update()
     {
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        MSText.text = (deltaTime * 1000.0f).ToString("0.0" + "ms");
-        FPSText.text = (1.0f / deltaTime).ToString("0." + "fps");
-        TimeText.text = GameManager.Instance.GameTime.ToString("00:00");
-
         //RedKills.text = GameManager.GetTeamKills(0).ToString();
         //BlueKills.text = GameManager.GetTeamKills(1).ToString();
         //PlayerScore.text = string.Format("{0}/{1}/{2}",
@@ -63,7 +37,7 @@ public class UIManager : MonoBehaviour
         //PlayerHealthImage.fillAmount = CurrentPlayer.health;
         //PlayerResourceImage.fillAmount = CurrentPlayer.resource;
         //PlayerExp.fillAmount = CurrentPlayer.expValue;
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             StartCoroutine(PopUpScoreBoard());
         }
@@ -75,13 +49,14 @@ public class UIManager : MonoBehaviour
 
     IEnumerator PopUpScoreBoard()
     {
-        ScoreBoardPanel.gameObject.SetActive(true);
+        uiSetting.scoreBoardPanel.gameObject.SetActive(true);
+        
         yield return null;
     }
     IEnumerator CloseScoreBoard()
     {
-        ScoreBoardPanel.gameObject.SetActive(false);
-        yield return null;
+        uiSetting.scoreBoardPanel.gameObject.SetActive(false);
 
+        yield return null;
     }
 }
