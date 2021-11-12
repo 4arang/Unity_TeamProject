@@ -191,12 +191,7 @@ public class Minion_Stats : MonoBehaviour
         stopwatch.Start();
     }
 
-    void Update()
-    {
-        UnityEngine.Debug.Log("Minion." + MinionNum + " HP " + hp);
-
-    }
-
+ 
     private void FixedUpdate()
     {
 
