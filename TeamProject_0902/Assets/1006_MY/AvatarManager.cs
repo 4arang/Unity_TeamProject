@@ -3,19 +3,42 @@ using UnityEngine.EventSystems;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class AvatarManager : MonoBehaviourPunCallbacks
+public class AvatarManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
 {
+    #region Public Fields
+    [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
+    public static GameObject LocalPlayerInstance;
+
+    #endregion
+
     #region Private Fields
     [Tooltip("The Player's UI GameObject Prefab")]
     [SerializeField]
     private GameObject playerUIPrefab;
 
     [Tooltip("The Player's InGame Avatar GameObject Prefab")]
-    public GameObject myCharacter;
+    [SerializeField]
+    private GameObject myCharacter;
     #endregion
 
     #region MonoBehaviour CallBacks
 
+    /// <summary>
+    /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
+    /// </summary>
+    public void Awake()
+    {
+        // #Important
+        // used in GameManager.cs: we keep track of the localPlayer instance to prevent instanciation when levels are synchronized
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = gameObject;
+        }
+
+        // #Critical
+        // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
+        DontDestroyOnLoad(gameObject);
+    }
 
     /// <summary>
     /// MonoBehaviour method called on GameObject by Unity during initialization phase.
@@ -117,5 +140,23 @@ public class AvatarManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    #endregion
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+
+        }
+        else
+        {
+            // Network player, receive data
+
+        }
+    }
+
     #endregion
 }

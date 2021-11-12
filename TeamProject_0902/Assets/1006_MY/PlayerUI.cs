@@ -2,25 +2,25 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-public class UISetting : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
 	#region SINGLETON
-	private static UISetting instance;
+	private static PlayerUI instance;
 
-	public static UISetting Instance
+	public static PlayerUI Instance
 	{
 		get
 		{
 			if (instance == null)
 			{
-				var obj = FindObjectOfType<UISetting>();
+				var obj = FindObjectOfType<PlayerUI>();
 				if (obj != null)
 				{
 					instance = obj;
 				}
 				else
 				{
-					var newObj = new GameObject().AddComponent<UISetting>();        //배포 시, 활성화
+					var newObj = new GameObject().AddComponent<PlayerUI>();        //배포 시, 활성화
 					instance = newObj;
 				}
 			}
@@ -30,7 +30,7 @@ public class UISetting : MonoBehaviour
 
 	private void Awake()
 	{
-		var objs = FindObjectsOfType<UISetting>();
+		var objs = FindObjectsOfType<PlayerUI>();
 		if (objs.Length != 1)
 		{
 			Destroy(gameObject);
@@ -44,8 +44,6 @@ public class UISetting : MonoBehaviour
 	int myChampIdx;
 	float deltaTime = 0.0f; //Check FPS
 
-	public Image scoreBoardPanel;
-
 	[SerializeField] private Text FPSText;
 	[SerializeField] private Text MSText;
 	[SerializeField] private Text TimeText;
@@ -56,7 +54,7 @@ public class UISetting : MonoBehaviour
 	[SerializeField] private Text playerHealth;
 	[SerializeField] private Text playerResource;
 	[SerializeField] private Text playerGold;
-
+	[SerializeField] private Image scoreBoardPanel;
 
 	[SerializeField] private GameObject myChampObj;
 	[SerializeField] private Image champPortrait;
@@ -200,7 +198,7 @@ public class UISetting : MonoBehaviour
 		//selectedSummonerSpells[1].Icon =
 		//	GameDataSource.Instance.m_SpellData[PlayerInfo.PI.mySelectedSpell2].Icon;
 	}
-	public void SetPlayerStatus()
+	public void SetStatus()
     {
 		Player_Stats stats=myChampObj.GetComponent<Player_Stats>();
 
@@ -215,12 +213,6 @@ public class UISetting : MonoBehaviour
 		LevelText.text = stats.Level.ToString();
     }
 
-
-	public void SetGameStatus()
-	{
-		//Team Manager에서 Champion kills 받아와서 초기화
-
-	}
 	public void SetChampion()
     {
 		GameObject champ = GameObject.Find("PlayerAvatar(Clone)");
@@ -231,15 +223,15 @@ public class UISetting : MonoBehaviour
         {
 			myChampObj = myChampSetup.myCharacter;
 			Debug.Log("오브젝트 이게 바인딩 됨" + myChampObj.name);
-        }			
+        }
+			
     }
 	public void GameInit()
 	{
 		SetChampion();					//UI, Champ Binding.
 		SetPortrait();					//Champ Portrait Update
 		SetActionBar(myChampIdx);		//Champ Actionbar Init
-		SetPlayerStatus();                  //Champ status Update
-		SetGameStatus();
+		SetStatus();					//Champ status Update
 	}
 
 	public void UpdateGameStatus()

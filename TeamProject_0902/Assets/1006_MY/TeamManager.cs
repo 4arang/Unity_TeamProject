@@ -28,16 +28,15 @@ public class TeamManager : MonoBehaviourPunCallbacks, IPunObservable
         ///<summary>
         ///Champion Add to Team when Game Started
         ///</summary>
-        
-        //if(PlayerInfo.PI.isOnTeam==false)
-        //{
-        //    if (PlayerInfo.PI.myTeam == this.TeamID)
-        //    {
-        //        //StartCoroutine(AddChampions());
-        //        PlayerInfo.PI.isOnTeam = true;      //isOnTeam true and no more need to add TeamManager list
-        //        Debug.Log("플레이어 인포 isOnTeam=" + PlayerInfo.PI.isOnTeam);
-        //    }
-        //}        
+        if(PlayerInfo.PI.isOnTeam==false)
+        {
+            if (PlayerInfo.PI.myTeam == this.TeamID)
+            {
+                //StartCoroutine(AddChampions());
+                PlayerInfo.PI.isOnTeam = true;      //isOnTeam true and no more need to add TeamManager list
+                Debug.Log("플레이어 인포 isOnTeam=" + PlayerInfo.PI.isOnTeam);
+            }
+        }        
 
         ///<summary>
         ///Minion Creep Spawning region. Get Instance from GameManager gametime and spawn with courutione.

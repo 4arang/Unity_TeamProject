@@ -1,9 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-
+using System.IO;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -43,9 +45,20 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     #endregion
 
+    public Text InfoText;
     public float GameTime;
     public int CurrentPlayerID = 0;
     public List<TeamManager> Teams;
+    public List<PhotonPlayer> Players;
+    public override void OnEnable()
+    {
+        base.OnEnable();
+    }
+    public void Start()
+    {
+        TeamSetup();
+    }
+
     private bool CheckAllPlayerLoadedLevel()        //Get Hash table CustomProperties
     {
         foreach (Photon.Realtime.Player p in PhotonNetwork.PlayerList)
@@ -72,35 +85,36 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
-    #region PUN CALLBACKS
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    #region START GAME SETTING
+
+    [PunRPC]
+    void RPC_AddCharacter(int whichCharacter)
     {
-        base.OnPlayerEnteredRoom(newPlayer);
-        Debug.Log("On Player Entered Room()" + newPlayer.NickName);
+        //characterValue = whichCharacter;
 
-        if(PhotonNetwork.IsMasterClient)
+        //myCharacter = Instantiate(PlayerInfo.PI.allCharacters[whichCharacter],
+        //    transform.position,
+        //    transform.rotation);
+
+        //myLobbyCharacter.transform.SetParent(NetworkManager.Instance.RoomPanel.transform);
+        //Debug.Log(myCharacter.GetComponent<Transform>());
+    }
+
+    public void TeamSetup()
+    {
+        foreach (var player in PhotonNetwork.PlayerList)
         {
-            Debug.LogFormat("On Player Entered room is MasterClient {0}", PhotonNetwork.IsMasterClient);
-
-            Debug.Log("다른 플레이어의 아바타를 추가적으로 생성하는 코드를 실행한다");
+            
         }
     }
+    
+    #endregion
 
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player leftPlayer)
-    {
-        Debug.Log("OnPlayerLeftRoom() " + leftPlayer.NickName);     // seen when other disconnects
+    #region PUN CALLBACKS
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Debug.LogFormat("OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom            
-
-            Debug.Log("나간 플레이어에 대한 처리를 실행한다");
-        }        
-    }
     public override void OnDisconnected(DisconnectCause cause)
     {
-        //연결이 끊어지면 로드할 씬
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Launcher");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Launcher");
     }
 
     public override void OnLeftRoom()
@@ -116,8 +130,52 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.LocalPlayer.ActorNumber == newMasterClient.ActorNumber)
         {
+            //Additional Part.
         }
     }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        //CheckEndOfGame();
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey(GameConsts.PLAYER_SPELL1))
+        {
+            return;
+        }
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
+
+
+        // if there was no countdown yet, the master client (this one) waits until everyone loaded the level and sets a timer start
+        int startTimestamp;
+        bool startTimeIsSet 
+            = Photon.Pun.UtilityScripts.CountdownTimer.TryGetStartTime(out startTimestamp);
+
+        if (changedProps.ContainsKey(GameConsts.PLAYER_LOADED_LEVEL))
+        {
+            if (CheckAllPlayerLoadedLevel())
+            {
+                if (!startTimeIsSet)
+                {
+                    Photon.Pun.UtilityScripts.CountdownTimer.SetStartTime();
+                }
+            }
+            else
+            {
+                // not all players loaded yet. wait:
+                Debug.Log("setting text waiting for players! ", this.InfoText);
+                InfoText.text = "Waiting for other players...";
+            }
+        }
+
+    }
+
     #endregion
 
 }
