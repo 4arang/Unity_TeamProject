@@ -27,7 +27,6 @@
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
 -define:UNITY_INCLUDE_TESTS
--define:UNITY_ANALYTICS
 -define:USE_SEARCH_ENGINE_API
 -define:USE_QUICK_SEARCH_MODULE
 -define:SCENE_TEMPLATE_MODULE
@@ -637,6 +636,7 @@
 "Assets/Scripts/YC/PlayerStats/StatCSVimplement.cs"
 "Assets/Scripts/YC/PlayerStats/StatCSVreader.cs"
 "Assets/Scripts/YC/PlayerStats/WhiteTigerCSV.cs"
+"Assets/Scripts/YC/Player_Level.cs"
 "Assets/Scripts/YC/Player_Return.cs"
 "Assets/Scripts/YC/Player_Skill_Attack.cs"
 "Assets/Scripts/YC/Player_Stats.cs"

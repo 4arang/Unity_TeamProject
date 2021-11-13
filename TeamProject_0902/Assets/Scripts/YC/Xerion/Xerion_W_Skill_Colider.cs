@@ -17,12 +17,12 @@ public class Xerion_W_Skill_Colider : MonoBehaviour
         {
             if ((transform.position - other.transform.position).magnitude <= Xerion_W_CenterR)
             {
-                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD);
+                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD,this.transform);
                 other.GetComponent<Minion_Stats>().DropSpeed(1-Xerion_W_CenterDS, 2.5f);
             }
             else
             { 
-                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD * 0.8f);
+                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD * 0.8f,this.transform);
                 other.GetComponent<Minion_Stats>().DropSpeed(1 - Xerion_W_SideDS, 2.5f);
             }
         }

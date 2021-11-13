@@ -299,7 +299,7 @@ public class Xerion : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(Xerion_BasicAD);
+            target.GetComponent<Minion_Stats>().DropHP(Xerion_BasicAD, this.transform);
         }
         else if (target.CompareTag("Player"))
         {

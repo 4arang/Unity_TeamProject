@@ -22,7 +22,7 @@ public class WT_Punch_Collider_L : MonoBehaviour
             {
                 Debug.Log("Enemy Hit" + WT_BasicAD);
                 Instantiate(TargetEffect, other.transform.position, Quaternion.identity);
-                other.GetComponent<Minion_Stats>().DropHP(WT_BasicAD);
+                other.GetComponent<Minion_Stats>().DropHP(WT_BasicAD,this.transform);
                 onSkill = false;    //한번에 한명만 공격하게
             }
         }

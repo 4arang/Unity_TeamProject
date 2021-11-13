@@ -210,7 +210,7 @@ public class PlayerUI : MonoBehaviour
 		MoveSpeedText.text = stats.MoveSpeed.ToString();
 		CriticalStrikeText.text = stats.AP.ToString();
 		AttackSpeedText.text = stats.AttackSpeed.ToString();
-		LevelText.text = stats.Level.ToString();
+		LevelText.text = stats.Level.ToString(); //Level 스크립트 추가 나중에 수정
     }
 
 	public void SetChampion()

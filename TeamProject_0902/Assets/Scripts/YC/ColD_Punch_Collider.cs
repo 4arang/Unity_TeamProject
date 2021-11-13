@@ -22,7 +22,7 @@ public class ColD_Punch_Collider : MonoBehaviour
             {
                 Debug.Log("Enemy Hit" + ColD_BasicAD);
                 Instantiate(TargetEffect, other.transform.position, Quaternion.identity);
-                other.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD);
+                other.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD, this.transform);
                 onSkill = false;    //한번에 한명만 공격하게
             }
         }

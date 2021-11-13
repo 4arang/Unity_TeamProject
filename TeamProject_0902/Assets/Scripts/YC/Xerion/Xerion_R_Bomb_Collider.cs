@@ -11,7 +11,7 @@ public class Xerion_R_Bomb_Collider : MonoBehaviour
     {
         if (other.CompareTag("Minion"))
         {
-            other.GetComponent<Minion_Stats>().DropHP(Xerion_R_AD);
+            other.GetComponent<Minion_Stats>().DropHP(Xerion_R_AD,this.transform);
         }
     }
 }

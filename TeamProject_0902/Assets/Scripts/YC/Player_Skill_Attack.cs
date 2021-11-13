@@ -57,7 +57,7 @@ public class Player_Skill_Attack : MonoBehaviour
       if(Time.time>timer)
         { 
             _table[other] = Time.time + cooldown;
-            other.GetComponent<Minion_Stats>().DropHP(ColD_Flame_AD); //damage the enemy
+            other.GetComponent<Minion_Stats>().DropHP(ColD_Flame_AD,this.transform); //damage the enemy
             timer_++;
             if(timer_>=4)
             {

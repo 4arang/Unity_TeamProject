@@ -34,9 +34,7 @@ public class Player_Stats : MonoBehaviour
 
     public float hp;
     public float mp;
-    public float EXP = 0;
-    public int Gold = 0;
-    public int Level = 1;
+    
 
     //Coldy special (Helium)
     [Range(0.0f, 100.0f)]
@@ -59,6 +57,8 @@ public class Player_Stats : MonoBehaviour
     //for minion targetsetting
     public bool isAttack_Minion = false;
     public bool isAttack_Player = false;
+
+    public int Level = 1;
 
 
 
@@ -211,7 +211,7 @@ public class Player_Stats : MonoBehaviour
 
 
             Regen();
-            LevelCheck();
+
         }
 
 
@@ -233,20 +233,10 @@ public class Player_Stats : MonoBehaviour
                 if (mp > MP) mp = MP;
             }
         }
-        if (TimeCheck % 60.0f == 0)
-        {
-            EXP += 5;
-        }
+
     }
 
-    void LevelCheck()
-    {
-        if (EXP >= 280 + (Level - 1) * 100)
-        {
-            EXP -= 280 + (Level - 1) * 100; //EXP Initializing
-            Level++;    //Lvl Up
-        }
-    }
+
     public void DropMP(float energy)
     {
         if (mp >= energy)
@@ -267,6 +257,11 @@ public class Player_Stats : MonoBehaviour
         Debug.Log("player HP" + hp);
 
         GetComponentInChildren<HP_Bar>().SetHP(hp);
+
+        if(hp<=0)
+        {
+
+        }
 
     }
 
@@ -298,4 +293,6 @@ public class Player_Stats : MonoBehaviour
             if (Helium > maxHelium) Helium = maxHelium;
         }
     }
+
+
 }

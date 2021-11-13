@@ -403,7 +403,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD);
+            target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD,this.transform);
         }
         else if (target.CompareTag("Player"))
         {
