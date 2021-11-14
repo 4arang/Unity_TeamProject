@@ -252,7 +252,7 @@ public class ColD : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD);
+            target.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD, this.transform);
         }
         else if (target.CompareTag("Player"))
         {

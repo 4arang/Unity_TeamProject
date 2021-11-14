@@ -179,7 +179,7 @@ public class Minion_Stats : MonoBehaviour
             EXPperTime = GetComponent<Minion4_Stats>().EXPperTime;
         }
 
-        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
         hp = HP;
         DamagedEffect.SetActive(false);
     }
@@ -194,7 +194,6 @@ public class Minion_Stats : MonoBehaviour
  
     private void FixedUpdate()
     {
-
         long elapsedTime = stopwatch.ElapsedMilliseconds;
         if (TryGetComponent(out Minion1_Stats Minion_Num1))
         {
@@ -230,6 +229,11 @@ public class Minion_Stats : MonoBehaviour
                     Recover_MoveSpeed = MoveSpeed;
                 }
             }
+
+            if(elapsedTime % 60000 ==0)
+            {
+                EXP += 1.53f;
+            }
         }
         else if (TryGetComponent(out Minion2_Stats Minion_Num2))
         {
@@ -258,6 +262,10 @@ public class Minion_Stats : MonoBehaviour
                     Recover_MoveSpeed = MoveSpeed;
                 }
             }
+            if (elapsedTime % 60000 == 0)
+            {
+                EXP += 0.92f;
+            }
         }
         else if (TryGetComponent(out Minion3_Stats Minion_Num3))
         {
@@ -267,7 +275,7 @@ public class Minion_Stats : MonoBehaviour
                 {
                     hp += HPregen;
                     if (hp > HP) hp = HP;
-                    GetComponentInChildren<HP_Bar>().SetHP(hp);
+                    //GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -297,8 +305,6 @@ public class Minion_Stats : MonoBehaviour
                 GetComponentInChildren<HP_Bar>().SetHP(hp);
 
                 AD += ADperTime;
-
-
             }
 
             if (elapsedTime % MoveSpeedptime == 0)
@@ -315,7 +321,7 @@ public class Minion_Stats : MonoBehaviour
     }
 
 
-    public void DropHP(float damage)
+    public void DropHP(float damage, Transform obj)
     {
 
 
@@ -325,9 +331,48 @@ public class Minion_Stats : MonoBehaviour
 
         if (hp <= 0)
         {
-            animator.SetBool("Die", true);
-            StartCoroutine("Dying");
-        }
+            if (obj.CompareTag("Player")) //플레이어에게 사망한경우
+            {
+                Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
+                int i = 0;
+                foreach (Collider col in colliderArray)
+                {
+                    if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                     && (player.TeamColor != TeamColor))
+                    {
+                        i++;
+                        col.GetComponent<Player_Level>().GetEXP(EXP * 0.66f); //경험치 분배
+                    }
+                }
+                if (i >= 2) //두명 이상에게 경험치 분배한 경우
+                {
+                    obj.GetComponent<Player_Level>().GetEXP(EXP * 0.34f); //처치한 플레이어에게 경험치추가
+                }
+            }
+
+            else//미니언에게 사망한 경우
+            {
+                Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
+
+                int i = 0;
+                foreach (Collider col in colliderArray)
+                {
+                    if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                     && (player.TeamColor != TeamColor))
+                    {
+                        col.GetComponent<Player_Level>().GetEXP(EXP*0.66f); //경험치 분배
+                        obj = col.transform;   
+                        i++;   
+                    }
+                }
+                if(i==1) //주위에 플레이어가 한명인 경우
+                {
+                    obj.GetComponent<Player_Level>().GetEXP(EXP * 0.34f); //경험치 추가
+                }
+            }
+                animator.SetBool("Die", true);
+                StartCoroutine("Dying");
+            }
         GetComponentInChildren<HP_Bar>().SetHP(hp);
     }
 

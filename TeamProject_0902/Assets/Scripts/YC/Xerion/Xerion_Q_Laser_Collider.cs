@@ -25,11 +25,11 @@ public class Xerion_Q_Laser_Collider : MonoBehaviour
             {
                 if (GetComponentInParent<Xerion_Shooting_Skill>().Q_LaserFull)
                 {
-                    other.GetComponent<Minion_Stats>().DropHP(Xerion_Q_AD+Xerion_Q_ADp);
+                    other.GetComponent<Minion_Stats>().DropHP(Xerion_Q_AD+Xerion_Q_ADp,this.transform);
                 }
                 else
                 {
-                    other.GetComponent<Minion_Stats>().DropHP(Xerion_Q_AD);
+                    other.GetComponent<Minion_Stats>().DropHP(Xerion_Q_AD,this.transform);
                 }
             }
         }

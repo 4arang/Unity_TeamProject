@@ -165,5 +165,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d02241d1c74faa4098f474d4a913584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUIPrefab: {fileID: 5180697820427583569, guid: fe8df3406e4696a4ebb7226e5054cc61, type: 3}
+  playerUIPrefab: {fileID: 8730155179946556776, guid: 29421855498a0934d857cf1f99c92bd0, type: 3}
   myCharacter: {fileID: 0}

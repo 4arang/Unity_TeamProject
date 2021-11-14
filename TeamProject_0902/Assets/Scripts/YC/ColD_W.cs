@@ -194,18 +194,18 @@ Quaternion.identity); //유탄발사 and transform 저장
             if (GetComponent<Player_Stats>().isDanger)
             {
                 GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp*1.5f;
-                GetComponent<Player_Stats>().HP += W_HP*1.5f;
+                GetComponent<Player_Stats>().MaxHP += W_HP*1.5f;
                 yield return new WaitForSeconds(1.5f);
                 GetComponent<Player_Stats>().MoveSpeed *= 1 / (W_SpeedUp*1.5f);
-                GetComponent<Player_Stats>().HP -= W_HP * 1.5f;
+                GetComponent<Player_Stats>().MaxHP -= W_HP * 1.5f;
             }
             else
             {
                 GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp;
-                GetComponent<Player_Stats>().HP += W_HP;
+                GetComponent<Player_Stats>().MaxHP += W_HP;
                 yield return new WaitForSeconds(1.5f);
                 GetComponent<Player_Stats>().MoveSpeed *= 1 / W_SpeedUp;
-                GetComponent<Player_Stats>().HP -= W_HP;
+                GetComponent<Player_Stats>().MaxHP -= W_HP;
             }
 
 

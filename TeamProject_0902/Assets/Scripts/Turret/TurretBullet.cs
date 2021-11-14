@@ -41,7 +41,7 @@ public class TurretBullet : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(turretAD);
+            target.GetComponent<Minion_Stats>().DropHP(turretAD, this.transform);
         }
         else if (target.CompareTag("Player"))
         {

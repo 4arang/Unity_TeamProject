@@ -96,7 +96,7 @@ namespace Photon.Pun.Demo.PunBasics
 			// we don't smooth anything, we go straight to the right camera shot
 			Cut();
 		}
-		
+
 		#endregion
 
 		#region Private Methods
@@ -115,7 +115,6 @@ namespace Photon.Pun.Demo.PunBasics
 		    
 	    }
 
-	   
 		void Cut()
 		{
 			cameraOffset.z = -distance;

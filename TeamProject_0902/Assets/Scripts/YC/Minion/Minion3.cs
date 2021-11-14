@@ -203,7 +203,7 @@ public class Minion3 : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(Minion3_AD);
+            target.GetComponent<Minion_Stats>().DropHP(Minion3_AD, this.transform);
         }
         else if (target.CompareTag("Player"))
         {

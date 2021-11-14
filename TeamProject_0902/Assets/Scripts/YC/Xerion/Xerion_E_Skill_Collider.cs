@@ -21,7 +21,7 @@ public class Xerion_E_Skill_Collider : MonoBehaviour
             if (StunTime < 0.5f) StunTime = 0.5f;
             else if (StunTime > 2.0f) StunTime = 2.0f;
 
-            other.GetComponent<Minion_Stats>().DropHP(Xerion_E_AD);
+            other.GetComponent<Minion_Stats>().DropHP(Xerion_E_AD,this.transform);
             other.GetComponent<Minion_Stats>().Stun(StunTime);
 
             Destroy(gameObject);

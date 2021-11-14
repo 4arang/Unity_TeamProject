@@ -7,7 +7,7 @@ public class TestServer : MonoBehaviourPunCallbacks
     public GameObject battleButton;
 
     private readonly string version = "1.0";
-    private string userId;
+    private string userId="TestUser";
     private void Awake()
     {
         if (PhotonNetwork.IsConnected == false)
@@ -20,15 +20,23 @@ public class TestServer : MonoBehaviourPunCallbacks
     private void Start()
     {
         PhotonNetwork.NickName = userId;
-        PhotonNetwork.ConnectUsingSettings();           //
+        PhotonNetwork.ConnectUsingSettings();
         battleButton.SetActive(false);
     }
-    private void Update()
+
+    public override void OnConnectedToMaster()
     {
-        if (PhotonNetwork.IsConnected)
-            battleButton.SetActive(true);
+        base.OnConnectedToMaster();
+        battleButton.SetActive(true);
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+        battleButton.SetActive(false);
+
+        Debug.Log($"<Color=Red><b>Missing</b></Color> Server Disconnected {cause}.");
+    }
     public override void OnJoinRandomFailed(short returnCode, string message)       //룸에 입장한 후 호출되는 콜백 함수
     {
         //룸 속성 정의

@@ -43,6 +43,8 @@ public class PlayerUI : MonoBehaviour
 	#region SEATS
 	int myChampIdx;
 	float deltaTime = 0.0f; //Check FPS
+	public Image scoreBoardPanel;
+	public GameObject myChampObj;
 
 	[SerializeField] private Text FPSText;
 	[SerializeField] private Text MSText;
@@ -54,9 +56,7 @@ public class PlayerUI : MonoBehaviour
 	[SerializeField] private Text playerHealth;
 	[SerializeField] private Text playerResource;
 	[SerializeField] private Text playerGold;
-	[SerializeField] private Image scoreBoardPanel;
 
-	[SerializeField] private GameObject myChampObj;
 	[SerializeField] private Image champPortrait;
 
 	[SerializeField] private List<Image> selectedChampAbilities;
@@ -126,24 +126,6 @@ public class PlayerUI : MonoBehaviour
 	}
     #region Public Methods
 
-    /// <summary>
-    /// Assigns a Player Target to Follow and represent.
-    /// </summary>
-    /// <param name="target">Target.</param>
-
-    public void SetTarget(AvatarManager _target)
-    {
-        if (_target == null)
-        {
-            Debug.LogError("<Color=Red><b>Missing</b></Color> PlayMakerManager target for PlayerUI.SetTarget.", this);
-            return;
-        }
-
-        // Cache references for efficiency because we are going to reuse them.
-        this.localPlayer = _target;
-        targetTransform = this.localPlayer.GetComponent<Transform>();
-    }
-
     public void SetPortrait()
     {
 		champPortrait.sprite = GameDataSource.Instance.m_CharacterData[myChampIdx].Portrait;
@@ -210,7 +192,7 @@ public class PlayerUI : MonoBehaviour
 		MoveSpeedText.text = stats.MoveSpeed.ToString();
 		CriticalStrikeText.text = stats.AP.ToString();
 		AttackSpeedText.text = stats.AttackSpeed.ToString();
-		LevelText.text = stats.Level.ToString();
+		LevelText.text = stats.Level.ToString(); //Level 스크립트 추가 나중에 수정
     }
 
 	public void SetChampion()
