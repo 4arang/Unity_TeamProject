@@ -254,7 +254,7 @@ public class Xerion : MonoBehaviour
                     if (passiveOn)
                     {
                         GetComponent<Player_Stats>().Energy = 0;    //패시브 사용
-                        GetComponent<Player_Stats>().DropMP(-GetComponent<Player_Stats>().MP / 10); //최대MP/10 충전
+                        GetComponent<Player_Stats>().DropMP(-GetComponent<Player_Stats>().MaxMP / 10); //최대MP/10 충전
                         PassiveEffect.SetActive(false);
                         passiveOn = false;
                     }

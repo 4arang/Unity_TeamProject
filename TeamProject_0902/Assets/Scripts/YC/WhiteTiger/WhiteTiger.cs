@@ -261,6 +261,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             {
                 movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
                 hit_ = hit;
+                Debug.Log("마우스 우클릭");
             }
             isupdate = true;
             PlayerDest = movingManager.Instance.PlayerClickedPos;
@@ -290,7 +291,6 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             PlayerMove();
         }
     }
-
 
     void PlayerMove()
     {

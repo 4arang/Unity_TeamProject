@@ -49,7 +49,6 @@ public class AvatarManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
         if (this.playerUIPrefab != null)        //Avatar Inspector에 UI가 등록되어있으면 생성
         {
             GameObject _uiGo = Instantiate(playerUIPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
             Debug.Log("UI GameObject Instantiate");
         }
         else
@@ -80,7 +79,7 @@ public class AvatarManager : MonoBehaviourPunCallbacks/*, IPunObservable*/
             {
                 myCharacter = GetComponent<TestSetup>().myCharacter;
 
-                TestCamera _cameraWork = myCharacter.GetComponent<TestCamera>();
+                TestCameraFollow _cameraWork = myCharacter.GetComponent<TestCameraFollow>();
                 if (_cameraWork != null)
                 {
                     _cameraWork.OnStartFollowing();

@@ -13,9 +13,11 @@ public class Player_Stats : MonoBehaviour
 
     //Game Stats
     public bool TeamColor;
-    public float HP;             //Health Point
+    public float CurrentHP;
+    public float MaxHP;             //Health Point
     public int HPperLevel;     //HP increasement per Level
-    public int MP;             //Mana Point
+    public float CurrentMP;
+    public float MaxMP;             //Mana Point
     public int MPperLevel;
     public int AP;             //Armor Point
     public float APperLevel;
@@ -75,9 +77,9 @@ public class Player_Stats : MonoBehaviour
 
 
 
-            HP = GetComponent<ColD_Stats>().HP;
+            MaxHP = GetComponent<ColD_Stats>().HP;
             HPperLevel = GetComponent<ColD_Stats>().HPperLevel;
-            MP = GetComponent<ColD_Stats>().MP;
+            MaxMP = GetComponent<ColD_Stats>().MP;
             MPperLevel = GetComponent<ColD_Stats>().MPperLevel;
             AP = GetComponent<ColD_Stats>().AP;
             APperLevel = GetComponent<ColD_Stats>().APperLevel;
@@ -95,8 +97,8 @@ public class Player_Stats : MonoBehaviour
             MPregenperLevel = GetComponent<ColD_Stats>().MPregenperLevel;
 
 
-            hp = HP;
-            mp = MP;
+            hp = MaxHP;
+            mp = MaxMP;
 
         }
         else if (TryGetComponent(out Xerion_Stats Champ_Num2))
@@ -109,9 +111,9 @@ public class Player_Stats : MonoBehaviour
 
 
 
-            HP = GetComponent<Xerion_Stats>().HP;
+            MaxHP = GetComponent<Xerion_Stats>().HP;
             HPperLevel = GetComponent<Xerion_Stats>().HPperLevel;
-            MP = GetComponent<Xerion_Stats>().MP;
+            MaxMP = GetComponent<Xerion_Stats>().MP;
             MPperLevel = GetComponent<Xerion_Stats>().MPperLevel;
             AP = GetComponent<Xerion_Stats>().AP;
             APperLevel = GetComponent<Xerion_Stats>().APperLevel;
@@ -128,9 +130,10 @@ public class Player_Stats : MonoBehaviour
             MPregen = GetComponent<Xerion_Stats>().MPregen;
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
-
-            hp = HP;
-            mp = MP;
+            CurrentHP = MaxHP;
+            CurrentMP = MaxMP;
+            hp = MaxHP;
+            mp = MaxMP;
 
             Xerion_Manager.Instance.Xerion_AD = AD;
         }
@@ -144,9 +147,9 @@ public class Player_Stats : MonoBehaviour
 
 
 
-            HP = GetComponent<WhiteTiger_Stats>().HP;
+            MaxHP = GetComponent<WhiteTiger_Stats>().HP;
             HPperLevel = GetComponent<WhiteTiger_Stats>().HPperLevel;
-            MP = GetComponent<WhiteTiger_Stats>().MP;
+            MaxMP = GetComponent<WhiteTiger_Stats>().MP;
             MPperLevel = GetComponent<WhiteTiger_Stats>().MPperLevel;
             AP = GetComponent<WhiteTiger_Stats>().AP;
             APperLevel = GetComponent<WhiteTiger_Stats>().APperLevel;
@@ -163,11 +166,14 @@ public class Player_Stats : MonoBehaviour
             MPregen = GetComponent<WhiteTiger_Stats>().MPregen;
             MPregenperLevel = GetComponent<WhiteTiger_Stats>().MPregenperLevel;
 
-            hp = HP;
-            mp = MP;
+
+            CurrentHP = MaxHP;
+            CurrentMP = MaxMP;
+            hp = MaxHP;
+            mp = MaxMP;
         }
 
-        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
     }
 
     private void Update()
@@ -197,7 +203,7 @@ public class Player_Stats : MonoBehaviour
             {
                 isZero = true;
             }
-            Debug.Log("Helium " + Helium);
+            //Debug.Log("Helium " + Helium);
         }
 
         if (AttackAbility == 2) //xerion
@@ -222,15 +228,15 @@ public class Player_Stats : MonoBehaviour
         TimeCheck += Time.deltaTime;
         if (TimeCheck % 1.0f == 0)
         {
-            if (hp < HP)
+            if (hp < MaxHP)
             {
                 hp += HPregen;
-                if (hp > HP) hp = HP;
+                if (hp > MaxHP) hp = MaxHP;
             }
-            if (mp < MP)
+            if (mp < MaxMP)
             {
                 mp += MPregen;
-                if (mp > MP) mp = MP;
+                if (mp > MaxMP) mp = MaxMP;
             }
         }
 
@@ -243,7 +249,7 @@ public class Player_Stats : MonoBehaviour
         {
             mp -= energy;
         }
-        if (mp > MP) mp = MP;
+        if (mp > MaxMP) mp = MaxMP;
     }
 
 

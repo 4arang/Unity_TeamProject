@@ -179,7 +179,7 @@ public class Minion_Stats : MonoBehaviour
             EXPperTime = GetComponent<Minion4_Stats>().EXPperTime;
         }
 
-        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
         hp = HP;
         DamagedEffect.SetActive(false);
     }
@@ -194,7 +194,6 @@ public class Minion_Stats : MonoBehaviour
  
     private void FixedUpdate()
     {
-
         long elapsedTime = stopwatch.ElapsedMilliseconds;
         if (TryGetComponent(out Minion1_Stats Minion_Num1))
         {
@@ -276,7 +275,7 @@ public class Minion_Stats : MonoBehaviour
                 {
                     hp += HPregen;
                     if (hp > HP) hp = HP;
-                    GetComponentInChildren<HP_Bar>().SetHP(hp);
+                    //GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -306,8 +305,6 @@ public class Minion_Stats : MonoBehaviour
                 GetComponentInChildren<HP_Bar>().SetHP(hp);
 
                 AD += ADperTime;
-
-
             }
 
             if (elapsedTime % MoveSpeedptime == 0)

@@ -17,12 +17,11 @@ public class TestSetup : MonoBehaviour
         PV = GetComponent<PhotonView>();
         if (PV.IsMine)
         {
-            PV.RPC("RPC_AddCharacter", RpcTarget.AllBuffered, TestInfo.PI.mySelectedChampion);
+            AddCharacter(TestInfo.PI.mySelectedChampion, TestInfo.PI.myTeam);
         }
     }
 
-    [PunRPC]
-    void RPC_AddCharacter(int whichCharacter)
+    void AddCharacter(int whichCharacter, int whichTeam)
     {
         characterValue = whichCharacter;
 
@@ -52,5 +51,14 @@ public class TestSetup : MonoBehaviour
         }
 
         myCharacter.transform.SetParent(this.gameObject.transform);
+
+        if(whichTeam==1)
+        {
+            GameObject.Find("Red Team").GetComponent<TeamManager>().Champions.Add(myCharacter);
+        }
+        else
+        {
+            GameObject.Find("Blue Team").GetComponent<TeamManager>().Champions.Add(myCharacter);
+        }
     }
 }

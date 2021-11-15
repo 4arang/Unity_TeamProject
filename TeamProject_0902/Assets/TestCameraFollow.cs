@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestCamera : MonoBehaviour
+public class TestCameraFollow : MonoBehaviour
 {
 	#region Private Fields
 
@@ -35,6 +35,8 @@ public class TestCamera : MonoBehaviour
 	// Cache for camera offset
 	Vector3 cameraOffset = Vector3.zero;
 
+	// get viewed gameobject
+	public GameObject myChampion;
 
 	#endregion
 
@@ -45,6 +47,7 @@ public class TestCamera : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
+		myChampion = this.gameObject;
 		// Start following the target if wanted.
 		if (followOnStart)
 		{
@@ -103,7 +106,6 @@ public class TestCamera : MonoBehaviour
 		cameraTransform.LookAt(this.transform.position + centerOffset);
 
 	}
-
 
 	void Cut()
 	{
