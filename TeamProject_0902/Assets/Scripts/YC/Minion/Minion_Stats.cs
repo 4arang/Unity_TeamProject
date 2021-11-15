@@ -398,7 +398,7 @@ public class Minion_Stats : MonoBehaviour
 
     IEnumerator Dying()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.5f);
         animator.SetBool("Die", false);
         Destroy(gameObject);
     }

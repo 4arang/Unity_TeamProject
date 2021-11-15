@@ -39,10 +39,19 @@ public class Minion3 : MonoBehaviour
 
         TeamColor = GetComponent<Minion_Stats>().TeamColor;
 
-        Turret1 = Turret_Manager.Instance.TargetBuilding1;
-        Turret2 = Turret_Manager.Instance.TargetBuilding2;
-        Turret3 = Turret_Manager.Instance.TargetBuilding3;
+        if (TeamColor)
+        {
+            Turret1 = Turret_Manager.Instance.Blue_TargetBuilding1;
+            Turret2 = Turret_Manager.Instance.Blue_TargetBuilding2;
+            Turret3 = Turret_Manager.Instance.Blue_TargetBuilding3;
 
+        }
+        else
+        {
+            Turret1 = Turret_Manager.Instance.Red_TargetBuilding1;
+            Turret2 = Turret_Manager.Instance.Red_TargetBuilding2;
+            Turret3 = Turret_Manager.Instance.Red_TargetBuilding3;
+        }
 
         InvokeRepeating("FindTarget", 0f, 0.5f);
     }
@@ -230,7 +239,7 @@ public class Minion3 : MonoBehaviour
         if (OnUpdateTarget)
         {
             OnUpdateTarget = false;
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(5.0f);
             Target = null;
             Debug.Log("Update Target");
             OnUpdateTarget = true;

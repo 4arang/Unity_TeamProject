@@ -5,10 +5,14 @@ using UnityEngine;
 public class Turret_Manager : MonoBehaviour
 {
 
-    public Transform TargetBuilding1;
-    public Transform TargetBuilding2;
-    public Transform TargetBuilding3;
+    public Transform Blue_TargetBuilding1;
+    public Transform Blue_TargetBuilding2;
+    public Transform Blue_TargetBuilding3;
 
+
+    public Transform Red_TargetBuilding1;
+    public Transform Red_TargetBuilding2;
+    public Transform Red_TargetBuilding3;
 
     private static Turret_Manager sInstance;
     public static Turret_Manager Instance

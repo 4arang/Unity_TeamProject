@@ -107001,7 +107001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7599431101685634122
 Transform:
   m_ObjectHideFlags: 0
@@ -107261,9 +107261,6 @@ MonoBehaviour:
   MPregenperLevel: 0
   hp: 0
   mp: 0
-  EXP: 0
-  Gold: 0
-  Level: 1
   Helium: 0
   minHelium: 0
   maxHelium: 100
@@ -107274,6 +107271,7 @@ MonoBehaviour:
   DamageStorage: 0
   isAttack_Minion: 0
   isAttack_Player: 0
+  Level: 1
 --- !u!114 &54509615198716373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145006,11 +145004,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1100873092469318494, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_Name

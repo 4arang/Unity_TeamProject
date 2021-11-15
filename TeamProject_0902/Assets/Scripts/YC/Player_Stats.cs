@@ -38,7 +38,7 @@ public class Player_Stats : MonoBehaviour
 
     //Coldy special (Helium)
     [Range(0.0f, 100.0f)]
-    public int Helium;
+    public int Helium=100;
     public int minHelium = 0;
     public int maxHelium = 100;
     public bool Charging; //충전상태

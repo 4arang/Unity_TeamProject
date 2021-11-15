@@ -19312,8 +19312,8 @@ MonoBehaviour:
   speed: 15
   accuracy: 99.2
   lifeSpellTime: 0.5
-  lifeHitTime: 1
-  fireRate: 2
+  lifeHitTime: 5
+  fireRate: 1
   muzzlePrefab: {fileID: 1156035233883068, guid: bae3110f03f4c9b47976a9c505b24cb2, type: 3}
   hitPrefab: {fileID: 1828600275193542, guid: 62c6639c5ae4dbc478bd98b4861a967f, type: 3}
   shotFX: {fileID: 0}

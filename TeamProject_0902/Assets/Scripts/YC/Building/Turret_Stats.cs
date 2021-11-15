@@ -55,7 +55,10 @@ public class Turret_Stats : MonoBehaviour
             Gold = int.Parse(data[8]["gold"].ToString());
             Exp = int.Parse(data[8]["exp"].ToString());
 
-            Turret_Manager.Instance.TargetBuilding1 = transform;
+            if (TeamColor)
+                Turret_Manager.Instance.Red_TargetBuilding1 = transform;
+            else
+                Turret_Manager.Instance.Blue_TargetBuilding1 = transform;
         }
        else if((transform.position.x>=-45 && transform.position.x<-25)
             ||(transform.position.x>=25 && transform.position.x<45))
@@ -79,7 +82,10 @@ public class Turret_Stats : MonoBehaviour
             Gold = int.Parse(data[9]["gold"].ToString());
             Exp = int.Parse(data[9]["exp"].ToString());
 
-            Turret_Manager.Instance.TargetBuilding2 = transform;
+            if (TeamColor)
+                Turret_Manager.Instance.Red_TargetBuilding2 = transform;
+            else
+                Turret_Manager.Instance.Blue_TargetBuilding2 = transform;
         }
         else if ((transform.position.x >= -60 && transform.position.x < -45)
       || (transform.position.x >= 45 && transform.position.x < 60))
@@ -102,7 +108,10 @@ public class Turret_Stats : MonoBehaviour
             Gold = int.Parse(data[10]["gold"].ToString());
             Exp = int.Parse(data[10]["exp"].ToString());
 
-            Turret_Manager.Instance.TargetBuilding3 = transform;
+            if (TeamColor)
+                Turret_Manager.Instance.Red_TargetBuilding3 = transform;
+            else
+                Turret_Manager.Instance.Blue_TargetBuilding3 = transform;
         }
         else if ((transform.position.x >= -75 && transform.position.x < -60)
 || (transform.position.x >= 60 && transform.position.x < 70))
@@ -134,5 +143,8 @@ public class Turret_Stats : MonoBehaviour
         damage *= (1 - AP / (100 + AP));
         HP -= damage;
         Debug.Log("Turret HP" + HP);
+
+        if (HP <= 0)
+            Destroy(gameObject);
     }
 }

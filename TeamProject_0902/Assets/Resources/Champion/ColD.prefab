@@ -16931,9 +16931,6 @@ MonoBehaviour:
   MPregenperLevel: 0
   hp: 0
   mp: 0
-  EXP: 0
-  Gold: 0
-  Level: 1
   Helium: 0
   minHelium: 0
   maxHelium: 100
@@ -16944,6 +16941,7 @@ MonoBehaviour:
   DamageStorage: 0
   isAttack_Minion: 0
   isAttack_Player: 0
+  Level: 1
 --- !u!1 &3798069380004984465
 GameObject:
   m_ObjectHideFlags: 0
@@ -29025,6 +29023,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3800888060591714601}
     m_Modifications:
+    - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1100873092469318494, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_Name
       value: HPstate

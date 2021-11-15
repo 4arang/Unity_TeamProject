@@ -4939,10 +4939,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6fd28de854a3e45975752a7fa07f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 15
   accuracy: 100
-  lifeSpellTime: 3
-  lifeHitTime: 3
+  lifeSpellTime: 0.5
+  lifeHitTime: 5
   fireRate: 1
   muzzlePrefab: {fileID: 1987862718156738, guid: 6f2c81e7975f3e54ba16ca66176b605e, type: 3}
   hitPrefab: {fileID: 1518921343645260, guid: 19ad3e3628d5d954f938fcc33e837c4a, type: 3}
