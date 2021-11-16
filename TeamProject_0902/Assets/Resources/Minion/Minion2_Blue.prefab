@@ -5260,6 +5260,7 @@ GameObject:
   - component: {fileID: 4859236931090342923}
   - component: {fileID: 5718349149158950000}
   - component: {fileID: 3549102503086252787}
+  - component: {fileID: 4008131726037444700}
   m_Layer: 0
   m_Name: Minion2_Blue
   m_TagString: Minion
@@ -5403,12 +5404,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 0}
   TeamColor: 0
   MaxHP: 0
   HP: 0
   HPregen: 0
   HPregenperLevel: 0
   HPPtime: 0
+  hp: 0
   MaxAD: 0
   AD: 0
   ADperTime: 0
@@ -5451,6 +5454,28 @@ MonoBehaviour:
   Turret2: {fileID: 0}
   Turret3: {fileID: 0}
   TeamColor: 0
+--- !u!114 &4008131726037444700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884981614487665006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5002211386183063154
 GameObject:
   m_ObjectHideFlags: 0

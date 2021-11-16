@@ -35,10 +35,14 @@ public class TestSetTarget : MonoBehaviour
                     }
 
                     //If the Other Obstacle is targeted
-                    if (hit.collider.gameObject.GetComponent<Targetable>().enemyType == Targetable.EnemyType.Champion)
+                    //if (hit.collider.gameObject.GetComponent<Targetable>().enemyType == Targetable.EnemyType.)
+                    //{
+                    //    Debug.Log("챔피언 클릭");
+                    //    // myChampion.GetComponent<Player_Combat>().targetedEnemy = hit.collider.gameObject;
+                    //}
+                    else
                     {
-                        Debug.Log("챔피언 클릭");
-                        // myChampion.GetComponent<Player_Combat>().targetedEnemy = hit.collider.gameObject;
+                        Debug.Log("선언되지 않은 타입");
                     }
                 }
 

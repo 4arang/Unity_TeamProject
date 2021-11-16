@@ -56,6 +56,8 @@ MonoBehaviour:
   - RPC_GameInit
   - RPC_AddGameCharacter
   - RPC_SpawnAvatar
+  - RPC_PerformMeleeAttack
+  - RPC_UpdateHealth
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

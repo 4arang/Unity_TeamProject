@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;//unity 내장시간함수? 어떻게 처리해야하는지 게임내 멈춰있는동안 처리같은거?
 
-
-public class Minion_Stats : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
 {
     public Camera MainCamera;
     Stopwatch stopwatch = new Stopwatch();
@@ -322,8 +323,7 @@ public class Minion_Stats : MonoBehaviour
 
 
     public void DropHP(float damage, Transform obj)
-    {
-
+    {     
 
         damage *= (1-AP/(100+AP));
 
@@ -398,5 +398,20 @@ public class Minion_Stats : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         animator.SetBool("Die", false);
         Destroy(gameObject);
+    }
+
+    //주기적으로 자동 실행되는 동기화 메서드
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(HP);
+            stream.SendNext(MaxHP);
+        }
+        else
+        {
+            HP = (int)stream.ReceiveNext();
+            MaxHP = (int)stream.ReceiveNext();
+        }
     }
 }
