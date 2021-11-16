@@ -16,13 +16,16 @@ public class SkillSetting : MonoBehaviour {
 	public GameObject hitPrefab;
     public AudioClip shotFX;
 	public List<GameObject> trails;
-	
+
+    private Transform target;
 	private Vector3 offset;
     private Vector3 shootDir;
     private Vector3 targetDir;
 
-    public void Setup(Vector3 dir, Vector3 dir2)
+    public void Setup(Vector3 dir, Transform target_)
     {
+        Vector3 dir2 = target_.position;
+        target = target_;
         shootDir = dir;
         targetDir = dir2;
     }
@@ -70,43 +73,87 @@ public class SkillSetting : MonoBehaviour {
 
 	
 
-	void Update () {	
-		if (speed != 0)
-			transform.position += shootDir  * (speed * Time.deltaTime);
-	}
-
-    void OnCollisionEnter(Collision co)
-    {
-        if (Vector3.Distance(co.transform.position, targetDir) <= 0.1f)
+	void Update () {
+        if (speed != 0 && target)
         {
-            if (trails.Count > 0)
-            {
-                for (int i = 0; i < trails.Count; i++)
-                    trails[i].transform.parent = null;
-            }
-            speed = 0;
-            GetComponent<Rigidbody>().isKinematic = true;
+            //transform.position += shootDir * (speed * Time.deltaTime);
+            Vector3 dir = target.position - transform.position;
+            float distanceThisFrame = speed * Time.deltaTime;
+            transform.Translate(dir.normalized * distanceThisFrame, Space.World);
 
-            ContactPoint contact = co.contacts[0];
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
-            Vector3 pos = contact.point;
-
-            if (hitPrefab != null)
+            if(dir.magnitude<=distanceThisFrame)
             {
-                var hitVFX = Instantiate(hitPrefab, pos, rot);
-                var ps = hitVFX.GetComponent<ParticleSystem>();
-                if (ps == null)
+                if (trails.Count > 0)
                 {
-                    var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(hitVFX, psChild.main.duration);
+                    for (int i = 0; i < trails.Count; i++)
+                        trails[i].transform.parent = null;
                 }
-                else
-                    Destroy(hitVFX, ps.main.duration);
-            }
+                speed = 0;
+                GetComponent<Rigidbody>().isKinematic = true;
 
-            StartCoroutine(DestroyParticle(0f));
+                //ContactPoint contact = target.contacts[0];
+                //Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+                //Vector3 pos = contact.point;
+
+                if (hitPrefab != null)
+                {
+                    var hitVFX = Instantiate(hitPrefab, transform.position, Quaternion.identity);
+                    var ps = hitVFX.GetComponent<ParticleSystem>();
+                    if (ps == null)
+                    {
+                        var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                        Destroy(hitVFX, psChild.main.duration);
+                    }
+                    else
+                        Destroy(hitVFX, ps.main.duration);
+                }
+
+                StartCoroutine(DestroyParticle(0f));
+            }
         }
+
+        
+
+        if(target ==null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
     }
+
+    //void OnCollisionEnter(Collision co)
+    //{
+    //    if (Vector3.Distance(co.transform.position, targetDir) <= 0.1f)
+    //    {
+    //        if (trails.Count > 0)
+    //        {
+    //            for (int i = 0; i < trails.Count; i++)
+    //                trails[i].transform.parent = null;
+    //        }
+    //        speed = 0;
+    //        GetComponent<Rigidbody>().isKinematic = true;
+
+    //        ContactPoint contact = co.contacts[0];
+    //        Quaternion rot = Quaternion.FromToRotation(Vector3.up, contact.normal);
+    //        Vector3 pos = contact.point;
+
+    //        if (hitPrefab != null)
+    //        {
+    //            var hitVFX = Instantiate(hitPrefab, pos, rot);
+    //            var ps = hitVFX.GetComponent<ParticleSystem>();
+    //            if (ps == null)
+    //            {
+    //                var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+    //                Destroy(hitVFX, psChild.main.duration);
+    //            }
+    //            else
+    //                Destroy(hitVFX, ps.main.duration);
+    //        }
+
+    //        StartCoroutine(DestroyParticle(0f));
+    //    }
+    //}
 
     //private void OnTriggerEnter(Collider other)
     //{

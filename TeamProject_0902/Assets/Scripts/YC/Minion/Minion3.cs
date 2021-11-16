@@ -23,6 +23,8 @@ public class Minion3 : MonoBehaviour
     [SerializeField] private Transform Turret1;
     [SerializeField] private Transform Turret2;
     [SerializeField] private Transform Turret3;
+    [SerializeField] private Transform Turret4;
+    [SerializeField] private Transform Turret5;
 
     public bool TeamColor;
     private bool OnUpdateTarget = true;
@@ -44,13 +46,16 @@ public class Minion3 : MonoBehaviour
             Turret1 = Turret_Manager.Instance.Blue_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Blue_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Blue_TargetBuilding3;
-
+            Turret4 = Turret_Manager.Instance.Blue_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Blue_TargetBuilding5;
         }
         else
         {
             Turret1 = Turret_Manager.Instance.Red_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Red_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Red_TargetBuilding3;
+            Turret4 = Turret_Manager.Instance.Red_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Red_TargetBuilding5;
         }
 
         InvokeRepeating("FindTarget", 0f, 0.5f);
@@ -136,6 +141,8 @@ public class Minion3 : MonoBehaviour
                     if (Turret1) Target = Turret1;
                     else if (Turret2) Target = Turret2;
                     else if (Turret3) Target = Turret3;
+                    else if (Turret4) Target = Turret4;
+                    else if (Turret5) Target = Turret5;
 
                     TargetFound = true;
                 }
@@ -194,7 +201,7 @@ public class Minion3 : MonoBehaviour
                 Transform LaserTransform = Instantiate(AttackBullet, Barrel.position,
                        Quaternion.AngleAxis(agentDir, Vector3.up));
                 bulletDirection = (Barrel.transform.position - BarrelArm.transform.position).normalized;
-                LaserTransform.GetComponent<SkillSetting>().Setup(bulletDirection, target.transform.position);
+               if(LaserTransform!=null) LaserTransform.GetComponent<SkillSetting>().Setup(bulletDirection, target);
                 if (target) damageEnemy(target);
             }
             yield return new WaitForSeconds(0.2f);

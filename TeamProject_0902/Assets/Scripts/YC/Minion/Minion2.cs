@@ -22,6 +22,8 @@ public class Minion2 : MonoBehaviour
     [SerializeField] private Transform Turret1;
     [SerializeField] private Transform Turret2;
     [SerializeField] private Transform Turret3;
+    [SerializeField] private Transform Turret4;
+    [SerializeField] private Transform Turret5;
 
     public bool TeamColor;
     private bool OnUpdateTarget = true;
@@ -136,6 +138,8 @@ public class Minion2 : MonoBehaviour
                     if (Turret1) Target = Turret1;
                     else if (Turret2) Target = Turret2;
                     else if (Turret3) Target = Turret3;
+                    else if (Turret4) Target = Turret4;
+                    else if (Turret5) Target = Turret5;
 
                     TargetFound = true;
                    
@@ -171,8 +175,9 @@ public class Minion2 : MonoBehaviour
                 Transform BasicShotTransform = Instantiate(AttackBullet, AttackEffect.transform.position,
                     Quaternion.AngleAxis(agentDir, Vector3.up));
                 Vector3 shootingDir = (target.transform.position - transform.position).normalized;
-                BasicShotTransform.GetComponent<SkillSetting>().Setup(shootingDir, target.transform.position);
-
+                if (BasicShotTransform != null) BasicShotTransform.GetComponent<SkillSetting>().Setup(shootingDir, target);
+              
+ 
                 animator.SetBool("Attack", true);
                 StartCoroutine("Attacking", target);
             }

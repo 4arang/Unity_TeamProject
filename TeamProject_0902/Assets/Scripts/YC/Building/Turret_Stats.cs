@@ -60,8 +60,8 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding1 = transform;
         }
-       else if((transform.position.x>=-45 && transform.position.x<-25)
-            ||(transform.position.x>=25 && transform.position.x<45))
+       else if((transform.position.x>=-65 && transform.position.x<-75)
+            ||(transform.position.x>=65 && transform.position.x<75))
          {
             MaxHP = float.Parse(data[9]["statshp"].ToString());
             HP = MaxHP;
@@ -109,9 +109,19 @@ public class Turret_Stats : MonoBehaviour
             Exp = int.Parse(data[10]["exp"].ToString());
 
             if (TeamColor)
-                Turret_Manager.Instance.Red_TargetBuilding3 = transform;
+            {
+                if(transform.position.z>0)
+                Turret_Manager.Instance.Red_TargetBuilding4 = transform;
+                else
+                Turret_Manager.Instance.Red_TargetBuilding5 = transform;
+            }
             else
-                Turret_Manager.Instance.Blue_TargetBuilding3 = transform;
+            {
+                if (transform.position.z > 0)
+                    Turret_Manager.Instance.Blue_TargetBuilding4 = transform;
+                else
+                    Turret_Manager.Instance.Blue_TargetBuilding5 = transform;
+            }
         }
         else if ((transform.position.x >= -75 && transform.position.x < -60)
 || (transform.position.x >= 60 && transform.position.x < 70))

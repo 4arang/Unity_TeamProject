@@ -23,9 +23,11 @@ public class ColD_W : MonoBehaviour
     [SerializeField] private GameObject grenade_L;
     [SerializeField] private GameObject grenade_R;
     [SerializeField] private Transform grenade_Bomb;
+    private float E_AD = 90; // 90 120 160 200 240, 0.4주문력, 2초간 둔화율 15 20 25 30 35, 위험상태 50, 1초간속박
+    private int E_Level = 1;
     protected float DirecAngle; //e키 방향각도
     private bool grenade_Left=true;
-
+    private bool E_SkillOn = false;
 
     [Header("R_Skill")] 
     [SerializeField] private GameObject missile;
@@ -82,6 +84,7 @@ public class ColD_W : MonoBehaviour
         if (Input.GetKey(KeyCode.E) && GetComponent<Player_Stats>().Helium >= 20)
         {
             isSkillon = true;
+            E_SkillOn = true;
             movingManager.Instance.PlayerClickedPos = transform.position; //위치고정
             Direction.transform.position = Range.transform.position; //캐릭터가운데로 화살이동
             Direction.SetActive(true); //화살방향 설정 -> 화살 active
@@ -89,7 +92,7 @@ public class ColD_W : MonoBehaviour
             Direction.transform.rotation = Quaternion.AngleAxis(DirecAngle, Vector3.up); //각도setting
             movingManager.Instance.PlayerDirection = DirecAngle; //플레이어에 방향전달
         }
-        if (Input.GetKeyUp(KeyCode.E))  //E키 떼는 순간 스킬 시작
+        if (Input.GetKeyUp(KeyCode.E) && E_SkillOn)  //E키 떼는 순간 스킬 시작
         {
             Direction.SetActive(false);
             GetComponent<Player_Stats>().DropHe();
@@ -102,7 +105,8 @@ public class ColD_W : MonoBehaviour
                 Vector3 nextDir = new Vector3(mouseVector.x, grenade_L.transform.position.y, mouseVector.z);
                 Vector3 shootDir = (nextDir - grenade_L.transform.position).normalized; //마우스좌표 -발사좌표
 
-                grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+                grenadeTransform.GetComponent<Projectile_Grenade>().Setup(shootDir, E_AD
+                    , gameObject); //유탄에 방향전달
                 grenade_Left = false;
             }
             else        //둘째탄
@@ -113,7 +117,8 @@ Quaternion.identity); //유탄발사 and transform 저장
                 Vector3 nextDir = new Vector3(mouseVector.x, grenade_R.transform.position.y, mouseVector.z);
                 Vector3 shootDir = (nextDir - grenade_R.transform.position).normalized; //마우스좌표 -발사좌표
 
-                grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+                grenadeTransform.GetComponent<Projectile_Grenade>().Setup(shootDir, E_AD
+                    , gameObject); //유탄에 방향전달
                 grenade_Left = true;
             }
 
@@ -123,6 +128,7 @@ Quaternion.identity); //유탄발사 and transform 저장
                 StartCoroutine("Active_E");
             }
             animator.SetBool("E_ColD", true);
+            E_SkillOn = false;
         }
 
         if (Input.GetKeyDown(KeyCode.R))

@@ -7,6 +7,9 @@ public class TurretBullet : MonoBehaviour
     private Transform target;
     private float turretAD;
     public float speed = 50f;
+
+    public ParticleSystem FXToDeatch;
+
     public void Seek(Transform _target, float AD)
     {
         target = _target;
@@ -26,7 +29,20 @@ public class TurretBullet : MonoBehaviour
 
         if(dir.magnitude<=distanceThisFrame)
         {
-            HitTarget(target);
+            speed = 0;
+            if (FXToDeatch != null)
+            {
+                var hitVFX = Instantiate(FXToDeatch, transform.position, Quaternion.identity);
+                var ps = hitVFX.GetComponent<ParticleSystem>();
+                if (ps == null)
+                {
+                    var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitVFX, psChild.main.duration);
+                }
+                else
+                    Destroy(hitVFX, ps.main.duration);
+            }
+           if(target) HitTarget(target);
             return;
         }
 

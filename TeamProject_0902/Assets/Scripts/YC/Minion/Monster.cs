@@ -24,6 +24,7 @@ public class Monster : MonoBehaviour
     private byte attackNum = 1; //1번공격 특수스킬, 234 -> 일반스킬
 
     [SerializeField] private GameObject Monster2;
+    [SerializeField] private GameObject Monster1;
 
 
     private void Start()
@@ -213,7 +214,10 @@ public class Monster : MonoBehaviour
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(10.0f);
-        Instantiate(Monster2, transform.position, Quaternion.identity);
+        Instantiate(Monster2, transform.position, Quaternion.AngleAxis(180, Vector3.up));
+        animator.SetBool("Spawn", true);
+        yield return new WaitForSeconds(9.2f);
+        animator.SetBool("Spawn", false);
         Debug.Log("destroy monsterself");
 
         Destroy(gameObject);

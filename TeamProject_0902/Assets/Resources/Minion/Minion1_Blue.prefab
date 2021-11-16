@@ -239,7 +239,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 1
+  m_Height: 1.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &5048501094236319508
@@ -295,6 +295,8 @@ MonoBehaviour:
   Turret1: {fileID: 0}
   Turret2: {fileID: 0}
   Turret3: {fileID: 0}
+  Turret4: {fileID: 0}
+  Turret5: {fileID: 0}
   TeamColor: 0
 --- !u!195 &724345335
 NavMeshAgent:
@@ -330,12 +332,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 0}
   TeamColor: 0
   MaxHP: 0
   HP: 0
   HPregen: 0
   HPregenperLevel: 0
   HPPtime: 0
+  hp: 0
   MaxAD: 0
   AD: 0
   ADperTime: 0

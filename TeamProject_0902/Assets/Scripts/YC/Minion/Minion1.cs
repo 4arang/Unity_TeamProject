@@ -20,6 +20,8 @@ public class Minion1 : MonoBehaviour
     [SerializeField] private Transform Turret1;
     [SerializeField] private Transform Turret2;
     [SerializeField] private Transform Turret3;
+    [SerializeField] private Transform Turret4;
+    [SerializeField] private Transform Turret5;
 
     public bool TeamColor;
     private bool OnUpdateTarget = true;
@@ -135,6 +137,8 @@ public class Minion1 : MonoBehaviour
                     if (Turret1) Target = Turret1;
                     else if (Turret2) Target = Turret2;
                     else if (Turret3) Target = Turret3;
+                    else if (Turret4) Target = Turret4;
+                    else if (Turret5) Target = Turret5;
 
                     TargetFound = true;
                 }

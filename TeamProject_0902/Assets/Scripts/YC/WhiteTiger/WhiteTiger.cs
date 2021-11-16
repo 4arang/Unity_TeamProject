@@ -415,7 +415,15 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         }
         else if (target.CompareTag("Monster"))
         {
-            target.GetComponent<Monster_Stats>().DropHP(WT_BasicAD);
+            if (target.GetComponent<Monster_Stats>().hp > 0)
+            {
+                target.GetComponent<Monster_Stats>().DropHP(WT_BasicAD);
+            }
+            else
+            {
+                target = null;
+                CheckEnemy = false;
+            }
         }
     }
 

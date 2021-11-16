@@ -838,8 +838,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 340876484193756911}
-  - component: {fileID: 1816705166022376048}
-  - component: {fileID: 1781678246324656440}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -874,33 +872,6 @@ Transform:
   m_Father: {fileID: 4544463658748815073}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1816705166022376048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337293852071829297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 486b2cf0d42d7e944b8345498a97b0c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ColD_Grenade_AD: 90
-  ColD_grenade_MD: 0.2
---- !u!135 &1781678246324656440
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337293852071829297}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.32
-  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &337396355675070961
 GameObject:
   m_ObjectHideFlags: 0
@@ -21602,9 +21573,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4544463658748815073}
-  - component: {fileID: 4544463658748815072}
   - component: {fileID: 4544463658748815075}
   - component: {fileID: 4544463658748815074}
+  - component: {fileID: -9016193525328589802}
   m_Layer: 0
   m_Name: ColD_Grenade_2
   m_TagString: Untagged
@@ -21630,24 +21601,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4544463658748815072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4544463658748815077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90504fe86e05b3547866f636547372cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FXToDeatch: {fileID: 432793840837584390}
-  Speed: 15
-  ImpactFX: {fileID: 0}
-  ImpactFXDestroyDelay: 2
-  ImpactOffset: 0
-  grenadeRange: 0.72
 --- !u!54 &4544463658748815075
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21675,8 +21628,27 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.25
+  m_Center: {x: 0, y: -1, z: 0}
+--- !u!114 &-9016193525328589802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4544463658748815077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54c0b772999aac43a1ba0e39b23ef41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FXToDeatch: {fileID: 432793840837584390}
+  Speed: 17
+  ImpactFX: {fileID: 0}
+  ImpactFXDestroyDelay: 2
+  ImpactOffset: 0.15
+  grenadeRange: 0.72
+  hitPrefab: {fileID: 459682993455248875, guid: 96e4e09080961164482719457a0fe294, type: 3}
 --- !u!1 &4544463658895675864
 GameObject:
   m_ObjectHideFlags: 0

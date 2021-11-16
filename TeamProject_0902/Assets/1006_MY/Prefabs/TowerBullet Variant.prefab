@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+  FXToDeatch: {fileID: 1883668456419339243, guid: 22d6430681c851645bec67ea8e1a0bb3, type: 3}
 --- !u!1001 &2281042109391758685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22,6 +23,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1424409609733958932, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079580295419779008, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
+      propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2079580295419779009, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
@@ -35,6 +40,10 @@ PrefabInstance:
     - target: {fileID: 2987766440675265502, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993102116657296845, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4993102116657296845, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_IsTrigger
@@ -66,7 +75,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5624243250466354054, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.6122417
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 5624243250466354054, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -116,7 +125,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5624243250466354057, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
+    - {fileID: 4349013828348170988, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
+    - {fileID: 4993102116657296845, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 76900974afa3f9f418be42ef1689882e, type: 3}
 --- !u!1 &5884710230153991893 stripped
 GameObject:

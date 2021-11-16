@@ -28,6 +28,7 @@ public class Player_Stats : MonoBehaviour
     public float AttackSpeed;
     public float AttackSpeedperLevel;
     public float MoveSpeed;
+    private float Recover_MoveSpeed;
     public int AttackRange;
     public float HPregen;
     public float HPregenperLevel;
@@ -100,6 +101,7 @@ public class Player_Stats : MonoBehaviour
             hp = MaxHP;
             mp = MaxMP;
 
+            Helium = 100;
         }
         else if (TryGetComponent(out Xerion_Stats Champ_Num2))
         {
@@ -173,6 +175,7 @@ public class Player_Stats : MonoBehaviour
             mp = MaxMP;
         }
 
+        Recover_MoveSpeed = MoveSpeed;
         //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
     }
 
@@ -300,5 +303,21 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
+    public void DropSpeed(float damage, float time)
+    {
+        MoveSpeed *= damage;
+        StartCoroutine("Active_SpeedReturn", time);
+    }
+    IEnumerator Active_SpeedReturn(float time)
+    {
+        yield return new WaitForSeconds(time); //1초후에 스피드 복구
+        MoveSpeed = Recover_MoveSpeed; //렙업시 변경시켜주기
+    }
+
+    public void Stun(float StunTime)
+    {
+        DropSpeed(0, StunTime);
+        //stop attack
+    }
 
 }

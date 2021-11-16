@@ -10,15 +10,6 @@ public class ColD_R_Skill_damage : MonoBehaviour
 
     private Dictionary<Collider, float> _table = new Dictionary<Collider, float>();
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +18,7 @@ public class ColD_R_Skill_damage : MonoBehaviour
         {
             _table[other] = float.NegativeInfinity; //음수할당
         }
-        if (other.CompareTag("Enemy") && !_table.ContainsKey(other)) //새로운 other 추가하는경우
+        if (other.CompareTag("Player") && !_table.ContainsKey(other)) //새로운 other 추가하는경우
         {
             _table[other] = float.NegativeInfinity; //음수할당
         }

@@ -39213,10 +39213,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6641666553202378973}
-  - component: {fileID: 6641666553202378972}
   - component: {fileID: 6641666553202378975}
   - component: {fileID: 6641666553202378974}
   - component: {fileID: 2885932612321814019}
+  - component: {fileID: 7645683441875246439}
   m_Layer: 0
   m_Name: Xerion_E(grenade)
   m_TagString: Untagged
@@ -39241,24 +39241,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6641666553202378972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6641666553202378969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90504fe86e05b3547866f636547372cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FXToDeatch: {fileID: 2565007385057810771}
-  Speed: 15
-  ImpactFX: {fileID: 0}
-  ImpactFXDestroyDelay: 2
-  ImpactOffset: 0
-  grenadeRange: 0.72
 --- !u!54 &6641666553202378975
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -39283,10 +39265,10 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6641666553202378969}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2885932612321814019
 MonoBehaviour:
@@ -39300,3 +39282,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e775d1a162fc4f42a2a2b6d206daaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Xerion_E_AD: 80
+--- !u!114 &7645683441875246439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6641666553202378969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54c0b772999aac43a1ba0e39b23ef41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FXToDeatch: {fileID: 2565007385057810771}
+  Speed: 17
+  ImpactFX: {fileID: 0}
+  ImpactFXDestroyDelay: 2
+  ImpactOffset: 0.15
+  grenadeRange: 0.72
+  hitPrefab: {fileID: 5158065388690354047, guid: 1c2496285b36afd49bbec52659a2ca97, type: 3}

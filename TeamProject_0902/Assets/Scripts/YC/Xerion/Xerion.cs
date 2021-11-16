@@ -248,7 +248,8 @@ public class Xerion : MonoBehaviour
                     Transform BasicShotTransform = Instantiate(BasicShot, GunShot_Effect.transform.position,
                      Quaternion.identity);
                     Vector3 shootingDir = (target.transform.position - transform.position).normalized;
-                    BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir);
+                    if(BasicShotTransform!=null)
+                        BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir, target);
                     Debug.Log("Fire!");
 
                     if (passiveOn)
@@ -311,7 +312,15 @@ public class Xerion : MonoBehaviour
         }
         else if (target.CompareTag("Monster"))
         {
-            target.GetComponent<Monster_Stats>().DropHP(Xerion_BasicAD);
+            if (target.GetComponent<Monster_Stats>().hp > 0)
+            {
+                target.GetComponent<Monster_Stats>().DropHP(Xerion_BasicAD);
+            }
+            else
+            {
+                target = null;
+                CheckEnemy = false;
+            }
         }
 
     }

@@ -41,6 +41,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     [SerializeField] private Transform grenade;
     [SerializeField] private GameObject grenadeEffect;
     protected float DirecAngle; //e키 방향각도
+    private float E_AD = 80; // 80 110 140 170 200 0.45주문력 거리에 비례 기절시간 0.5~2s
     private float E_MP = 60;
     private byte E_Level = 1;
     private bool E_On = false;
@@ -224,12 +225,13 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             Direction.SetActive(false);
 
             Transform grenadeTransform = Instantiate(grenade, grenadeEffect.transform.position,
-Quaternion.identity); //유탄발사 and transform 저장
+Quaternion.AngleAxis(DirecAngle, Vector3.up)); //유탄발사 and transform 저장
 
             Vector3 nextDir = new Vector3(mouseVector.x, grenadeEffect.transform.position.y, mouseVector.z);
             Vector3 shootDir = (nextDir - grenadeEffect.transform.position).normalized; //마우스좌표 -발사좌표
 
-            grenadeTransform.GetComponent<PFX_ProjectileObject>().Setup(shootDir); //유탄에 방향전달
+            grenadeTransform.GetComponent<Projectile_Grenade>().Setup(shootDir, E_AD,
+               gameObject); //유탄에 방향전달
 
             if (animator.GetBool("E_Xerion") == false)
             {
