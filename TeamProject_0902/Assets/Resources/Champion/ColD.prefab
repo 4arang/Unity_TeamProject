@@ -16693,7 +16693,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3800888060591714601
 Transform:
   m_ObjectHideFlags: 0
@@ -16911,9 +16911,11 @@ MonoBehaviour:
   MagicAbility: 0
   Difficulty: 0
   TeamColor: 0
-  HP: 0
+  CurrentHP: 0
+  MaxHP: 0
   HPperLevel: 0
-  MP: 0
+  CurrentMP: 0
+  MaxMP: 0
   MPperLevel: 0
   AP: 0
   APperLevel: 0
@@ -29025,11 +29027,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1100873091641997688, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1100873092469318494, guid: 6a68510de62e7fc40b92021a1209575f, type: 3}
       propertyPath: m_Name

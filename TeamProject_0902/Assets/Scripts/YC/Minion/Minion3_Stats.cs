@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics; //unity 내장시간함수? 어떻게 처리해야하는지 게임내 멈춰있는동안 처리같은거?
 
-public class Minion3_Stats : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class Minion3_Stats : MonoBehaviourPunCallbacks
 {
     Stopwatch stopwatch = new Stopwatch();
 
