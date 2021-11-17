@@ -107105,6 +107105,7 @@ GameObject:
   - component: {fileID: -3682068371744194992}
   - component: {fileID: -7309014568545131023}
   - component: {fileID: 5060220385579491676}
+  - component: {fileID: 1235785007}
   m_Layer: 0
   m_Name: BaekRang
   m_TagString: Player
@@ -107174,7 +107175,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -107312,10 +107313,8 @@ MonoBehaviour:
   MagicAbility: 0
   Difficulty: 0
   TeamColor: 0
-  CurrentHP: 0
   MaxHP: 0
   HPperLevel: 0
-  CurrentMP: 0
   MaxMP: 0
   MPperLevel: 0
   AP: 0
@@ -107449,6 +107448,30 @@ MonoBehaviour:
   performRangedAttack: 1
   projPrefab: {fileID: 0}
   projSpawnPoint: {fileID: 0}
+--- !u!114 &1235785007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599431101685634140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec1157a5ff05ea4688fd5fc7a23ac30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSpeed: 10
+  rotateSpeedMovement: 360
+  rotateVelocity: 0
+  linerenderobj: {fileID: 7599431100687404857}
+  BasicRange: {fileID: 7599431102196435135}
+  BasicRange_Col: {fileID: 7599431102300375990}
+  BasicAttack_Effect_Slash: {fileID: 5615511609105345146, guid: 45844c2f40560304f91d70f1d34d1d54, type: 3}
+  CheckEnemy: 0
+  TargetEnemy: {fileID: 0}
+  Q_Punch_L: {fileID: 7599431100932834088}
+  Q_Punch_R: {fileID: 7599431100715604721}
+  adv_Q_Punch: {fileID: 7599431101701173847}
 --- !u!1 &7599431101686496636
 GameObject:
   m_ObjectHideFlags: 0
@@ -145514,23 +145537,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 422950727970329181, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 858375209545690372, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 858375209545690372, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 858375209545690372, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6517450999129250457, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6517450999129250457, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1665351043514459859, guid: 7e02cd0b535221243b8bc0a03953917e, type: 3}

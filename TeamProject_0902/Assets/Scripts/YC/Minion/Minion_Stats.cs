@@ -62,7 +62,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
             //TeamColor = GetComponent<Minion1_Stats>().TeamColor;
 
             MaxHP = GetComponent<Minion1_Stats>().MaxHP;
-            HP = GetComponent<Minion1_Stats>().HP;
+            //HP = GetComponent<Minion1_Stats>().HP;
             HPregen = GetComponent<Minion1_Stats>().HPregen;
             HPregenperLevel = GetComponent<Minion1_Stats>().HPregenperLevel;
             HPPtime = GetComponent<Minion1_Stats>().HPPtime;
@@ -99,7 +99,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
            // TeamColor = GetComponent<Minion2_Stats>().TeamColor;
 
             MaxHP = GetComponent<Minion2_Stats>().MaxHP;
-            HP = GetComponent<Minion2_Stats>().HP;
+           // HP = GetComponent<Minion2_Stats>().HP;
             HPregen = GetComponent<Minion2_Stats>().HPregen;
             HPPtime = GetComponent<Minion2_Stats>().HPPtime;
 
@@ -128,7 +128,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
            // TeamColor = GetComponent<Minion3_Stats>().TeamColor;
 
             MaxHP = GetComponent<Minion3_Stats>().MaxHP;
-            HP = GetComponent<Minion3_Stats>().HP;
+           // HP = GetComponent<Minion3_Stats>().HP;
             HPregen = GetComponent<Minion3_Stats>().HPregen;
             HPPtime = GetComponent<Minion3_Stats>().HPPtime;
 
@@ -156,7 +156,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
         {
             // TeamColor = GetComponent<Minion4_Stats>().TeamColor;
 
-            HP = GetComponent<Minion4_Stats>().HP;
+            MaxHP = GetComponent<Minion4_Stats>().HP;
             HPregen = GetComponent<Minion4_Stats>().HPregen;
             HPPtime = GetComponent<Minion4_Stats>().HPPtime;
 
@@ -181,7 +181,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
         }
 
         //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
-        hp = HP;
+        hp = MaxHP;
         DamagedEffect.SetActive(false);
     }
 
@@ -200,11 +200,11 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (hp <= HP)
+                if (hp <= MaxHP)
                 {
                     hp += HPregen;
                     HPregen += HPregenperLevel;
-                    if (hp > HP) hp = HP;
+                    if (hp > MaxHP) hp = MaxHP;
                     GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
@@ -240,10 +240,10 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (hp <= HP)
+                if (hp <= MaxHP)
                 {
                     hp += HPregen;
-                    if (hp > HP) hp = HP;
+                    if (hp > MaxHP) hp = MaxHP;
                     GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
@@ -272,10 +272,10 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
         {
             if (elapsedTime % HPPtime == 0)
             {
-                if (hp <= HP)
+                if (hp <= MaxHP)
                 {
                     hp += HPregen;
-                    if (hp > HP) hp = HP;
+                    if (hp > MaxHP) hp = MaxHP;
                     //GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
@@ -405,12 +405,14 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(HP);
+            //동기화되는 변수들 추가
+            stream.SendNext(hp);
             stream.SendNext(MaxHP);
         }
         else
         {
-            HP = (int)stream.ReceiveNext();
+            //받아오는 변수들 추가
+            hp = (int)stream.ReceiveNext();
             MaxHP = (int)stream.ReceiveNext();
         }
     }

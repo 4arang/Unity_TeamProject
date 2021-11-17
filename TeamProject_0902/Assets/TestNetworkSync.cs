@@ -28,17 +28,21 @@ public class TestNetworkSync : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        float HP = GetComponent<Player_Stats>().hp;
+
         if (stream.IsWriting)
         {
             //We own this player: send the others our data
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
+            stream.SendNext(HP);
+            //stream.SendNext(transform.rotation);
         }
         else
         {
             //Network player, receive data
-            correctPlayerPos = (Vector3)stream.ReceiveNext();
-            correctPlayerRot = (Quaternion)stream.ReceiveNext();
+
+            //correctPlayerPos = (Vector3)stream.ReceiveNext();
+            //correctPlayerRot = (Quaternion)stream.ReceiveNext();
+            HP = (float)stream.ReceiveNext();
         }
     }
 

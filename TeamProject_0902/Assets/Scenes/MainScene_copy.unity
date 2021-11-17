@@ -931,6 +931,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138914201}
     m_Modifications:
+    - target: {fileID: -5991224284096693414, guid: 53823ccf0b86d9747a58d7b258346a43, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 919939560645257520, guid: 53823ccf0b86d9747a58d7b258346a43, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -2838,6 +2842,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4008131726037444700, guid: f82edf1af538f0e4d94d7b08fd707d3f, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4884981614487665006, guid: f82edf1af538f0e4d94d7b08fd707d3f, type: 3}
       propertyPath: m_Name
       value: Minion2_Blue
@@ -3456,6 +3464,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138914201}
     m_Modifications:
+    - target: {fileID: 4008131726037444700, guid: f82edf1af538f0e4d94d7b08fd707d3f, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4884981614487665006, guid: f82edf1af538f0e4d94d7b08fd707d3f, type: 3}
       propertyPath: m_Name
       value: Minion2_Blue
@@ -3697,19 +3709,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1464998985006854029, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1464998985006854039, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 386277549}
-    - target: {fileID: 1492387041107906748, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+    - target: {fileID: 3701782745415427384, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1492387041107906748, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+    - target: {fileID: 3701782745415427384, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701782745837434345, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3701782745837434345, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7469326566000087999, guid: 22abbbfa855cce042bfcc809dd839994, type: 3}
       propertyPath: sceneViewId
@@ -3899,29 +3919,13 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3732016795644872836, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3732016795644872836, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7084695559618019097, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7084695559618019097, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7599431101685634122, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7599431101685634122, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.18
+      value: 2.74
       objectReference: {fileID: 0}
     - target: {fileID: 7599431101685634122, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3959,17 +3963,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7599431101685634131, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: MainCamera
-      value: 
-      objectReference: {fileID: 386277549}
     - target: {fileID: 7599431101685634140, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
       propertyPath: m_Name
       value: WhiteTiger
-      objectReference: {fileID: 0}
-    - target: {fileID: 7599431101685634140, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cef735c953cd3c44ab4ebd7600bb4a17, type: 3}

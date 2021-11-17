@@ -36,8 +36,8 @@ public class TestChampStatusBar : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        playerHealthSlider.value = stats.CurrentHP/stats.MaxHP;
-        playerResourceSlider.value = stats.CurrentMP/ stats.MaxMP;
+        playerHealthSlider.value = stats.hp/stats.MaxHP;
+        playerResourceSlider.value = stats.mp/ stats.MaxMP;
     }
 
     private void LateUpdate()

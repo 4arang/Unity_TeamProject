@@ -43,8 +43,6 @@ public class WhiteTiger_Skill : MonoBehaviour
         Direction.SetActive(false);
         Range.SetActive(false);
 
-
-
         W_Shield.SetActive(false);
         adv_W_Shield.SetActive(false);
         E_Aura.SetActive(false);
@@ -52,8 +50,6 @@ public class WhiteTiger_Skill : MonoBehaviour
 
         animator = GetComponent<Animator>();
         WildPoint = 0;
-
-
     }
 
 

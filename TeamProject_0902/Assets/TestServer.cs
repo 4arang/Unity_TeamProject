@@ -53,10 +53,10 @@ public class TestServer : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomRoom();
 
-        if (PlayerInfo.PI != null)
+        if (TestInfo.PI != null)
         {
-            PlayerInfo.PI.mySelectedChampion = 0;       //백랑으로 테스트
-            PlayerPrefs.SetInt("MyCharacter", 0);
+            TestInfo.PI.mySelectedChampion = 2;       //제리온으로 테스트
+            PlayerPrefs.SetInt("MyCharacter", 2);
         }
     }
 

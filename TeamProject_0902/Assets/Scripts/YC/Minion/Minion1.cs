@@ -59,7 +59,7 @@ public class Minion1 : MonoBehaviour
     
     void Update()
     {
-        agent.speed = GetComponent<Minion_Stats>().MoveSpeed/100;
+        agent.speed = 0;//GetComponent<Minion_Stats>().MoveSpeed/100;
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
 

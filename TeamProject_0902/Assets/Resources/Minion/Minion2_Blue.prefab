@@ -5453,6 +5453,8 @@ MonoBehaviour:
   Turret1: {fileID: 0}
   Turret2: {fileID: 0}
   Turret3: {fileID: 0}
+  Turret4: {fileID: 0}
+  Turret5: {fileID: 0}
   TeamColor: 0
 --- !u!114 &4008131726037444700
 MonoBehaviour:
@@ -5472,7 +5474,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5718349149158950000}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

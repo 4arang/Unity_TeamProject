@@ -13,10 +13,8 @@ public class Player_Stats : MonoBehaviour
 
     //Game Stats
     public bool TeamColor;
-    public float CurrentHP;
     public float MaxHP;             //Health Point
     public int HPperLevel;     //HP increasement per Level
-    public float CurrentMP;
     public float MaxMP;             //Mana Point
     public int MPperLevel;
     public int AP;             //Armor Point
@@ -35,8 +33,8 @@ public class Player_Stats : MonoBehaviour
     public int MPregen;
     public float MPregenperLevel;
 
-    public float hp;
-    public float mp;
+    public float hp;    //current HP;
+    public float mp;    //current MP;
     
 
     //Coldy special (Helium)
@@ -98,9 +96,7 @@ public class Player_Stats : MonoBehaviour
             MPregenperLevel = GetComponent<ColD_Stats>().MPregenperLevel;
 
 
-            hp = MaxHP;
-            mp = MaxMP;
-
+           // GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
             Helium = 100;
         }
         else if (TryGetComponent(out Xerion_Stats Champ_Num2))
@@ -132,11 +128,8 @@ public class Player_Stats : MonoBehaviour
             MPregen = GetComponent<Xerion_Stats>().MPregen;
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
-            CurrentHP = MaxHP;
-            CurrentMP = MaxMP;
-            hp = MaxHP;
-            mp = MaxMP;
-
+            GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
+            GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
             Xerion_Manager.Instance.Xerion_AD = AD;
         }
         else if (TryGetComponent(out WhiteTiger_Stats Champ_Num3))
@@ -169,14 +162,14 @@ public class Player_Stats : MonoBehaviour
             MPregenperLevel = GetComponent<WhiteTiger_Stats>().MPregenperLevel;
 
 
-            CurrentHP = MaxHP;
-            CurrentMP = MaxMP;
-            hp = MaxHP;
-            mp = MaxMP;
+            //GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP); //mp들어가나
         }
+        hp = MaxHP;
+        mp = MaxMP;
 
         Recover_MoveSpeed = MoveSpeed;
-        //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+      //  GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
+
     }
 
     private void Update()
