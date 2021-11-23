@@ -191,7 +191,7 @@ public class Monster : MonoBehaviour
 
     private void damageEnemy(Transform target)
     {
-        target.GetComponent<Player_Stats>().DropHP(Monster_AD);
+        target.GetComponent<Player_Stats>().DropHP(Monster_AD, this.transform);
     }
 
     float GetDirection(Vector3 home, Vector3 away)

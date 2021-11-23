@@ -407,7 +407,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(WT_BasicAD);
+            target.GetComponent<Player_Stats>().DropHP(WT_BasicAD, this.transform);
         }
         else if (target.CompareTag("Turret"))
         {
@@ -417,7 +417,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         {
             if (target.GetComponent<Monster_Stats>().hp > 0)
             {
-                target.GetComponent<Monster_Stats>().DropHP(WT_BasicAD);
+                target.GetComponent<Monster_Stats>().DropHP(WT_BasicAD, this.transform);
             }
             else
             {

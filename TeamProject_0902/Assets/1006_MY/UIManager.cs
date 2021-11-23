@@ -4,12 +4,28 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    private static UIManager sInstance;
+    public static UIManager Instance
+    {
+        get
+        {
+            if (sInstance == null)
+             {
+                 GameObject newGameObj = new GameObject("UIManager");
+                 sInstance = newGameObj.AddComponent<UIManager>();
+             }
+             return sInstance;
+        }
+    }
+
+
+    public float Exp;// exp to level up : 280 + (level-1)*100
+    public int Gold;
+    public int Level; //max 18
 
     private void Awake()
     {
-        if (Instance != this)
-            Instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Update()
@@ -50,7 +66,7 @@ public class UIManager : MonoBehaviour
     IEnumerator CloseScoreBoard()
     {
         PlayerUI playerUI = GetComponent<PlayerUI>();
-        playerUI.scoreBoardPanel.gameObject.SetActive(false); ;
+      //  playerUI.scoreBoardPanel.gameObject.SetActive(false); ;
         yield return null;
 
     }

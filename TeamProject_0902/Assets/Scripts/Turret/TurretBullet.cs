@@ -54,6 +54,7 @@ public class TurretBullet : MonoBehaviour
         //Need to add damaged effect
         //Debug.Log("Hit Something");
         //Destroy(target.gameObject);     //Stats추가해서 제거 부분
+ 
 
         if (target.CompareTag("Minion"))
         {
@@ -61,7 +62,7 @@ public class TurretBullet : MonoBehaviour
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(turretAD);
+            target.GetComponent<Player_Stats>().DropHP(turretAD, this.transform);
         }
         Destroy(gameObject);
     }

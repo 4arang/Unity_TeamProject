@@ -365,6 +365,7 @@ Quaternion.AngleAxis(DirecAngle, Vector3.up)); //유탄발사 and transform 저장
         while (true)
         {
             Laser.SetActive(true);
+            Laser.GetComponent<Xerion_Q_Laser_Collider>().setup();
             GetComponentInChildren<Xerion_Q_Laser_Collider>().Xerion_Q_ColliderOn = true;
             yield return new WaitForSeconds(1.0f);
             //GetComponentInChildren<Xerion_Q_Laser_Collider>().Xerion_Q_Full = Q_LaserFull;
@@ -389,4 +390,6 @@ Quaternion.AngleAxis(DirecAngle, Vector3.up)); //유탄발사 and transform 저장
 
         return hit.point;
     }
+
+  
 }

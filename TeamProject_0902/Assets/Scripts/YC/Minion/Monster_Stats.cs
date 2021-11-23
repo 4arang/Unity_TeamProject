@@ -7,7 +7,7 @@ public class Monster_Stats : MonoBehaviour
 {
     Stopwatch stopwatch = new Stopwatch();
 
-    public float HP;   //Health Point
+    public float MaxHP;   //Health Point
     public float HPregen; //HP increasemnt per every 90s
     public float HPregenperLevel; //HPregen increasement per every 90s
     public int HPPtime = 90000; //�ٸ� ���ݰ� ����->�ϳ��� ����
@@ -48,7 +48,7 @@ public class Monster_Stats : MonoBehaviour
 
         Minion_Number = int.Parse(data[13]["tags"].ToString());
 
-        HP = float.Parse(data[13]["statshp"].ToString());
+        MaxHP = float.Parse(data[13]["statshp"].ToString());
         HPregen = float.Parse(data[13]["statshpregen"].ToString());
         HPregenperLevel = float.Parse(data[13]["statshpregenperlevel"].ToString());
 
@@ -59,15 +59,15 @@ public class Monster_Stats : MonoBehaviour
         Armor = float.Parse(data[13]["statsarmor"].ToString());
         Armorp = float.Parse(data[13]["statsarmorperlevel"].ToString());
 
-       
-        MRP =int.Parse(data[13]["statsspellblock"].ToString());
+
+        MRP = int.Parse(data[13]["statsspellblock"].ToString());
         MRPp = int.Parse(data[13]["statsspellblockperlevel"].ToString());
 
         AttackSpeed = float.Parse(data[6]["statsattackspeed"].ToString());
         MoveSpeed = float.Parse(data[6]["statsmovespeed"].ToString());
         AttackRange = int.Parse(data[6]["statsattackrange"].ToString());
 
-        GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.06f);
         hp = 100; //hp = HP;
 
         //for passive
@@ -83,11 +83,11 @@ public class Monster_Stats : MonoBehaviour
         long elapsedTime = stopwatch.ElapsedMilliseconds;
         if (elapsedTime % HPPtime == 0)
         {
-            if (hp <= HP)
+            if (hp <= MaxHP)
             {
                 hp += HPregen;
                 HPregen += HPregenperLevel;
-                if (hp > HP) hp = HP;
+                if (hp > MaxHP) hp = MaxHP;
                 GetComponentInChildren<HP_Bar>().SetHP(hp);
             }
             if (AD < MaxAD)
@@ -108,16 +108,30 @@ public class Monster_Stats : MonoBehaviour
         }
     }
 
-    public void DropHP(float damage)
+    public void DropHP(float damage, Transform obj)
     {
 
 
-        damage *= (1 - Armor / (100 + Armor));
+    damage *= (1 - Armor / (100 + Armor));
 
         hp -= damage;
 
         if (hp <= 0)
         {
+                //사거리 2000이내의 팀 영웅 이동속도 증가
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, 20.0f);
+        foreach (Collider col in colliderArray)
+        {
+            if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+             && (player.TeamColor == obj.GetComponent<Player_Stats>().TeamColor))
+            {
+                //이동속도 175% 2초간 줄어들게
+            }
+        }
+        //팀원들 잃은체력 15% 회복
+        //경험치 골드 제공
+        //90초간 주문력 공격력 16%증가
+        //사망시 사라지는 버프
             GetComponent<Monster>().Die();
         }
         UnityEngine.Debug.Log("Monster hp " + hp);

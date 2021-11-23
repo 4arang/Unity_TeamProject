@@ -256,7 +256,7 @@ public class ColD : MonoBehaviour
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(ColD_BasicAD);
+            target.GetComponent<Player_Stats>().DropHP(ColD_BasicAD, this.transform);
         }
         else if (target.CompareTag("Turret"))
         {
@@ -266,7 +266,7 @@ public class ColD : MonoBehaviour
         {
             if (target.GetComponent<Monster_Stats>().hp > 0)
             {
-                target.GetComponent<Monster_Stats>().DropHP(ColD_BasicAD);
+                target.GetComponent<Monster_Stats>().DropHP(ColD_BasicAD, this.transform);
             }
             else
             {

@@ -126,14 +126,14 @@ public class Xerion : MonoBehaviour
         {
             if (TargetEnemy)//타겟설정이 되었다면 
             {
-                Debug.Log("Targeted");
+
                 GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
                 agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
                 AttackTargetEnemy(TargetEnemy); //타겟 공격
             }
             else
             {       //타겟이 없으면 재설정
-                Debug.Log("Targeting");
+
                 GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
             }
         }
@@ -233,7 +233,7 @@ public class Xerion : MonoBehaviour
             target.transform.localScale.magnitude * 10.0f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position;
-            Debug.Log("TargetSet, Player Stop");
+            //Debug.Log("TargetSet, Player Stop");
             if (animator.GetBool("A_Xerion") == false)
             {
 
@@ -250,7 +250,7 @@ public class Xerion : MonoBehaviour
                     Vector3 shootingDir = (target.transform.position - transform.position).normalized;
                     if(BasicShotTransform!=null)
                         BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir, target);
-                    Debug.Log("Fire!");
+                   // Debug.Log("Fire!");
 
                     if (passiveOn)
                     {
@@ -295,8 +295,6 @@ public class Xerion : MonoBehaviour
 
     private void damageEnemy(Transform target)
     {
-        Debug.Log("AD " + Xerion_BasicAD);
-
 
         if (target.CompareTag("Minion"))
         {
@@ -304,7 +302,7 @@ public class Xerion : MonoBehaviour
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(Xerion_BasicAD);
+            target.GetComponent<Player_Stats>().DropHP(Xerion_BasicAD, this.transform);
         }
         else if (target.CompareTag("Turret"))
         {
@@ -314,7 +312,7 @@ public class Xerion : MonoBehaviour
         {
             if (target.GetComponent<Monster_Stats>().hp > 0)
             {
-                target.GetComponent<Monster_Stats>().DropHP(Xerion_BasicAD);
+                target.GetComponent<Monster_Stats>().DropHP(Xerion_BasicAD, this.transform);
             }
             else
             {

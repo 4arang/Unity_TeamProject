@@ -8,10 +8,10 @@ public class HP_Bar : MonoBehaviour
 
     public Slider slider;
 
-    public void SetMaxHP(float maxHP)
+    public void SetMaxHP(float maxHP, float UIref) // ui º¸Á¤°ª
     {
         slider.maxValue = maxHP;
-        slider.minValue = -maxHP * 0.259f;
+        slider.minValue = -maxHP * UIref;
         slider.value = maxHP;
     }
 

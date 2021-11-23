@@ -61,6 +61,7 @@ public class Player_Stats : MonoBehaviour
 
     public int Level = 1;
 
+   private Transform[] champs; //처치에 관여한 챔피언들
 
 
 
@@ -129,7 +130,7 @@ public class Player_Stats : MonoBehaviour
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
             GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
-            GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
+            GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.259f);
             Xerion_Manager.Instance.Xerion_AD = AD;
         }
         else if (TryGetComponent(out WhiteTiger_Stats Champ_Num3))
@@ -168,6 +169,8 @@ public class Player_Stats : MonoBehaviour
         mp = MaxMP;
 
         Recover_MoveSpeed = MoveSpeed;
+
+        PlayerStatManager.Instance.Player = this.transform;
       //  GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
 
     }
@@ -222,7 +225,8 @@ public class Player_Stats : MonoBehaviour
     void Regen()
     {
         TimeCheck += Time.deltaTime;
-        if (TimeCheck % 1.0f == 0)
+      
+        if (TimeCheck > 1.0f)
         {
             if (hp < MaxHP)
             {
@@ -234,8 +238,11 @@ public class Player_Stats : MonoBehaviour
                 mp += MPregen;
                 if (mp > MaxMP) mp = MaxMP;
             }
+            TimeCheck = 0;
         }
-
+     
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
+        GetComponentInChildren<RP_Bar>().SetRP(mp);
     }
 
 
@@ -246,25 +253,55 @@ public class Player_Stats : MonoBehaviour
             mp -= energy;
         }
         if (mp > MaxMP) mp = MaxMP;
+
+        GetComponentInChildren<RP_Bar>().SetRP(mp);
     }
 
 
 
-    public void DropHP(float Damage)
+    public void DropHP(float Damage, Transform obj)
     {
         Damage *= (1 - AP / (100 + AP));
         hp -= Damage;
         if (AttackAbility == 3) //for whitetiger
             StartCoroutine("StoreDamage", Damage);
-        Debug.Log("player HP" + hp);
 
         GetComponentInChildren<HP_Bar>().SetHP(hp);
 
         if(hp<=0)
         {
-
+            //죽었을때
+            Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
+            foreach (Collider col in colliderArray)
+            {
+                if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                 && (player.TeamColor != TeamColor))
+                {
+                    //사거리 내에 있는 경우 자동으로 획득 처치에 관여한 플레이와 중복 방지
+                    if((player.transform != champs[0]) 
+                        ||(player.transform !=champs[1]))
+                    {
+                        player.GetComponent<Player_Level>().GetEXP(90 * (Level - 1) + 42);
+                    }
+                }
+            }
         }
 
+       
+        if(obj.CompareTag("Player"))
+        {
+            if (true/*/해당 오브젝트가 죽어있는 상태인 경우 10초간 저장*/)
+            {
+                StartCoroutine("StoreChampion");
+            }
+        }
+    }
+
+    IEnumerator StoreChampion(Transform champion)
+    {
+        champs[0] = champion;
+        yield return new WaitForSeconds(10.0f);
+        champs = null;
     }
 
     IEnumerator StoreDamage(float Damage)

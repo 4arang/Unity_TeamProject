@@ -155,6 +155,32 @@ public class Turret_Stats : MonoBehaviour
         Debug.Log("Turret HP" + HP);
 
         if (HP <= 0)
+        {
+            Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
+            int i = 0;
+            foreach (Collider col in colliderArray)
+            {
+                if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                 && (player.TeamColor != TeamColor))
+                {
+                    i++;
+                    col.GetComponent<Player_Level>().GetEXP(Exp); //경험치 획득
+                }
+            }
+            if (i >= 2) //두명 이상에게 경험치 분배한 경우
+            {
+                foreach(Collider col in colliderArray)
+                {
+                    if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                && (player.TeamColor != TeamColor))
+                    {
+                        col.GetComponent<Player_Level>().GetEXP(-Exp*0.34f); //경험치 분배
+                    }
+                }
+            }
+            //수정 : 폭발 이펙트 아직 안받음
             Destroy(gameObject);
+
+        }
     }
 }

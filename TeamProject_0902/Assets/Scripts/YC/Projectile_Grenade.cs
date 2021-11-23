@@ -133,7 +133,7 @@ public class Projectile_Grenade : MonoBehaviour
                     SkillAD *= 1.5f; //위험상태 50% 증가
                     SkillMD *= 1.5f; //주문력 추후 수정
                 }
-                other.GetComponent<Player_Stats>().DropHP(SkillAD);
+                other.GetComponent<Player_Stats>().DropHP(SkillAD, this.transform);
                 other.GetComponent<Player_Stats>().DropSpeed(1 - SkillMD, 2.0f);
             }
             else if (other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor !=
@@ -145,7 +145,7 @@ public class Projectile_Grenade : MonoBehaviour
             }
             else if (other.CompareTag("Monster"))
             {
-                other.GetComponent<Monster_Stats>().DropHP(SkillAD);
+                other.GetComponent<Monster_Stats>().DropHP(SkillAD, this.transform);
             }
         }
         else //xerion
@@ -157,7 +157,7 @@ public class Projectile_Grenade : MonoBehaviour
             if (other.CompareTag("Player") && other.GetComponent<Player_Stats>().TeamColor !=
             player.GetComponent<Player_Stats>().TeamColor)
             {
-                other.GetComponent<Player_Stats>().DropHP(SkillAD);
+                other.GetComponent<Player_Stats>().DropHP(SkillAD, this.transform);
                 other.GetComponent<Player_Stats>().Stun(stunTime);
             }
             else if (other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor !=
@@ -169,7 +169,7 @@ public class Projectile_Grenade : MonoBehaviour
             }
             else if (other.CompareTag("Monster"))
             {
-                other.GetComponent<Monster_Stats>().DropHP(SkillAD);
+                other.GetComponent<Monster_Stats>().DropHP(SkillAD, this.transform);
             }
         }
     }

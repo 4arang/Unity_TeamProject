@@ -35,7 +35,7 @@ public class Minion3 : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         isAttack = false;
 
-        TargetRange = GetComponent<Minion_Stats>().AttackRange * 0.01f;
+        TargetRange = GetComponent<Minion_Stats>().AttackRange * 0.02f;
         TargetFound = false;
         AttackSpeed = GetComponent<Minion_Stats>().AttackSpeed;
 
@@ -223,7 +223,7 @@ public class Minion3 : MonoBehaviour
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(Minion3_AD);
+            target.GetComponent<Player_Stats>().DropHP(Minion3_AD, this.transform);
         }
         else if (target.CompareTag("Turret"))
         {

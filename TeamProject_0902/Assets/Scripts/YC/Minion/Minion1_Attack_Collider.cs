@@ -22,7 +22,7 @@ public class Minion1_Attack_Collider : MonoBehaviour
                 other.GetComponent<Player_Stats>().TeamColor != GetComponentInParent<Minion_Stats>().TeamColor)
             {
                 Debug.Log("Enemy Hit" + Minion1_AD);
-            other.GetComponent<Player_Stats>().DropHP(Minion1_AD);
+            other.GetComponent<Player_Stats>().DropHP(Minion1_AD, this.transform);
 
             }
      }

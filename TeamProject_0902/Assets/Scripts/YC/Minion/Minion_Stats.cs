@@ -180,7 +180,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
             EXPperTime = GetComponent<Minion4_Stats>().EXPperTime;
         }
 
-        //GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+        GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.038f);
         hp = MaxHP;
         DamagedEffect.SetActive(false);
     }
@@ -276,7 +276,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
                 {
                     hp += HPregen;
                     if (hp > MaxHP) hp = MaxHP;
-                    //GetComponentInChildren<HP_Bar>().SetHP(hp);
+                    GetComponentInChildren<HP_Bar>().SetHP(hp);
                 }
                 if (AD <= MaxAD)
                 {
@@ -302,7 +302,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
 
                 hp += HPregen;
                 HP += HPregen;
-                GetComponentInChildren<HP_Bar>().SetMaxHP(HP);
+                GetComponentInChildren<HP_Bar>().SetMaxHP(HP, 0.038f);
                 GetComponentInChildren<HP_Bar>().SetHP(hp);
 
                 AD += ADperTime;
@@ -342,12 +342,16 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
                     {
                         i++;
                         col.GetComponent<Player_Level>().GetEXP(EXP * 0.66f); //경험치 분배
+                        if(obj!=col) //처치한 플레이어 외의 다른 플레이어 골드분배보상
+                        col.GetComponent<Player_Level>().GetGold(Gold_Normal);
                     }
                 }
                 if (i >= 2) //두명 이상에게 경험치 분배한 경우
                 {
                     obj.GetComponent<Player_Level>().GetEXP(EXP * 0.34f); //처치한 플레이어에게 경험치추가
+                   
                 }
+                obj.GetComponent<Player_Level>().GetGold(Gold_Advanced); //처치골드 추가
             }
 
             else//미니언에게 사망한 경우
@@ -361,6 +365,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
                      && (player.TeamColor != TeamColor))
                     {
                         col.GetComponent<Player_Level>().GetEXP(EXP*0.66f); //경험치 분배
+                        col.GetComponent<Player_Level>().GetGold(Gold_Normal);
                         obj = col.transform;   
                         i++;   
                     }
@@ -395,7 +400,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
 
     IEnumerator Dying()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.0f);
         animator.SetBool("Die", false);
         Destroy(gameObject);
     }

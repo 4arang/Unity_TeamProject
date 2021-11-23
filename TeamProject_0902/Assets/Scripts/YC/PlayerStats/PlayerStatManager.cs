@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PlayerStatManager : MonoBehaviour
 {
-   
-
+    public Transform Player;
 
 
 

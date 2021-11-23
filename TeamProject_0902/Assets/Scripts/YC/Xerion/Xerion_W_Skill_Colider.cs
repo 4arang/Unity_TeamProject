@@ -11,21 +11,69 @@ public class Xerion_W_Skill_Colider : MonoBehaviour
     // private float Xerion_W_SideAD; //0.8*centerAD // 20
     public float Xerion_W_CenterR = 1.0f;
 
+    private bool TeamColor;
+    private Transform player;
+
+    void Start()
+    {
+
+        player = PlayerStatManager.Instance.Player;
+        TeamColor = player.GetComponent<Player_Stats>().TeamColor;
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Minion"))
+        if ((other.CompareTag("Minion") && other.GetComponent<Minion_Stats>().TeamColor != TeamColor)
+            || (other.CompareTag("Player") && other.GetComponent<Player_Stats>().TeamColor != TeamColor)
+            || other.CompareTag("Monster")
+            || (other.CompareTag("Turret") && other.GetComponent<Turret_Stats>().TeamColor != TeamColor))
         {
-            if ((transform.position - other.transform.position).magnitude <= Xerion_W_CenterR)
-            {
-                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD,this.transform);
-                other.GetComponent<Minion_Stats>().DropSpeed(1-Xerion_W_CenterDS, 2.5f);
-            }
-            else
-            { 
-                other.GetComponent<Minion_Stats>().DropHP(Xerion_W_CenterAD * 0.8f,this.transform);
-                other.GetComponent<Minion_Stats>().DropSpeed(1 - Xerion_W_SideDS, 2.5f);
-            }
+        if ((transform.position - other.transform.position).magnitude <= Xerion_W_CenterR)
+        {
+                if(other.CompareTag("Minion"))
+            other.GetComponent<Minion_Stats>().DropSpeed(1 - Xerion_W_CenterDS, 2.5f);
+                else if (other.CompareTag("Player"))
+                    other.GetComponent<Player_Stats>().DropSpeed(1 - Xerion_W_CenterDS, 2.5f);
+
+                damageEnemy(Xerion_W_CenterAD, other.transform);
         }
-      
+        else
+        {
+                if (other.CompareTag("Minion"))
+                    other.GetComponent<Minion_Stats>().DropSpeed(1 - Xerion_W_SideDS, 2.5f);
+                else if (other.CompareTag("Player"))
+                    other.GetComponent<Player_Stats>().DropSpeed(1 - Xerion_W_SideDS, 2.5f);
+
+                damageEnemy(Xerion_W_CenterAD * 0.8f, other.transform);
+            }
+
+    }
+    }
+
+    private void damageEnemy(float AD, Transform target)
+    {
+
+        if (target.CompareTag("Minion"))
+        {
+            target.GetComponent<Minion_Stats>().DropHP(AD, player);
+        }
+        else if (target.CompareTag("Player"))
+        {
+            target.GetComponent<Player_Stats>().DropHP(AD, player);
+        }
+        else if (target.CompareTag("Turret"))
+        {
+            target.GetComponent<Turret_Stats>().DropHP(AD);
+        }
+        else if (target.CompareTag("Monster"))
+        {
+            if (target.GetComponent<Monster_Stats>().hp > 0)
+            {
+                target.GetComponent<Monster_Stats>().DropHP(AD, player);
+            }
+
+        }
+
     }
 }
