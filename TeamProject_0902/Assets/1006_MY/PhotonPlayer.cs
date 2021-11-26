@@ -22,9 +22,7 @@ public class PhotonPlayer : MonoBehaviour
         {
             PV.RPC("RPC_GetTeam", RpcTarget.MasterClient);
         }
-    }
-    private void Update()
-    {
+
         if (myAvatar == null && myTeam != 0)
         {
             if (PV.IsMine && PhotonRoom.room.currentScene == 0)
@@ -32,8 +30,23 @@ public class PhotonPlayer : MonoBehaviour
                 myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
                            PhotonRoom.room.spawnPoints[myNumberInRoom - 1].position,
                            PhotonRoom.room.spawnPoints[myNumberInRoom - 1].rotation, 0);
+
             }
         }
+        Debug.Log("my number inroom " + myNumberInRoom);
+    }
+    private void Update()
+    {
+        //if (myAvatar == null && myTeam != 0)
+        //{
+        //    if (PV.IsMine && PhotonRoom.room.currentScene == 0)
+        //    {
+        //        myAvatar = PhotonNetwork.Instantiate(Path.Combine("NetworkPlayer", "PlayerAvatar"),
+        //                   PhotonRoom.room.spawnPoints[myNumberInRoom - 1].position,
+        //                   PhotonRoom.room.spawnPoints[myNumberInRoom - 1].rotation, 0);
+        //        LobbyController.Instance.playerNumber = myNumberInRoom;
+        //    }
+        //}
     }
 
     [PunRPC]

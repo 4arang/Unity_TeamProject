@@ -55,6 +55,7 @@ public class Xerion : MonoBehaviour
     private float TotalAgentDistance = 0;
     private bool passiveOn = false;
 
+    //public GameObject cameraObj;
 
     private void Start()
     {
@@ -74,73 +75,78 @@ public class Xerion : MonoBehaviour
 
         PassiveEffect.SetActive(false);
 
+        //cameraObj = Camera.main.gameObject;
+        //cameraObj.GetComponent<MainCamera_CameraRoam>().player = this.transform;
+
     }
 
 
     private void Update()
     {
-        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
-
-        if(PV.IsMine)
+        if (PV.IsMine)
         {
+            agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
+
+
             RightMouseClicked();
-        }
-
-        animator.SetFloat("Speed", agent.velocity.magnitude);
-        if (animator.GetFloat("Speed") > 0.1f)
-        {
-            TotalAgentDistance += Time.deltaTime;
-        }
-        if (TotalAgentDistance > 2.0f)
-        {
-            TotalAgentDistance = 0;
-            GetComponent<Player_Stats>().Energy += 1;
-            //  Debug.Log("Xerion_Energy " + GetComponent<Player_Stats>().Energy);
-        }
-
-        if (skillDir != movingManager.Instance.PlayerDirection)
-        {
-            skillDir = movingManager.Instance.PlayerDirection;
-            agent.transform.rotation = Quaternion.AngleAxis(skillDir, Vector3.up);
-
-        }
 
 
-        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
-        else { movingManager.Instance.isFree = false; } //전투모드
-
-
-        //////////////기본어택땅/////////////
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            BasicRange_col.SetActive(true);
-            BasicRange.SetActive(true);
-            isBasicAttack = true;
-        }
-
-        if (isBasicAttack)       //A키 입력 이후에 마우스왼쪽키 입력 가능
-        {
-            LeftMouseClicked();
-        }
-        if (CheckEnemy && !isBasicAttack) //적 체크 완료한경우
-        {
-            if (TargetEnemy)//타겟설정이 되었다면 
+            animator.SetFloat("Speed", agent.velocity.magnitude);
+            if (animator.GetFloat("Speed") > 0.1f)
             {
-
-                GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
-                agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                AttackTargetEnemy(TargetEnemy); //타겟 공격
+                TotalAgentDistance += Time.deltaTime;
             }
-            else
-            {       //타겟이 없으면 재설정
-
-                GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
+            if (TotalAgentDistance > 2.0f)
+            {
+                TotalAgentDistance = 0;
+                GetComponent<Player_Stats>().Energy += 1;
+                //  Debug.Log("Xerion_Energy " + GetComponent<Player_Stats>().Energy);
             }
-        }
 
-        if (GetComponent<Xerion_Shooting_Skill>().isSkillon)
-        {
-            CheckEnemy = false;
+            if (skillDir != movingManager.Instance.PlayerDirection)
+            {
+                skillDir = movingManager.Instance.PlayerDirection;
+                agent.transform.rotation = Quaternion.AngleAxis(skillDir, Vector3.up);
+
+            }
+
+
+            if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+            else { movingManager.Instance.isFree = false; } //전투모드
+
+
+            //////////////기본어택땅/////////////
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                BasicRange_col.SetActive(true);
+                BasicRange.SetActive(true);
+                isBasicAttack = true;
+            }
+
+            if (isBasicAttack)       //A키 입력 이후에 마우스왼쪽키 입력 가능
+            {
+                LeftMouseClicked();
+            }
+            if (CheckEnemy && !isBasicAttack) //적 체크 완료한경우
+            {
+                if (TargetEnemy)//타겟설정이 되었다면 
+                {
+
+                    GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
+                    agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
+                    AttackTargetEnemy(TargetEnemy); //타겟 공격
+                }
+                else
+                {       //타겟이 없으면 재설정
+
+                    GetComponentInChildren<Xerion_Basic_Range_collider>().isAttackReady();
+                }
+            }
+
+            if (GetComponent<Xerion_Shooting_Skill>().isSkillon)
+            {
+                CheckEnemy = false;
+            }
         }
 
     }

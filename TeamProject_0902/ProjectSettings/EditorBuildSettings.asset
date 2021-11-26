@@ -8,10 +8,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Launcher_Rev.unity
     guid: 69f3cd93e2ef5104e812b041106b102e
+  - enabled: 1
+    path: Assets/Scenes/Main_Test.unity
+    guid: 3eb63fadaf186e7439aac6c604794680
+  - enabled: 0
+    path: Assets/Scenes/Loading_Test.unity
+    guid: d081cb3f9807e4e4c9250af8d401b9e0
+  - enabled: 0
+    path: Assets/Scenes/Lobby_Test.unity
+    guid: f05fe3884f3f6ce49b6066164fb33829
   - enabled: 0
     path: Assets/Scenes/TestScene.unity
     guid: b0e8e65fc9cc64540ae6c22de5cdcaa4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainGameScene.unity
     guid: 3e23df0c96437a045af70253cb42276f
   m_configObjects: {}

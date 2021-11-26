@@ -20,7 +20,9 @@ public class LobbyController : MonoBehaviour
     [SerializeField]
     private List<Image> skillImage;
 
-    private int selectedChamp;
+    public int selectedChamp;
+    public bool playerTeam;
+
     private void Start()
     {
         champInfoContainer.SetActive(false);

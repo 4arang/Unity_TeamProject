@@ -821,6 +821,54 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 842347266}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonRoom, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22200002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2361,6 +2409,8 @@ MonoBehaviour:
   - {fileID: 1431183511}
   - {fileID: 173576298}
   - {fileID: 365334922}
+  selectedChamp: 0
+  playerTeam: 0
 --- !u!4 &335691156
 Transform:
   m_ObjectHideFlags: 0
@@ -2798,6 +2848,38 @@ PrefabInstance:
     - target: {fileID: 100002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 842347266}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonRoom, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
       propertyPath: m_Pivot.x
@@ -5230,6 +5312,7 @@ MonoBehaviour:
   currentScene: 0
   multiplayScene: 1
   nextPlayersTeam: 1
+  playerNumber: 0
   mynumberInRoom: 0
   spawnPoints:
   - {fileID: 1711284213}
@@ -7101,6 +7184,34 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 842347266}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonRoom, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8397,6 +8508,38 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 842347266}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PhotonRoom, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: f10fec99b7508334f9548bb541b97954, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 22400002, guid: f10fec99b7508334f9548bb541b97954, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -9212,7 +9355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00015273393}
+  m_AnchoredPosition: {x: 0, y: 0.00014981077}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1777989529
@@ -10679,7 +10822,7 @@ MonoBehaviour:
   - {fileID: 1816982202}
   - {fileID: 39417403}
   ChatInput: {fileID: 156056163}
-  LobbyPlayerPrefab: {fileID: 6586956883136690572, guid: 0d16bbf5d644f9146b58c9a83cfd6829, type: 3}
+  LobbyPlayerPrefab: {fileID: 0}
   StartGameButton: {fileID: 502030324}
   myActorNumber: 0
   StatusText: {fileID: 73958432}

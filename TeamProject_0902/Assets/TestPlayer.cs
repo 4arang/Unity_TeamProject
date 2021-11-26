@@ -50,8 +50,10 @@ public class TestPlayer : MonoBehaviour
     void RPC_GetTeam()
     {
         Debug.Log("Team Setting ");
-        myTeam = GameSetup.GS.nextPlayersTeam;
+
         GameSetup.GS.UpdateTeam();
+        myTeam = GameSetup.GS.nextPlayersTeam;
+
         PV.RPC("RPC_SentTeam", RpcTarget.OthersBuffered, myTeam);
     }
 

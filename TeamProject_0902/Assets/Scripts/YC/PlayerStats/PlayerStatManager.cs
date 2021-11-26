@@ -7,7 +7,6 @@ public class PlayerStatManager : MonoBehaviour
     public Transform Player;
 
 
-
     private static PlayerStatManager sInstance;
     public static PlayerStatManager Instance
     {

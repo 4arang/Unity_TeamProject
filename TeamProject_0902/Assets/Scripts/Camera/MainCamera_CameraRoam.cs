@@ -5,8 +5,8 @@ using UnityEngine;
 public class MainCamera_CameraRoam : MonoBehaviour
 {
     //space ют╥б╫ц event////
-    private Transform player;
-    private Vector3 cameraOffset;
+    public Transform player;
+    public Vector3 cameraOffset;
 
     [Range(0.01f, 1.0f)]
     public float smoothness = 0.5f;
@@ -26,16 +26,23 @@ public class MainCamera_CameraRoam : MonoBehaviour
     {
         //player = GameObject.FindWithTag("Player").transform;
         camHeight = transform.position.y;
+        //if (player == null)
+        //{
+        //    player = GameObject.FindWithTag("Player").transform;
+        //}
+    }
+
+    public void SetCameraTarget(Transform playertransform)
+    {
+        player = playertransform;
     }
 
     void Update()
     {
-        if(player==null)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-        }
+
         if (Input.GetKey(KeyCode.Space))
         {
+
             cameraOffset = player.transform.position;
             cameraOffset.y = camHeight;
             cameraOffset.z -= 6;

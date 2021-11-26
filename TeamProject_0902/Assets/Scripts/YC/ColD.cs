@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class ColD : MonoBehaviour
 {
+    //Network Components
+    PhotonView PV;
+
     //Animation
     Animator animator;
     public float runSpeed = 10.0f;
@@ -46,9 +50,12 @@ public class ColD : MonoBehaviour
     private bool OnAttack = false;
     private float ColD_BasicAD;
     private byte ColD_BasicAD_Level = 1;
+
+    //public GameObject cameraObj;
    
     private void Start()
     {
+        PV = GetComponent<PhotonView>();
         animator = GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         lr = linerenderobj.GetComponent<LineRenderer>();
@@ -63,63 +70,66 @@ public class ColD : MonoBehaviour
         BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
+        //cameraObj = Camera.main.gameObject;
+        //cameraObj.GetComponent<MainCamera_CameraRoam>().player = this.transform;
     }
 
 
     private void Update()
     {
 
-
-        agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
-        //Debug.Log("Speed " + agent.speed);
-        RightMouseClicked();
-
-        animator.SetFloat("Speed", agent.velocity.magnitude);
-
-        if (grenadeDir != movingManager.Instance.PlayerDirection)
+        if (PV.IsMine)
         {
-            onSkill = true;
-            grenadeDir = movingManager.Instance.PlayerDirection;
-            agent.transform.rotation = Quaternion.AngleAxis(grenadeDir, Vector3.up);
-        }
-        else
-            onSkill = false;
+            agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
+            //Debug.Log("Speed " + agent.speed);
+            RightMouseClicked();
 
-        if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
-        else { movingManager.Instance.isFree = false; } //전투모드
+            animator.SetFloat("Speed", agent.velocity.magnitude);
 
-
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            BasicRange_Col.SetActive(true);
-            BasicRange.SetActive(true);
-            isBasicAttack = true;
-        }
-        if (isBasicAttack) //A키 입력 이후에 활성화
-        {
-            LeftMouseClicked(); //왼쪽마우스 클릭
-        }
-        if(CheckEnemy && !isBasicAttack) //적 체크 완료한경우
-        {
-            if (TargetEnemy)//타겟설정이 되었다면 
+            if (grenadeDir != movingManager.Instance.PlayerDirection)
             {
-                Debug.Log("Targeted");
-                GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
-                agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
-                AttackTargetEnemy(TargetEnemy); //타겟 공격
+                onSkill = true;
+                grenadeDir = movingManager.Instance.PlayerDirection;
+                agent.transform.rotation = Quaternion.AngleAxis(grenadeDir, Vector3.up);
             }
             else
-            {       //타겟이 없으면 재설정
-                Debug.Log("Targeting");
-                GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
+                onSkill = false;
+
+            if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
+            else { movingManager.Instance.isFree = false; } //전투모드
+
+
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                BasicRange_Col.SetActive(true);
+                BasicRange.SetActive(true);
+                isBasicAttack = true;
             }
-        }
-        if(GetComponent<ColD_W>().isSkillon)
-        {
-            CheckEnemy = false;
-        }
-                
+            if (isBasicAttack) //A키 입력 이후에 활성화
+            {
+                LeftMouseClicked(); //왼쪽마우스 클릭
+            }
+            if (CheckEnemy && !isBasicAttack) //적 체크 완료한경우
+            {
+                if (TargetEnemy)//타겟설정이 되었다면 
+                {
+                    Debug.Log("Targeted");
+                    GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
+                    agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
+                    AttackTargetEnemy(TargetEnemy); //타겟 공격
+                }
+                else
+                {       //타겟이 없으면 재설정
+                    Debug.Log("Targeting");
+                    GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
+                }
+            }
+            if (GetComponent<ColD_W>().isSkillon)
+            {
+                CheckEnemy = false;
+            }
+        }   
     }
 
 

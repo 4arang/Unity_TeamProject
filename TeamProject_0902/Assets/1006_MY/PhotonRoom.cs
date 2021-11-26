@@ -14,6 +14,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     public int currentScene;
     public int multiplayScene=1;
     public int nextPlayersTeam=1;
+    public int playerNumber;
 
     //public int playersInRoom;
     public int mynumberInRoom;
@@ -36,6 +37,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     private Slider LoadingSlider;
     [SerializeField]
     private GameObject LoadingTextBox;
+
 
     //public int playersInGame;
     #region SINGLETON
@@ -83,6 +85,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         //Loading Components Disable
         ChattingScrollView.SetActive(true);
         LoadingPanel.SetActive(false);
+
+
     }
 
     private void Update()
@@ -99,6 +103,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
     #region UI_BUTTONS CALLBACKS
     public void OnStartGameButton() //Call by StartGame Button
     {
+
         LoadingPanel.SetActive(true);
 
         PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -144,6 +149,15 @@ public class PhotonRoom : MonoBehaviourPunCallbacks, IInRoomCallbacks
         {
             nextPlayersTeam = 1;
         }
+    }
+
+    public void OnChangeBox(int seatNumber)
+    {
+        //if(room.spawnPoints[seatNumber].GetComponent<Image>()!=null)
+        // Debug.Log("image");
+        //else Debug.Log("no image");
+        //if(room.spawnPoints[seatNumber].)
+        //PhotonPlayer.myAvatar.transform.TransformPoint(room.spawnPoints[mynumberInRoom].position);
     }
 
     //[PunRPC]

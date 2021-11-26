@@ -288,7 +288,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IInRoomCallbacks
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {            
             PlayerNickNames[i].text = PhotonNetwork.PlayerList[i].NickName;
-            //PhotonNetwork.PlayerList.
+            //if(PV.IsMine)
+            //{
+            //    if(i%2==0)
+            //    LobbyController.Instance.playerTeam = true;
+            //else
+            //    LobbyController.Instance.playerTeam = false;
+            //}
         }
 
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
