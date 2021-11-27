@@ -16,7 +16,7 @@ public class Xerion_Q_Laser_Collider : MonoBehaviour
 
     public void setup()
     {
-        Xerion_Q_ColliderOn = false;
+        Xerion_Q_ColliderOn = true;
         Xerion_Q_Full = false;
 
         player = PlayerStatManager.Instance.Player;

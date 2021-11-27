@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class Test_SpawnPlayers : MonoBehaviour
 {
-    public PhotonView PV;
     public GameObject WhiteTiger;
     public GameObject Coldy;
     public GameObject Xerion;
@@ -18,7 +17,6 @@ public class Test_SpawnPlayers : MonoBehaviour
 
     private void Awake()
     {
-        PV = GetComponent<PhotonView>();
         camera = FindObjectOfType<MainCamera_CameraRoam>();
 
         selectedChampion = LobbyController.Instance.selectedChamp;
@@ -51,4 +49,5 @@ public class Test_SpawnPlayers : MonoBehaviour
         }
 
     }
+
 }

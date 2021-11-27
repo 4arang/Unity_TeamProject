@@ -58,6 +58,17 @@ MonoBehaviour:
   - RPC_SpawnAvatar
   - RPC_PerformMeleeAttack
   - RPC_UpdateHealth
+  - activePassive
+  - instantiateBullet
+  - activeDrone
+  - activeE
+  - activeQLaser
+  - activeQWeapenEffect
+  - instantiateE
+  - instantiateR_Drone
+  - instantiateR_Grenade
+  - instantiateWSatellite
+  - activeSmoke
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

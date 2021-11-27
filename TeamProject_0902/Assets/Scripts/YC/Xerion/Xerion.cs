@@ -81,10 +81,13 @@ public class Xerion : MonoBehaviour
     }
 
 
+
     private void Update()
     {
         if (PV.IsMine)
         {
+ 
+
             agent.speed = GetComponent<Player_Stats>().MoveSpeed / 100;
 
 
@@ -198,9 +201,12 @@ public class Xerion : MonoBehaviour
 
     private void LateUpdate()       //update에서 좌표값 갱신 후에 lateupdate에서 움직임
     {
-        if (isupdate)
+        if (PV.IsMine)
         {
-            PlayerMove();
+            if (isupdate)
+            {
+                PlayerMove();
+            }
         }
 
     }
@@ -250,19 +256,14 @@ public class Xerion : MonoBehaviour
                 if (!OnAttack)
                 {
                     GetComponent<Player_Stats>().Energy += 10;
-
-                    Transform BasicShotTransform = Instantiate(BasicShot, GunShot_Effect.transform.position,
-                     Quaternion.identity);
-                    Vector3 shootingDir = (target.transform.position - transform.position).normalized;
-                    if(BasicShotTransform!=null)
-                        BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir, target);
-                   // Debug.Log("Fire!");
+                   
+                    PV.RPC("instantiateBullet", RpcTarget.AllViaServer, target.position);
 
                     if (passiveOn)
                     {
                         GetComponent<Player_Stats>().Energy = 0;    //패시브 사용
                         GetComponent<Player_Stats>().DropMP(-GetComponent<Player_Stats>().MaxMP / 10); //최대MP/10 충전
-                        PassiveEffect.SetActive(false);
+                        PV.RPC("activePassive", RpcTarget.AllViaServer, false);
                         passiveOn = false;
                     }
                     StartCoroutine("Active_A", target);
@@ -296,7 +297,7 @@ public class Xerion : MonoBehaviour
     public void OnPassive()
     {
         passiveOn = true;
-        PassiveEffect.SetActive(true);
+        PV.RPC("activePassive", RpcTarget.AllViaServer, true);
     }
 
     private void damageEnemy(Transform target)
@@ -327,5 +328,23 @@ public class Xerion : MonoBehaviour
             }
         }
 
+    }
+
+    [PunRPC]
+    void instantiateBullet(Vector3 target)
+    {
+        Transform BasicShotTransform = Instantiate(BasicShot, GunShot_Effect.transform.position,
+                   Quaternion.identity).transform;
+        Vector3 shootingDir = (target - transform.position).normalized;
+        if (BasicShotTransform != null)
+        {
+            BasicShotTransform.GetComponent<PFX_ProjectileObject>().Setup(shootingDir, target);
+        }
+    }
+
+    [PunRPC]
+    void activePassive(bool b)
+    {
+       PassiveEffect.SetActive(b);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public class PFX_ProjectileObject : MonoBehaviour
 {
     public ParticleSystem FXToDeatch;
@@ -15,14 +16,14 @@ public class PFX_ProjectileObject : MonoBehaviour
     public float grenadeRange=0.72f;
 
     private Vector3 grenadeDir;
-    private Transform target;
+    private Vector3 target;
 
 
    public void Setup(Vector3 ShootDir)
     {
        grenadeDir = ShootDir;
     }
-    public void Setup(Vector3 ShootDir, Transform target_)
+    public void Setup(Vector3 ShootDir, Vector3 target_)
     {
         grenadeDir = ShootDir;
         target = target_;
@@ -39,10 +40,10 @@ public class PFX_ProjectileObject : MonoBehaviour
         if (Speed == 0)
             return;
         //transform.position += grenadeDir * (Speed * Time.deltaTime);
-        else if (Speed != 0 && target)
+        else if (Speed != 0)
         {
             //transform.position += shootDir * (speed * Time.deltaTime);
-            Vector3 dir = target.position - transform.position;
+            Vector3 dir = target - transform.position;
             float distanceThisFrame = Speed * Time.deltaTime;
             transform.Translate(dir.normalized * distanceThisFrame, Space.World);
 
@@ -63,10 +64,10 @@ public class PFX_ProjectileObject : MonoBehaviour
                     if (ps == null)
                     {
                         var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                        Destroy(hitVFX, psChild.main.duration);
+                        Destroy(hitVFX, 0.25f);
                     }
                     else
-                        Destroy(hitVFX, ps.main.duration);
+                        Destroy(hitVFX, 0.25f);
                 }
 
             }
@@ -100,4 +101,5 @@ public class PFX_ProjectileObject : MonoBehaviour
 
     //    Destroy(gameObject);
     //}
+
 }
