@@ -69,6 +69,20 @@ MonoBehaviour:
   - instantiateR_Grenade
   - instantiateWSatellite
   - activeSmoke
+  - activeE_L
+  - activeE_R
+  - activeQ
+  - activeW
+  - activeR
+  - instantiateR
+  - activeA
+  - activeA_Slash
+  - activeE_adv
+  - activeQ_L
+  - activeQ_R
+  - activeW_adv
+  - activeQ_adv
+  - instantiateExplosion
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

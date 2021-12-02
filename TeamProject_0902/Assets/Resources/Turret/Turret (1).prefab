@@ -1606,6 +1606,7 @@ GameObject:
   - component: {fileID: 4870318213135244828}
   - component: {fileID: 4870318213135244829}
   - component: {fileID: 4870318213135244830}
+  - component: {fileID: 4201804564685154496}
   m_Layer: 0
   m_Name: Turret (1)
   m_TagString: Turret
@@ -1658,6 +1659,8 @@ MonoBehaviour:
   TeamColor: 0
   Gold: 0
   Exp: 0
+  isAttack_Minion: 0
+  ExplosionEffect: {fileID: 100000, guid: 782c458fb5341e84d86f91f677ecaf31, type: 3}
 --- !u!114 &4870318213135244828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1677,7 +1680,7 @@ MonoBehaviour:
   rotatePart: {fileID: 7418746804131496717}
   firePoint: {fileID: 4279321037895502373}
   bulletPrefab: {fileID: 5884710230153991899, guid: 40c8065d63f1d6e47a3935e69e34bc55, type: 3}
-  shootEffPrefab: {fileID: 1546018688379653726, guid: 1502eb2cab1f3144d8a9d5b0bde7b593, type: 3}
+  shootEffPrefab: {fileID: 0}
 --- !u!54 &4870318213135244829
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1707,6 +1710,28 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4201804564685154496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419986693296960399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7419986693301722617
 GameObject:
   m_ObjectHideFlags: 0

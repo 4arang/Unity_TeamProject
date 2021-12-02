@@ -15271,6 +15271,9 @@ GameObject:
   - component: {fileID: 2865288413993350503}
   - component: {fileID: 2865288413993350499}
   - component: {fileID: 2865288413993350502}
+  - component: {fileID: 1785882435900513013}
+  - component: {fileID: 663131462458916274}
+  - component: {fileID: -71709393472162867}
   m_Layer: 0
   m_Name: Minion4_blue
   m_TagString: Minion
@@ -15357,12 +15360,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c40e63837a74445bb6a2c4f1bd0c3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainCamera: {fileID: 0}
   TeamColor: 0
   MaxHP: 0
   HP: 0
   HPregen: 0
   HPregenperLevel: 0
   HPPtime: 0
+  hp: 0
   MaxAD: 0
   AD: 0
   ADperTime: 0
@@ -15432,6 +15437,8 @@ MonoBehaviour:
   Turret1: {fileID: 0}
   Turret2: {fileID: 0}
   Turret3: {fileID: 0}
+  Turret4: {fileID: 0}
+  Turret5: {fileID: 0}
   TeamColor: 0
 --- !u!195 &2865288413993350502
 NavMeshAgent:
@@ -15455,6 +15462,73 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1785882435900513013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045615944599616986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8841929815281380263}
+  - {fileID: 663131462458916274}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &663131462458916274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045615944599616986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 4
+    SynchronizeType: 1
+    Name: Die
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
+--- !u!114 &-71709393472162867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9045615944599616986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &8444844261882064854
 PrefabInstance:
   m_ObjectHideFlags: 0

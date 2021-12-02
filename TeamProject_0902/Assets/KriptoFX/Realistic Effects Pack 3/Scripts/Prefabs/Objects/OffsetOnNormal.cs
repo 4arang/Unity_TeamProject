@@ -11,6 +11,7 @@ public class OffsetOnNormal : MonoBehaviour
   void Awake()
   {
     startPosition = transform.position;
+        Destroy(gameObject, 7.0f);
   }
 
 	// Use this for initialization
@@ -23,8 +24,5 @@ public class OffsetOnNormal : MonoBehaviour
     }
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

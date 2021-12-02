@@ -4974,14 +4974,14 @@ GameObject:
   - component: {fileID: 2166294662081494539}
   - component: {fileID: 2166294662081494536}
   - component: {fileID: 2166294662081494558}
-  - component: {fileID: 3016307864778077783}
+  - component: {fileID: 2692839534449877777}
   m_Layer: 0
   m_Name: WhiteTiger
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2166294662081494559
 Transform:
   m_ObjectHideFlags: 0
@@ -5107,7 +5107,7 @@ MonoBehaviour:
   adv_E_Aura: {fileID: 2166294663917605071}
   ref_Dist_time: 0.05
   ref_flyingSpeed: 1000
-  Target_pos: {x: 0, y: 0, z: 0}
+  Target: {fileID: 0}
   R_Targeted: 0
 --- !u!114 &2166294662081494529
 MonoBehaviour:
@@ -5133,6 +5133,8 @@ MonoBehaviour:
   Q_Punch_L: {fileID: 2166294663774759293}
   Q_Punch_R: {fileID: 2166294663588458660}
   adv_Q_Punch: {fileID: 2166294662090987522}
+  R_Effect: {fileID: 5615511609105345146, guid: 90a123e8fab43a7468d1eab55cb19b57, type: 3}
+  R_AD: 150
 --- !u!114 &2166294662081494534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5204,10 +5206,9 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
-  - {fileID: 2166294662081494533}
-  - {fileID: 3016307864778077783}
+  - {fileID: 2692839534449877777}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -5227,27 +5228,27 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Speed
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: A_WT
   - Type: 4
-    SynchronizeType: 0
-    Name: Q_WT
-  - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Wildness
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: W_WT
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: R_WT
+  - Type: 4
+    SynchronizeType: 0
+    Name: R_Final
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 1
 --- !u!114 &2166294662081494539
 MonoBehaviour:
@@ -5328,7 +5329,7 @@ MonoBehaviour:
   isAttack_Minion: 0
   isAttack_Player: 0
   Level: 1
---- !u!114 &3016307864778077783
+--- !u!114 &2692839534449877777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5337,30 +5338,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2166294662081494537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PositionModel:
-    SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 10
-    InterpolateOption: 2
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
-    ExtrapolateOption: 0
-    ExtrapolateSpeed: 1
-    ExtrapolateIncludingRoundTripTime: 1
-    ExtrapolateNumberOfStoredPositions: 1
-  m_RotationModel:
-    SynchronizeEnabled: 1
-    InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
-    InterpolateLerpSpeed: 5
-  m_ScaleModel:
-    SynchronizeEnabled: 0
-    InterpolateOption: 0
-    InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 0
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2166294662088372340
 GameObject:
   m_ObjectHideFlags: 0
@@ -66913,8 +66897,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.319582, y: 10, z: 49.02343}
-  m_Center: {x: 0.16893265, y: 10, z: 34.51156}
+  m_Size: {x: 30.273298, y: 25.87121, z: 57.229782}
+  m_Center: {x: 0.8332978, y: 12.917919, z: 36.169765}
 --- !u!114 &2166294662784965899
 MonoBehaviour:
   m_ObjectHideFlags: 0

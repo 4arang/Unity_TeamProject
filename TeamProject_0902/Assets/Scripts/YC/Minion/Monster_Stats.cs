@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using Photon.Pun;
 
-public class Monster_Stats : MonoBehaviour
+public class Monster_Stats : MonoBehaviourPunCallbacks, IPunObservable
 {
     Stopwatch stopwatch = new Stopwatch();
 
@@ -158,5 +159,31 @@ public class Monster_Stats : MonoBehaviour
         AD = AD_;
         Armor = Armor_;
         MRP = MRP_;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //동기화되는 변수들 추가
+            stream.SendNext(hp);
+            stream.SendNext(MaxHP);
+            stream.SendNext(Armor);
+            stream.SendNext(MRP);
+            stream.SendNext(AD);
+            stream.SendNext(MoveSpeed);
+            stream.SendNext(EXP);
+        }
+        else
+        {
+            //받아오는 변수들 추가
+            hp = (float)stream.ReceiveNext();
+            MaxHP = (float)stream.ReceiveNext();
+            Armor = (float)stream.ReceiveNext();
+            MRP = (int)stream.ReceiveNext();
+            AD = (float)stream.ReceiveNext();
+            MoveSpeed = (float)stream.ReceiveNext();
+            EXP = (float)stream.ReceiveNext();
+        }
     }
 }

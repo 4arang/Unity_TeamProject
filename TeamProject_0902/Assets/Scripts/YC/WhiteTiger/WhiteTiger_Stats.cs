@@ -36,7 +36,7 @@ public class WhiteTiger_Stats : MonoBehaviour
     //WT special (W 스킬 사용 후 데미지 회복)
     public float DamageStorage=0;
 
-    void Start()
+    void Awake()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 

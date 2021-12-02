@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Player_Stats : MonoBehaviour
+public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 {
     //Player Information
     public byte AttackAbility; // coldy 8 wt 3  xerion2
@@ -65,7 +66,7 @@ public class Player_Stats : MonoBehaviour
 
 
 
-    private void Start()
+    private void Awake()
     {
         if (TryGetComponent(out ColD_Stats Champ_Num1))
         {
@@ -348,6 +349,26 @@ public class Player_Stats : MonoBehaviour
     {
         DropSpeed(0, StunTime);
         //stop attack
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            //동기화되는 변수들 추가
+            stream.SendNext(hp);
+            stream.SendNext(MaxHP);
+            stream.SendNext(mp);
+            stream.SendNext(MaxMP);
+        }
+        else
+        {
+            //받아오는 변수들 추가
+            hp = (float)stream.ReceiveNext();
+            MaxHP = (float)stream.ReceiveNext();
+            mp = (float)stream.ReceiveNext();
+            MaxMP = (float)stream.ReceiveNext();
+        }
     }
 
 }

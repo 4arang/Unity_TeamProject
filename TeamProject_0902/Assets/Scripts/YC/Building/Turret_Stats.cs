@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Turret_Stats : MonoBehaviour
 {
+    PhotonView PV;
     public float HP;
     public float MaxHP;
     public float HPregen; 
@@ -26,6 +28,7 @@ public class Turret_Stats : MonoBehaviour
     public int Exp;
 
     public bool isAttack_Minion;
+    [SerializeField] private GameObject ExplosionEffect;
 
 
     private void Awake()
@@ -145,7 +148,7 @@ public class Turret_Stats : MonoBehaviour
             Exp = int.Parse(data[10]["exp"].ToString());
         }
 
-
+        PV.RPC("instantiateExplosition", RpcTarget.AllViaServer);
     }
 
     public void DropHP(float damage)
@@ -179,8 +182,29 @@ public class Turret_Stats : MonoBehaviour
                 }
             }
             //수정 : 폭발 이펙트 아직 안받음
+            
             Destroy(gameObject);
 
         }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(HP);
+
+        }
+        else
+        {
+            HP = (float)stream.ReceiveNext();
+
+        }
+    }
+
+    [PunRPC]
+    void instantiateExplosion()
+    {
+        Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
     }
 }

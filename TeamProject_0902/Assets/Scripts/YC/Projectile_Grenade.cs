@@ -23,6 +23,7 @@ public class Projectile_Grenade : MonoBehaviour
     public GameObject hitPrefab;
 
     private GameObject player;
+    private bool teamcolor;
 
     private float stunTime; //xerion : 0.5~2.0
     private Vector3 startPos;
@@ -34,6 +35,7 @@ public class Projectile_Grenade : MonoBehaviour
         SkillAD = AD;
         player = player_;
         startPos = player_.transform.position;
+        teamcolor = player.GetComponent<Player_Stats>().TeamColor;
     }
 
     private void Start()
@@ -55,44 +57,49 @@ public class Projectile_Grenade : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //ignore collisions with projectile
-        var contact = collision.contacts[0];
-        if (contact.otherCollider.name.Contains("Projectile"))
-            return;
-        
-        damageEnemy(collision.transform);
-
-        Speed = 0;
-
-        var hitPosition = contact.point + contact.normal * ImpactOffset;
-
-        if (ImpactFX != null)
+        if ((collision.transform.CompareTag("Player") && collision.transform.GetComponent<Player_Stats>().TeamColor
+            != teamcolor) || (collision.transform.CompareTag("Minion") && collision.transform.GetComponent<Minion_Stats>().TeamColor
+            != teamcolor) || (collision.transform.CompareTag("Turret") && collision.transform.GetComponent<Turret_Stats>().TeamColor
+            != teamcolor) || collision.transform.CompareTag("Monster"))
         {
-            var impact = Instantiate(ImpactFX, hitPosition, Quaternion.identity);
-            impact.transform.localScale = transform.localScale;
-            Destroy(impact, ImpactFXDestroyDelay);
-        }
-        if (hitPrefab!=null)
-        {
-            var hitVFX = Instantiate(hitPrefab, transform.position, Quaternion.identity);
-            var ps = hitVFX.GetComponent<ParticleSystem>();
-            if (ps == null)
+            //ignore collisions with projectile
+            var contact = collision.contacts[0];
+            if (contact.otherCollider.name.Contains("Projectile"))
+                return;
+
+            damageEnemy(collision.transform);
+
+            Speed = 0;
+
+            var hitPosition = contact.point + contact.normal * ImpactOffset;
+
+            if (ImpactFX != null)
             {
-                var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(hitVFX, psChild.main.duration);
+                var impact = Instantiate(ImpactFX, hitPosition, Quaternion.identity);
+                impact.transform.localScale = transform.localScale;
+                Destroy(impact, ImpactFXDestroyDelay);
             }
-            else
-                Destroy(hitVFX, ps.main.duration);
+            if (hitPrefab != null)
+            {
+                var hitVFX = Instantiate(hitPrefab, transform.position, Quaternion.identity);
+                var ps = hitVFX.GetComponent<ParticleSystem>();
+                if (ps == null)
+                {
+                    var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
+                    Destroy(hitVFX, psChild.main.duration);
+                }
+                else
+                    Destroy(hitVFX, ps.main.duration);
 
-            StartCoroutine(DestroyParticle(0f));
+                StartCoroutine(DestroyParticle(0f));
+            }
+
+            //FXToDeatch.transform.parent = null;
+            //FXToDeatch.Stop(true);
+            //Destroy(FXToDeatch.gameObject, ImpactFXDestroyDelay);
+
+            //Destroy(gameObject);
         }
-
-        //FXToDeatch.transform.parent = null;
-        //FXToDeatch.Stop(true);
-        //Destroy(FXToDeatch.gameObject, ImpactFXDestroyDelay);
-
-        //Destroy(gameObject);
-
     }
     public IEnumerator DestroyParticle(float waitTime)
     {

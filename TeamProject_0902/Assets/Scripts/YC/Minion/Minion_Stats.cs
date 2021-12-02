@@ -413,12 +413,20 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
             //동기화되는 변수들 추가
             stream.SendNext(hp);
             stream.SendNext(MaxHP);
+            stream.SendNext(AP);
+            stream.SendNext(AD);
+            stream.SendNext(MoveSpeed);
+            stream.SendNext(EXP);
         }
         else
         {
             //받아오는 변수들 추가
-            hp = (int)stream.ReceiveNext();
-            MaxHP = (int)stream.ReceiveNext();
+            hp = (float)stream.ReceiveNext();
+            MaxHP = (float)stream.ReceiveNext();
+            AP = (float)stream.ReceiveNext();
+            AD = (float)stream.ReceiveNext();
+            MoveSpeed = (float)stream.ReceiveNext();
+            EXP = (float)stream.ReceiveNext();
         }
     }
 }

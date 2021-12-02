@@ -256,7 +256,6 @@ public class Xerion : MonoBehaviour
                 if (!OnAttack)
                 {
                     GetComponent<Player_Stats>().Energy += 10;
-                   
                     PV.RPC("instantiateBullet", RpcTarget.AllViaServer, target.position);
 
                     if (passiveOn)
@@ -275,7 +274,7 @@ public class Xerion : MonoBehaviour
     IEnumerator Active_A(Transform target)
     {
         OnAttack = true;
-        while (true)
+        while (OnAttack)
         {
             animator.SetBool("A_Xerion", true);
             GunShot_Effect.SetActive(true);

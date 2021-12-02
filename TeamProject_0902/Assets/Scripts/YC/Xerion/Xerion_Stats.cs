@@ -46,7 +46,7 @@ public class Xerion_Stats : MonoBehaviour
     
 
 
-    void Start()
+    void Awake()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 

@@ -41,7 +41,7 @@ public class ColD_Stats : MonoBehaviour
     public bool isZero; //헬륨 0인경우 상태->스킬사용x
     private float TimeCheck = 0.0f;
 
-    void Start()
+    void Awake()
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
         if (transform.position.x < 0) TeamColor = true;

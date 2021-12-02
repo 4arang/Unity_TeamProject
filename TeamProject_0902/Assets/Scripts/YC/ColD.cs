@@ -14,7 +14,7 @@ public class ColD : MonoBehaviour
     public float runSpeed = 10.0f;
     Vector3 Direction;
 
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
     float motionSmoothTime = 0.1f;
     public float rotateSpeedMovement = 360.0f;
     public float rotateVelocity;
@@ -214,7 +214,7 @@ public class ColD : MonoBehaviour
     void AttackTargetEnemy(Transform target)
     {
         if ((transform.position - target.transform.position).magnitude <
-            target.transform.localScale.magnitude * 0.85f)
+            target.transform.localScale.magnitude * 1.25f)
         {
             movingManager.Instance.PlayerClickedPos = transform.position; //공격범위 안이면 멈추고 방향전환
             if (animator.GetBool("A_ColD") == false)
@@ -242,11 +242,11 @@ public class ColD : MonoBehaviour
            
             animator.SetBool("A_ColD", true);
             yield return new WaitForSeconds(0.2f);
-            BasicAttack_Effect.SetActive(true);
+            PV.RPC("activeA", RpcTarget.AllViaServer, true);
             //GetComponentInChildren<ColD_Punch_Collider>().Skill();
-            BasicAttack_Effect_Slash.SetActive(true);
+            PV.RPC("activeA_Slash", RpcTarget.AllViaServer, true);
             yield return new WaitForSeconds(0.6f);
-            BasicAttack_Effect.SetActive(false);
+            PV.RPC("activeA", RpcTarget.AllViaServer, false);
             animator.SetBool("A_ColD", false);
 
             if(target)damageEnemy(target);
@@ -289,5 +289,16 @@ public class ColD : MonoBehaviour
     float GetDirection(Vector3 home, Vector3 away)
     {
         return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
+    }
+
+    [PunRPC]
+    void activeA(bool b)
+    {
+        BasicAttack_Effect.SetActive(b);
+    }
+    [PunRPC]
+    void activeA_Slash(bool b)
+    {
+        BasicAttack_Effect_Slash.SetActive(b);
     }
 }

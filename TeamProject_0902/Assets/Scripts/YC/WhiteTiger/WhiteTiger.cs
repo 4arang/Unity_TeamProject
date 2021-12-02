@@ -4,8 +4,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class WhiteTiger : MonoBehaviourPunCallbacks
 {
+
+    PhotonView PV;
+
     //Animation
     Animator animator;
     private float originalSpeed;
@@ -69,10 +73,13 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     private float Q_AD;
     private byte Q_Level = 1;
 
-
+    [Header("R_Skill")]
+    [SerializeField] private GameObject R_Effect;
+    public float R_AD = 150; // 150 / 300 / 500 + a
 
     private void Start()
     {
+        PV = GetComponent<PhotonView>();
         animator = GetComponent<Animator>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         lr = linerenderobj.GetComponent<LineRenderer>();
@@ -109,7 +116,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (PV.IsMine)
         {
             //Debug.Log("Tiger speed " + agent.speed);
 
@@ -139,6 +146,10 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (agent.velocity.magnitude < 0.1f) { movingManager.Instance.isFree = true; } //비전투모드
             else { movingManager.Instance.isFree = false; } //전투모드
 
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                PV.RPC("instantiateR",RpcTarget.AllViaServer ,this.transform.position);
+            }
 
             //////////////기본어택땅/////////////
             if (Input.GetKeyDown(KeyCode.A))
@@ -358,11 +369,11 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (!GetComponent<WhiteTiger_Skill>().isWild)
             {
                 GetComponent<Player_Stats>().AD += 10 * Q_Level;
-                Q_Punch_L.SetActive(true);
-                Q_Punch_R.SetActive(true);
+                PV.RPC("activeQ_L", RpcTarget.AllViaServer, true);
+                PV.RPC("activeQ_R", RpcTarget.AllViaServer, true);
                 yield return new WaitForSeconds(10.0f);
-                Q_Punch_L.SetActive(false);
-                Q_Punch_R.SetActive(false);
+                PV.RPC("activeQ_L", RpcTarget.AllViaServer, false);
+                PV.RPC("activeQ_R", RpcTarget.AllViaServer, false);
                 GetComponent<Player_Stats>().AD -= 10 * Q_Level;
                 break;
             }
@@ -370,9 +381,11 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             {
                 On_adv_Q = true;    //true일경우 펀치->물어뜯기
                 GetComponent<Player_Stats>().AD += 20 * Q_Level;
-                adv_Q_Punch.SetActive(true);
+                PV.RPC("activeQ_adv", RpcTarget.AllViaServer, true);
+                //adv_Q_Punch.SetActive(true);
                 yield return new WaitForSeconds(10.0f);
-                adv_Q_Punch.SetActive(false);
+                PV.RPC("activeQ_adv", RpcTarget.AllViaServer, false);
+                //adv_Q_Punch.SetActive(false);
                 GetComponent<Player_Stats>().AD -= 20 * Q_Level;
                 On_adv_Q = false;
                 //yield return new WaitForSeconds(10.0f);
@@ -388,15 +401,48 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         return Mathf.Atan2(away.x - home.x, away.z - home.z) * Mathf.Rad2Deg;
     }
 
-    public void R_Attack()
+    public void R_Attack(Transform target)
     {
         // StartCoroutine("Active_R_Attack");
         /// 적 챔피언에게만 가능. 추후 수정요
         ///////
-        ///
+        ///공격 애니메이션
+        StartCoroutine("Active_R", target);
 
+        //damageEnemy(target);
         Debug.Log("RSkill Targeted");
     }
+    IEnumerator Active_R(Transform target)
+    {
+        while (target)
+        {
+            animator.SetBool("R_Final", true);
+            Debug.Log("Target " + target);
+            Debug.Log("my " + this.transform);
+            target.GetComponent<Player_Stats>().DropHP(R_AD/4, this.transform);
+            PV.RPC("instantiateR", RpcTarget.AllViaServer, target.position); //공격이펙트
+            target.GetComponent<Player_Stats>().Stun(1.5f);
+
+            yield return new WaitForSeconds(0.5f);
+            PV.RPC("instantiateR", RpcTarget.AllViaServer, target.position);
+            target.GetComponent<Player_Stats>().DropHP(R_AD/4, this.transform);
+            GetComponent<WhiteTiger_Skill>().WildPoint++;
+
+            yield return new WaitForSeconds(0.5f);
+            PV.RPC("instantiateR", RpcTarget.AllViaServer, target.position);
+            target.GetComponent<Player_Stats>().DropHP(R_AD / 4, this.transform);
+            GetComponent<WhiteTiger_Skill>().WildPoint++;
+
+            yield return new WaitForSeconds(0.5f);
+            target.GetComponent<Player_Stats>().DropHP(R_AD / 4, this.transform);
+            PV.RPC("instantiateR", RpcTarget.AllViaServer, target.position);
+            GetComponent<WhiteTiger_Skill>().WildPoint++;
+
+            animator.SetBool("R_Final", false);
+            break;
+        }
+    }
+
     private void damageEnemy(Transform target)
     {
         WT_BasicAD = GetComponent<Player_Stats>().AD;
@@ -450,7 +496,26 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
         }
     }
-
+    [PunRPC]
+    void activeQ_L(bool b)
+    {
+        Q_Punch_L.SetActive(b);
+    }
+    [PunRPC]
+    void activeQ_R(bool b)
+    {
+        Q_Punch_R.SetActive(b);
+    }
+    [PunRPC]
+    void activeQ_adv(bool b)
+    {
+        adv_Q_Punch.SetActive(b);
+    }
+    [PunRPC]
+    void instantiateR(Vector3 targetPos)
+    {
+        Instantiate(R_Effect, targetPos, Quaternion.AngleAxis(playerDir, Vector3.up));
+    }
 }
 
 
