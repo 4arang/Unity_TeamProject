@@ -49,8 +49,9 @@ public class Minion1_Stats : MonoBehaviour
 
         Minion_Number = byte.Parse(data[4]["tags"].ToString());
 
-        MaxHP = 1300;
+      
         HP = float.Parse(data[4]["statshp"].ToString());
+        MaxHP = HP;
         HPregen = float.Parse(data[4]["statshpregen"].ToString());
         HPregenperLevel = float.Parse(data[4]["statshpregenperlevel"].ToString());
 

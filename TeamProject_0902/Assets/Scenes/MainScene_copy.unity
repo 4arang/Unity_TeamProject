@@ -268,6 +268,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7027420102841807934, guid: 83e8f5fe92ab0664999f43a579989ac8, type: 3}
+      propertyPath: sceneViewId
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83e8f5fe92ab0664999f43a579989ac8, type: 3}
 --- !u!4 &41345411 stripped
@@ -509,6 +513,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1785882435900513013, guid: fbd8b69b7433d4940b60a6eaf9dc91a3, type: 3}
+      propertyPath: sceneViewId
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8557872189675169632, guid: fbd8b69b7433d4940b60a6eaf9dc91a3, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -691,6 +699,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6284e157bc25d6a4399a852184abc480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  cameraOffset: {x: 0, y: 0, z: 0}
   smoothness: 0.5
   camWidthLeft: -85
   camWidthRight: 85
@@ -833,6 +843,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Minion3_Blue
       objectReference: {fileID: 0}
+    - target: {fileID: 6882991117898487258, guid: 6d52c193a5f160b419a6f3020cb45c28, type: 3}
+      propertyPath: sceneViewId
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 8895373902577094811, guid: 6d52c193a5f160b419a6f3020cb45c28, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -937,6 +951,10 @@ PrefabInstance:
     - target: {fileID: 1027008122498256921, guid: fbd8b69b7433d4940b60a6eaf9dc91a3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785882435900513013, guid: fbd8b69b7433d4940b60a6eaf9dc91a3, type: 3}
+      propertyPath: sceneViewId
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8557872189675169632, guid: fbd8b69b7433d4940b60a6eaf9dc91a3, type: 3}
       propertyPath: m_RootOrder
@@ -1050,6 +1068,10 @@ PrefabInstance:
     - target: {fileID: 5424467898351243427, guid: e1548dc80e72ddc4a83de92378ad76b2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889099701641420699, guid: e1548dc80e72ddc4a83de92378ad76b2, type: 3}
+      propertyPath: sceneViewId
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1548dc80e72ddc4a83de92378ad76b2, type: 3}
@@ -2540,7 +2562,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: f292bb4a3ed550d4b9e142808c35e522, type: 3}
 --- !u!4 &1271553307 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7418746803943888383, guid: f292bb4a3ed550d4b9e142808c35e522, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 1271553306}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1283191327
@@ -2597,6 +2619,10 @@ PrefabInstance:
     - target: {fileID: 5291563896142718965, guid: 6de6f2f0aa82b244aaddc206bef4e289, type: 3}
       propertyPath: m_Name
       value: Minion1_Red
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126375947755249939, guid: 6de6f2f0aa82b244aaddc206bef4e289, type: 3}
+      propertyPath: sceneViewId
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8544106539828040446, guid: 6de6f2f0aa82b244aaddc206bef4e289, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2667,6 +2693,10 @@ PrefabInstance:
     - target: {fileID: 4309339646192897887, guid: 6d52c193a5f160b419a6f3020cb45c28, type: 3}
       propertyPath: m_Name
       value: Minion3_Blue
+      objectReference: {fileID: 0}
+    - target: {fileID: 6882991117898487258, guid: 6d52c193a5f160b419a6f3020cb45c28, type: 3}
+      propertyPath: sceneViewId
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8895373902577094811, guid: 6d52c193a5f160b419a6f3020cb45c28, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3031,6 +3061,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2138914201}
     m_Modifications:
+    - target: {fileID: -3032153037673974265, guid: ab6b6f235e0d4594bb4a5e757a7f8be0, type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1279537646135407423, guid: ab6b6f235e0d4594bb4a5e757a7f8be0, type: 3}
       propertyPath: m_Name
       value: Minion4_Red
@@ -3384,6 +3418,10 @@ PrefabInstance:
     - target: {fileID: 2907005461995185723, guid: 91fc7d8adf2099f4782b41acd5156f6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152377649381772484, guid: 91fc7d8adf2099f4782b41acd5156f6e, type: 3}
+      propertyPath: sceneViewId
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91fc7d8adf2099f4782b41acd5156f6e, type: 3}
@@ -4472,6 +4510,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4152377649381772484, guid: 91fc7d8adf2099f4782b41acd5156f6e, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91fc7d8adf2099f4782b41acd5156f6e, type: 3}
 --- !u!1001 &3708763200861574357
@@ -4481,6 +4523,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2123637211, guid: 87333215baa579949a6f79029f3888b9, type: 3}
+      propertyPath: sceneViewId
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3142536499936267412, guid: 87333215baa579949a6f79029f3888b9, type: 3}
       propertyPath: m_Name
       value: MAP

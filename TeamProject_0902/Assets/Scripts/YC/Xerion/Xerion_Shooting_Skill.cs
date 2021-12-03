@@ -328,7 +328,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
                     satellite_range.SetActive(false);
                     Drone_Range.SetActive(false);
                     //Drone.SetActive(false);
-                    PV.RPC("activeDrone", RpcTarget.AllViaServer, true);
+                    PV.RPC("activeDrone", RpcTarget.AllViaServer, false);
                     DroneShot = 4;
                     mainCamera.fieldOfView -= R_camFOV;
                     R_active = false; //시간초과시 or 스킬모두 사용시 r스킬 종료

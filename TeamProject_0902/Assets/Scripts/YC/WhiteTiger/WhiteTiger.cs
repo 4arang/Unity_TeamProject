@@ -77,6 +77,13 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject R_Effect;
     public float R_AD = 150; // 150 / 300 / 500 + a
 
+    //minimap sprite
+    [SerializeField] private GameObject TeamBlue;
+    [SerializeField] private GameObject TeamRed;
+    [SerializeField] private GameObject TeamBlue_hp;
+    [SerializeField] private GameObject TeamRed_hp;
+
+
     private void Start()
     {
         PV = GetComponent<PhotonView>();
@@ -111,6 +118,21 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
         TeamColor = GetComponent<Player_Stats>().TeamColor;
         InvokeRepeating("Passive", 0f, 0.5f); //passiveRange 내 챔피언발견시 속도 up
+
+        if (GetComponent<Player_Stats>().TeamColor)
+        {
+            TeamBlue.SetActive(true);
+            TeamBlue_hp.SetActive(true);
+            TeamRed.SetActive(false);
+            Object.Destroy(TeamRed_hp);
+        }
+        else
+        {
+            TeamBlue.SetActive(false);
+            Object.Destroy(TeamBlue_hp);
+            TeamRed.SetActive(true);
+            TeamRed_hp.SetActive(true);
+        }
     }
 
 

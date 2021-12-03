@@ -12,8 +12,8 @@ public class MapCamera : MonoBehaviour
     Camera cam; //미니맵캠 
     [SerializeField]
     GameObject camToMove; // 메인맵캠 어디로 갈지?
-    [SerializeField]
-    GameObject PlayerToMove; //플레이어 어디로갈지
+
+    public Transform PlayerToMove; //플레이어 어디로갈지
     NavMeshAgent agent;
     RaycastHit hit;
     Ray ray;
@@ -34,11 +34,15 @@ public class MapCamera : MonoBehaviour
         {
             cam = GetComponent<Camera>();
         }
-        if (PlayerToMove == null)
-        {
-            PlayerToMove = GameObject.FindWithTag("Player");
-            agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
-        }
+
+    }
+
+    public void SetCameraTarget(Transform player)
+    {
+
+        PlayerToMove = player;
+        agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
+
     }
 
 

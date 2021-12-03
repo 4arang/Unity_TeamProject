@@ -22,6 +22,7 @@ public class Minion4 : MonoBehaviour
     [SerializeField] private Transform Turret3;
     [SerializeField] private Transform Turret4;
     [SerializeField] private Transform Turret5;
+    [SerializeField] private Transform Turret6;
 
     public bool TeamColor;
     private bool OnUpdateTarget = true;
@@ -41,6 +42,9 @@ public class Minion4 : MonoBehaviour
             Turret1 = Turret_Manager.Instance.Blue_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Blue_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Blue_TargetBuilding3;
+            Turret4 = Turret_Manager.Instance.Blue_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Blue_TargetBuilding5;
+            Turret6 = Turret_Manager.Instance.Blue_TargetBuilding6;
 
         }
         else
@@ -48,7 +52,11 @@ public class Minion4 : MonoBehaviour
             Turret1 = Turret_Manager.Instance.Red_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Red_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Red_TargetBuilding3;
+            Turret4 = Turret_Manager.Instance.Red_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Red_TargetBuilding5;
+            Turret6 = Turret_Manager.Instance.Red_TargetBuilding6;
         }
+
 
         TeamColor = GetComponent<Minion_Stats>().TeamColor;
         InvokeRepeating("FindTarget", 0f, 0.5f);
@@ -129,17 +137,19 @@ public class Minion4 : MonoBehaviour
                     TargetFound = true;
                     Debug.Log("Target Priority 7 " + Target);
                 }
-                else
-                {
-                    if (Turret1) Target = Turret1;
-                    else if (Turret2) Target = Turret2;
-                    else if (Turret3) Target = Turret3;
-                    else if (Turret4) Target = Turret4;
-                    else if (Turret5) Target = Turret5;
-
-                    TargetFound = true;
-                }
             }
+            if (!Target || Target.CompareTag("Turret"))
+            {
+                if (Turret1) Target = Turret1;
+                else if (Turret2) Target = Turret2;
+                else if (Turret3) Target = Turret3;
+                else if (Turret4) Target = Turret4;
+                else if (Turret5) Target = Turret5;
+                else if (Turret6) Target = Turret6;
+
+                TargetFound = true;
+            }
+
         }
         else
         {
@@ -229,7 +239,7 @@ public class Minion4 : MonoBehaviour
         if (OnUpdateTarget)
         {
             OnUpdateTarget = false;
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(1.0f);
             Target = null;
             Debug.Log("Update Target");
             OnUpdateTarget = true;

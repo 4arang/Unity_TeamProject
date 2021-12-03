@@ -22,6 +22,7 @@ public class Minion1 : MonoBehaviour
     [SerializeField] private Transform Turret3;
     [SerializeField] private Transform Turret4;
     [SerializeField] private Transform Turret5;
+    [SerializeField] private Transform Turret6;
 
     public bool TeamColor;
     private bool OnUpdateTarget = true;
@@ -44,6 +45,9 @@ public class Minion1 : MonoBehaviour
             Turret1 = Turret_Manager.Instance.Blue_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Blue_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Blue_TargetBuilding3;
+            Turret4 = Turret_Manager.Instance.Blue_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Blue_TargetBuilding5;
+            Turret6 = Turret_Manager.Instance.Blue_TargetBuilding6;
 
         }
         else
@@ -51,6 +55,9 @@ public class Minion1 : MonoBehaviour
             Turret1 = Turret_Manager.Instance.Red_TargetBuilding1;
             Turret2 = Turret_Manager.Instance.Red_TargetBuilding2;
             Turret3 = Turret_Manager.Instance.Red_TargetBuilding3;
+            Turret4 = Turret_Manager.Instance.Red_TargetBuilding4;
+            Turret5 = Turret_Manager.Instance.Red_TargetBuilding5;
+            Turret6 = Turret_Manager.Instance.Red_TargetBuilding6;
         }
 
         InvokeRepeating("FindTarget", 0f, 0.5f);
@@ -59,7 +66,7 @@ public class Minion1 : MonoBehaviour
     
     void Update()
     {
-        agent.speed = 0;//GetComponent<Minion_Stats>().MoveSpeed/100;
+        agent.speed = GetComponent<Minion_Stats>().MoveSpeed/100;
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
 
@@ -79,34 +86,34 @@ public class Minion1 : MonoBehaviour
             {
 
                 if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
-                    && player.isAttack_Player &&(player.TeamColor != TeamColor))
+                    && player.isAttack_Player && (player.TeamColor != TeamColor))
                 {
                     Target = player.transform;
                     GetComponent<Minion_Stats>().isAttack_Player = true;
                     TargetFound = true;
-                   // Debug.Log("Target Priority 1 " + Target);
+                    // Debug.Log("Target Priority 1 " + Target);
                 }
                 else if (col.TryGetComponent<Minion_Stats>(out Minion_Stats enemy)
-                    && enemy.isAttack_Player && (enemy.TeamColor != TeamColor) )
+                    && enemy.isAttack_Player && (enemy.TeamColor != TeamColor))
                 {
                     Target = enemy.transform;
                     TargetFound = true;
-                   // Debug.Log("Target Priority 2 " + Target);
+                    // Debug.Log("Target Priority 2 " + Target);
                 }
                 else if (col.TryGetComponent<Minion_Stats>(out Minion_Stats enemy_)
-                     && enemy.isAttack_Player && (enemy_.TeamColor != TeamColor) )
+                     && enemy.isAttack_Player && (enemy_.TeamColor != TeamColor))
                 {
                     Target = enemy_.transform;
                     TargetFound = true;
                     GetComponent<Minion_Stats>().isAttack_Minion = true;
-                   // Debug.Log("Target Priority 3 " + Target);
+                    // Debug.Log("Target Priority 3 " + Target);
                 }
                 else if (col.TryGetComponent<Turret_Stats>(out Turret_Stats turret)
-                    &&(turret.TeamColor != TeamColor) && turret.isAttack_Minion)
+                    && (turret.TeamColor != TeamColor) && turret.isAttack_Minion)
                 {
                     Target = turret.transform;
                     TargetFound = true;
-                   // Debug.Log("Target priority 4 " + Target);
+                    // Debug.Log("Target priority 4 " + Target);
                 }
 
                 else if (col.TryGetComponent<Player_Stats>(out Player_Stats player_)
@@ -115,34 +122,36 @@ public class Minion1 : MonoBehaviour
                     Target = player_.transform;
                     TargetFound = true;
                     GetComponent<Minion_Stats>().isAttack_Player = true;
-                  //  Debug.Log("Target Priority 5 " + Target);
+                    //  Debug.Log("Target Priority 5 " + Target);
                 }
 
                 else if (col.TryGetComponent<Minion_Stats>(out Minion_Stats enemy__) && (enemy__.TeamColor != TeamColor)) //Targeting Minion
                 {
-                        Target = enemy__.transform;
+                    Target = enemy__.transform;
                     TargetFound = true;
                     GetComponent<Minion_Stats>().isAttack_Minion = true;
-                       // Debug.Log("Target Priority 6 " + Target);
+                    // Debug.Log("Target Priority 6 " + Target);
                 }
                 else if (col.TryGetComponent<Player_Stats>(out Player_Stats player__) && (player__.TeamColor != TeamColor)) //Minion > Champion
                 {
                     Target = player__.transform;
                     TargetFound = true;
                     GetComponent<Minion_Stats>().isAttack_Player = true;
-                   // Debug.Log("Target Priority 7 " + Target);
+                    // Debug.Log("Target Priority 7 " + Target);
                 }
-                else
+            }
+                if(!Target || Target.CompareTag("Turret"))
                 {
                     if (Turret1) Target = Turret1;
                     else if (Turret2) Target = Turret2;
                     else if (Turret3) Target = Turret3;
                     else if (Turret4) Target = Turret4;
                     else if (Turret5) Target = Turret5;
+                    else if (Turret6) Target = Turret6;
 
                     TargetFound = true;
                 }
-            }
+            
         }
         else
         {
@@ -157,7 +166,7 @@ public class Minion1 : MonoBehaviour
     private void AttackTarget(Transform target)
     {
         agent.SetDestination(target.position);
-        if (target.CompareTag("Turret")) TargetRange_ = TargetRange + 1.5f;
+        if (target.CompareTag("Turret")) TargetRange_ = TargetRange + 1.0f;
         else TargetRange_ = TargetRange;
 
         if (Vector3.Distance(agent.transform.position, target.position) <= TargetRange_)
@@ -234,7 +243,7 @@ public class Minion1 : MonoBehaviour
         if (OnUpdateTarget)
         {
             OnUpdateTarget = false;
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(1.0f);
             Target = null;
            // Debug.Log("Update Target");
             OnUpdateTarget = true;

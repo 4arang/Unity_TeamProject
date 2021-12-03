@@ -51,35 +51,48 @@ public class MainCamera_CameraRoam : MonoBehaviour
 
         Vector3 pos = transform.position;
 
-        //if (Input.mousePosition.y >= Screen.height - screenSizeThickness)
-        //{
-        //    if (pos.z <= camHeightUp)
-        //        pos.z += camSpeed * Time.deltaTime;
-        //}
+        if (Input.mousePosition.y >= Screen.height - screenSizeThickness)
+        {
+            if (pos.z <= camHeightUp)
+            {
+                pos.z += camSpeed * Time.deltaTime;
+                pos.x += camSpeed * Time.deltaTime;
+            }
+        }
 
-        ////Down
-        //if (Input.mousePosition.y <= screenSizeThickness)
-        //{
-        //    if (pos.z >= camHeightDown)
-        //        pos.z -= camSpeed * Time.deltaTime;
-        //}
+        //Down
+        if (Input.mousePosition.y <= screenSizeThickness)
+        {
+            if (pos.z >= camHeightDown)
+            {
+                pos.z -= camSpeed * Time.deltaTime;
+                pos.x -= camSpeed * Time.deltaTime;
+            }
+        }
 
-        ////Right
-        //if (Input.mousePosition.x >= Screen.width - screenSizeThickness)
-        //{
-        //    if (pos.x <= camWidthRight)
-        //        pos.x += camSpeed * Time.deltaTime;
+        //Right
+        if (Input.mousePosition.x >= Screen.width - screenSizeThickness)
+        {
+            if (pos.x <= camWidthRight)
+            {
+                pos.x += camSpeed * Time.deltaTime;
+                pos.z -= camSpeed * Time.deltaTime;
+            }
 
-        //}
+        }
 
-        ////Left
-        //if (Input.mousePosition.x <= screenSizeThickness)
-        //{
-        //    if(pos.x>= camWidthLeft)
-        //    pos.x -= camSpeed * Time.deltaTime;
+        //Left
+        if (Input.mousePosition.x <= screenSizeThickness)
+        {
+            if (pos.x >= camWidthLeft)
+            {
+                pos.x -= camSpeed * Time.deltaTime;
+                pos.z += camSpeed * Time.deltaTime;
 
-        //}
+            }
 
-        //transform.position = pos;
+        }
+
+        transform.position = pos;
     }
 }

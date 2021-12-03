@@ -18,5 +18,6 @@ public class HP_Bar : MonoBehaviour
    public void SetHP(float hp)
     {
         slider.value = hp;
+        Debug.Log("hp " + hp);
     }
 }

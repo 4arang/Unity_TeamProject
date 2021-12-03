@@ -11,13 +11,14 @@ public class Test_SpawnPlayers : MonoBehaviour
     private Vector3 spawnPos;
 
     MainCamera_CameraRoam camera;
-
+    MapCamera mapCamera;
 
     private int selectedChampion;
 
     private void Awake()
     {
         camera = FindObjectOfType<MainCamera_CameraRoam>();
+        mapCamera = FindObjectOfType<MapCamera>();
 
         selectedChampion = LobbyController.Instance.selectedChamp;
 
@@ -32,18 +33,21 @@ public class Test_SpawnPlayers : MonoBehaviour
                 {
                   GameObject Player =  PhotonNetwork.Instantiate(WhiteTiger.name, spawnPos, Quaternion.identity);
                     camera.SetCameraTarget(Player.transform);
+                    mapCamera.SetCameraTarget(Player.transform);
                     break;
                 }
             case 1:
                 {
                     GameObject Player = PhotonNetwork.Instantiate(Coldy.name, spawnPos, Quaternion.identity);
                     camera.SetCameraTarget(Player.transform);
+                    mapCamera.SetCameraTarget(Player.transform);
                     break;
                 }
             case 2:
                 {
                     GameObject Player = PhotonNetwork.Instantiate(Xerion.name, spawnPos, Quaternion.identity);
                     camera.SetCameraTarget(Player.transform);
+                    mapCamera.SetCameraTarget(Player.transform);
                     break;
                 }
         }

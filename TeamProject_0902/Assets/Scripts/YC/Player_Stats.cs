@@ -65,7 +65,6 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
    private Transform[] champs; //처치에 관여한 챔피언들
 
 
-
     private void Awake()
     {
         if (TryGetComponent(out ColD_Stats Champ_Num1))
@@ -130,8 +129,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             MPregen = GetComponent<Xerion_Stats>().MPregen;
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
-            GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
-            GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.259f);
+
             Xerion_Manager.Instance.Xerion_AD = AD;
         }
         else if (TryGetComponent(out WhiteTiger_Stats Champ_Num3))
@@ -174,6 +172,11 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         PlayerStatManager.Instance.Player = this.transform;
       //  GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
 
+    }
+    private void Start()
+    {
+        GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
+        GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.259f);
     }
 
     private void Update()
@@ -268,7 +271,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             StartCoroutine("StoreDamage", Damage);
 
         GetComponentInChildren<HP_Bar>().SetHP(hp);
-
+        
         if(hp<=0)
         {
             //죽었을때
@@ -286,6 +289,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
                     }
                 }
             }
+            return;
         }
 
        
@@ -293,7 +297,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (true/*/해당 오브젝트가 죽어있는 상태인 경우 10초간 저장*/)
             {
-                StartCoroutine("StoreChampion");
+                StartCoroutine("StoreChampion", obj);
             }
         }
     }

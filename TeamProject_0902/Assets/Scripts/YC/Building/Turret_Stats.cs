@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class Turret_Stats : MonoBehaviour
 {
-    PhotonView PV;
     public float HP;
     public float MaxHP;
     public float HPregen; 
@@ -35,7 +34,7 @@ public class Turret_Stats : MonoBehaviour
     {
         List<Dictionary<string, object>> data = StatCSVreader.Read("Character_Stats");
 
-        if (transform.position.x < 0) TeamColor = true;
+        if (transform.position.y > 0) TeamColor = true;
         else TeamColor = false; 
 
         if (transform.position.x>=-25 && transform.position.x<25)
@@ -63,8 +62,8 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding1 = transform;
         }
-       else if((transform.position.x>=-65 && transform.position.x<-75)
-            ||(transform.position.x>=65 && transform.position.x<75))
+       else if((transform.position.x>=-40 && transform.position.x<-25)
+            ||(transform.position.x>=25 && transform.position.x<40))
          {
             MaxHP = float.Parse(data[9]["statshp"].ToString());
             HP = MaxHP;
@@ -90,8 +89,8 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding2 = transform;
         }
-        else if ((transform.position.x >= -60 && transform.position.x < -45)
-      || (transform.position.x >= 45 && transform.position.x < 60))
+        else if ((transform.position.x >= -70 && transform.position.x < -60)
+      || (transform.position.x >= 60 && transform.position.x < 70))
         {
             MaxHP = float.Parse(data[10]["statshp"].ToString());
             HP = MaxHP;
@@ -126,29 +125,49 @@ public class Turret_Stats : MonoBehaviour
                     Turret_Manager.Instance.Blue_TargetBuilding5 = transform;
             }
         }
-        else if ((transform.position.x >= -75 && transform.position.x < -60)
-|| (transform.position.x >= 60 && transform.position.x < 70))
+        else if ((transform.position.x >= -58 && transform.position.x < -45)
+|| (transform.position.x >= 45 && transform.position.x < 58))
         {
-            MaxHP = float.Parse(data[10]["statshp"].ToString());
+            MaxHP = float.Parse(data[11]["statshp"].ToString());
             HP = MaxHP;
-            HPregen = float.Parse(data[10]["statshpregen"].ToString()); //5초당 
+            HPregen = float.Parse(data[11]["statshpregen"].ToString()); //5초당 
 
             MaxAD = 278;
-            AD = float.Parse(data[10]["statsattackdamage"].ToString());
-            ADperTime = float.Parse(data[10]["statsattackdamageperlevel"].ToString());//3~17분 증가
-            AttackSpeed = float.Parse(data[10]["statsattackspeed"].ToString());
-            AttackRange = float.Parse(data[10]["statsattackrange"].ToString());
+            AD = float.Parse(data[11]["statsattackdamage"].ToString());
+            ADperTime = float.Parse(data[11]["statsattackdamageperlevel"].ToString());//3~17분 증가
+            AttackSpeed = float.Parse(data[11]["statsattackspeed"].ToString());
+            AttackRange = float.Parse(data[11]["statsattackrange"].ToString());
 
             MaxAP = 40;
-            AP = float.Parse(data[10]["statsarmor"].ToString());
+            AP = float.Parse(data[11]["statsarmor"].ToString());
 
             MaxMRP = 40;
-            MRP = float.Parse(data[10]["statsspellblock"].ToString());
-            Gold = int.Parse(data[10]["gold"].ToString());
-            Exp = int.Parse(data[10]["exp"].ToString());
-        }
+            MRP = float.Parse(data[11]["statsspellblock"].ToString());
+            Gold = int.Parse(data[11]["gold"].ToString());
+            Exp = int.Parse(data[11]["exp"].ToString());
 
-        PV.RPC("instantiateExplosition", RpcTarget.AllViaServer);
+            if (TeamColor)
+                Turret_Manager.Instance.Red_TargetBuilding3 = transform;
+            else
+                Turret_Manager.Instance.Blue_TargetBuilding3 = transform;
+        }
+        else if ((transform.position.x <= -70)||(transform.position.x >= 70))
+        {
+            MaxHP = float.Parse(data[12]["statshp"].ToString());
+            HP = MaxHP;
+            HPregen = float.Parse(data[12]["statshpregen"].ToString()); //5초당 
+
+            MaxAP = 40;
+            AP = float.Parse(data[12]["statsarmor"].ToString());
+
+            MaxMRP = 40;
+            MRP = float.Parse(data[12]["statsspellblock"].ToString());
+
+            if (TeamColor)
+                Turret_Manager.Instance.Red_TargetBuilding6 = transform;
+            else
+                Turret_Manager.Instance.Blue_TargetBuilding6 = transform;
+        }
     }
 
     public void DropHP(float damage)
@@ -181,8 +200,8 @@ public class Turret_Stats : MonoBehaviour
                     }
                 }
             }
-            //수정 : 폭발 이펙트 아직 안받음
-            
+          
+            //PV.RPC("instantiateExplosition", RpcTarget.AllViaServer);
             Destroy(gameObject);
 
         }
@@ -202,9 +221,4 @@ public class Turret_Stats : MonoBehaviour
         }
     }
 
-    [PunRPC]
-    void instantiateExplosion()
-    {
-        Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-    }
 }

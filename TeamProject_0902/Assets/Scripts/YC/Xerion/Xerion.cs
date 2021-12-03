@@ -56,6 +56,11 @@ public class Xerion : MonoBehaviour
     private bool passiveOn = false;
 
     //public GameObject cameraObj;
+    //minimap sprite
+    [SerializeField] private GameObject TeamBlue;
+    [SerializeField] private GameObject TeamRed;
+    [SerializeField] private GameObject TeamBlue_hp;
+    [SerializeField] private GameObject TeamRed_hp;
 
     private void Start()
     {
@@ -77,6 +82,20 @@ public class Xerion : MonoBehaviour
 
         //cameraObj = Camera.main.gameObject;
         //cameraObj.GetComponent<MainCamera_CameraRoam>().player = this.transform;
+        if (GetComponent<Player_Stats>().TeamColor)
+        {
+            TeamBlue.SetActive(true);
+            TeamBlue_hp.SetActive(true);
+            TeamRed.SetActive(false);
+            Object.Destroy(TeamRed_hp);
+        }
+        else
+        {
+            TeamBlue.SetActive(false);
+            Object.Destroy(TeamBlue_hp);
+            TeamRed.SetActive(true);
+            TeamRed_hp.SetActive(true);
+        }
 
     }
 
