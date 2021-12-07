@@ -14,11 +14,6 @@ public class XP_Bar : MonoBehaviour
       SetMaxXP(280 );
     }
 
-    private void Update()
-    {
-        SetXP(UIManager.Instance.Exp);
-        SetLevel(UIManager.Instance.Level);
-    }
     public void SetXP(float xp)
     {
         slider.value = xp;

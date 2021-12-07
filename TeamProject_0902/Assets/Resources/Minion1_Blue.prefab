@@ -384,6 +384,7 @@ MonoBehaviour:
   Turret3: {fileID: 0}
   Turret4: {fileID: 0}
   Turret5: {fileID: 0}
+  Turret6: {fileID: 0}
   TeamColor: 0
 --- !u!195 &724345335
 NavMeshAgent:

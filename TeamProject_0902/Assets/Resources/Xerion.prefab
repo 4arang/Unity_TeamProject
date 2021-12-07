@@ -5984,6 +5984,7 @@ MonoBehaviour:
   MPregenperLevel: 0
   hp: 0
   mp: 0
+  Level: 1
   Helium: 0
   minHelium: 0
   maxHelium: 100
@@ -5994,7 +5995,6 @@ MonoBehaviour:
   DamageStorage: 0
   isAttack_Minion: 0
   isAttack_Player: 0
-  Level: 1
 --- !u!114 &9126777858038511358
 MonoBehaviour:
   m_ObjectHideFlags: 0

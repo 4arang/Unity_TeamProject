@@ -6,7 +6,7 @@ public class Xerion_Q_Laser_Collider : MonoBehaviour
 {
     private float Xerion_Q_AD=70;   //110 150 190 230
     private float Xerion_Q_ADp=20; //20 30 40 50 70
-
+    private int Q_Level = 1;
 
     public bool Xerion_Q_ColliderOn=false;
     public bool Xerion_Q_Full;
@@ -14,8 +14,31 @@ public class Xerion_Q_Laser_Collider : MonoBehaviour
     private bool TeamColor;
     private Transform player;
 
-    public void setup()
+    public void setup(int Q_Level)
     {
+        if(Q_Level==2)
+        {
+             Xerion_Q_AD = 110;  
+             Xerion_Q_ADp = 30; 
+        }
+        else if (Q_Level==3)
+        {
+            Xerion_Q_AD = 150;
+            Xerion_Q_ADp = 40;
+        }
+        else if (Q_Level == 4)
+        {
+            Xerion_Q_AD = 190;
+            Xerion_Q_ADp = 50;
+        }
+        else if (Q_Level == 5)
+        {
+            Xerion_Q_AD = 230;
+            Xerion_Q_ADp = 70;
+        }
+
+
+
         Xerion_Q_ColliderOn = true;
         Xerion_Q_Full = false;
 

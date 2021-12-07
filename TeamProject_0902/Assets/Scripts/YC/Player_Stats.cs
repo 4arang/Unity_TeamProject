@@ -11,6 +11,9 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     public byte MagicAbility;
     public byte Difficulty;
 
+    //UI info
+    Stats_Text UI_Stats;
+    UI_Bar ActionBar;
 
     //Game Stats
     public bool TeamColor;
@@ -36,6 +39,8 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
     public float hp;    //current HP;
     public float mp;    //current MP;
+
+    public int Level = 1;
     
 
     //Coldy special (Helium)
@@ -60,9 +65,8 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     public bool isAttack_Minion = false;
     public bool isAttack_Player = false;
 
-    public int Level = 1;
 
-   private Transform[] champs; //처치에 관여한 챔피언들
+    private Transform[] champs; //처치에 관여한 챔피언들
 
 
     private void Awake()
@@ -175,8 +179,28 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     }
     private void Start()
     {
+        //stats bar
+        UI_Stats = FindObjectOfType<Stats_Text>();
+
         GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
         GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.259f);
+
+        UI_Stats.SetAD(AD);
+        //UI_Stats.SetMP();
+        UI_Stats.SetArmor(AP);
+        UI_Stats.SetMRP(MRP);
+        //UI_Stats.SetCoolTime();
+        UI_Stats.SetMoveSpeed(MoveSpeed);
+        //UI_Stats.SetCriticalRate
+        UI_Stats.SetAttackSpeed(AttackSpeed);
+
+        //action bar
+        ActionBar = FindObjectOfType<UI_Bar>();
+
+        ActionBar.SetMaxHP(MaxHP);
+        ActionBar.SetHP(hp);
+        ActionBar.SetMaxRP(MaxMP);
+        ActionBar.SetRP(mp);
     }
 
     private void Update()
@@ -223,7 +247,10 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
         }
 
-
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            GetComponent<Player_Level>().GetEXP(280);
+        }
     }
 
     void Regen()
@@ -243,10 +270,12 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
                 if (mp > MaxMP) mp = MaxMP;
             }
             TimeCheck = 0;
+            GetComponentInChildren<HP_Bar>().SetHP(hp);
+            GetComponentInChildren<RP_Bar>().SetRP(mp);
+
+            ActionBar.SetHP(hp);
+            ActionBar.SetRP(mp);
         }
-     
-        GetComponentInChildren<HP_Bar>().SetHP(hp);
-        GetComponentInChildren<RP_Bar>().SetRP(mp);
     }
 
 
@@ -259,6 +288,8 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         if (mp > MaxMP) mp = MaxMP;
 
         GetComponentInChildren<RP_Bar>().SetRP(mp);
+
+        ActionBar.SetRP(mp);
     }
 
 
@@ -271,8 +302,10 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             StartCoroutine("StoreDamage", Damage);
 
         GetComponentInChildren<HP_Bar>().SetHP(hp);
-        
-        if(hp<=0)
+
+        ActionBar.SetHP(hp);
+
+        if (hp<=0)
         {
             //죽었을때
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
@@ -342,16 +375,19 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     {
         MoveSpeed *= damage;
         StartCoroutine("Active_SpeedReturn", time);
+        UI_Stats.SetMoveSpeed(MoveSpeed);
     }
     IEnumerator Active_SpeedReturn(float time)
     {
         yield return new WaitForSeconds(time); //1초후에 스피드 복구
         MoveSpeed = Recover_MoveSpeed; //렙업시 변경시켜주기
+        UI_Stats.SetMoveSpeed(MoveSpeed);
     }
 
     public void Stun(float StunTime)
     {
         DropSpeed(0, StunTime);
+        UI_Stats.SetMoveSpeed(MoveSpeed);
         //stop attack
     }
 
@@ -372,6 +408,73 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             MaxHP = (float)stream.ReceiveNext();
             mp = (float)stream.ReceiveNext();
             MaxMP = (float)stream.ReceiveNext();
+        }
+    }
+
+    public void LevelupQ()
+    {
+        if (AttackAbility == 8) //coldy
+        {
+
+        }
+
+        else if (AttackAbility == 2) //xerion
+        {
+            GetComponent<Xerion_Shooting_Skill>().levelupQ();
+        }
+        else //WT
+        {
+
+        }
+
+
+    }
+    public void LevelupW()
+    {
+        if (AttackAbility == 8) //coldy
+        {
+
+        }
+
+        else if (AttackAbility == 2) //xerion
+        {
+            GetComponent<Xerion_Shooting_Skill>().levelupW();
+        }
+        else //WT
+        {
+
+        }
+    }
+    public void LevelupE()
+    {
+        if (AttackAbility == 8) //coldy
+        {
+
+        }
+
+        else if (AttackAbility == 2) //xerion
+        {
+            GetComponent<Xerion_Shooting_Skill>().levelupE();
+        }
+        else //WT
+        {
+
+        }
+    }
+    public void LevelupR()
+    {
+        Debug.Log("levle up R"); if (AttackAbility == 8) //coldy
+        {
+
+        }
+
+        else if (AttackAbility == 2) //xerion
+        {
+            GetComponent<Xerion_Shooting_Skill>().levelupR();
+        }
+        else //WT
+        {
+
         }
     }
 

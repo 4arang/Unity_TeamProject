@@ -12,8 +12,8 @@ public class Gold_Text : MonoBehaviour
         gold = GetComponent<Text>();    
     }
 
-    void Update()
+    public void SetGold(int Gold)
     {
-        gold.text = UIManager.Instance.Gold.ToString();
+        gold.text = Gold.ToString();
     }
 }

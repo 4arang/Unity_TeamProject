@@ -45,6 +45,7 @@ public class MainCamera_CameraRoam : MonoBehaviour
 
             cameraOffset = player.transform.position;
             cameraOffset.y = camHeight;
+            cameraOffset.x -= 6;
             cameraOffset.z -= 6;
             transform.position = Vector3.Slerp(transform.position, cameraOffset, smoothness);
         }

@@ -14,11 +14,31 @@ public class Xerion_W_Skill_Colider : MonoBehaviour
     private bool TeamColor;
     private Transform player;
 
-    void Start()
-    {
 
-        player = PlayerStatManager.Instance.Player;
+    public void setup(Transform Player, int Wlevel)
+    {
+        player = Player;
         TeamColor = player.GetComponent<Player_Stats>().TeamColor;
+        if(Wlevel ==2)
+        {
+            Xerion_W_CenterAD = 130;
+            Xerion_W_CenterDS = 0.65f;
+        }
+        else if (Wlevel == 3)
+        {
+            Xerion_W_CenterAD = 160;
+            Xerion_W_CenterDS = 0.70f;
+        }
+        else if (Wlevel == 4)
+        {
+            Xerion_W_CenterAD = 190;
+            Xerion_W_CenterDS = 0.75f;
+        }
+        else if (Wlevel ==5)
+        {
+            Xerion_W_CenterAD = 220;
+            Xerion_W_CenterDS = 0.80f;
+        }
     }
 
 

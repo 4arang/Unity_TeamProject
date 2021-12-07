@@ -10,10 +10,20 @@ public class Xerion_R_Bomb_Collider : MonoBehaviour
     private bool TeamColor;
     private Transform player;
 
-    void Start()
+
+    public void Setup(Transform Player, int level)
     {
-        player = PlayerStatManager.Instance.Player;
+        player = Player;
         TeamColor = player.GetComponent<Player_Stats>().TeamColor;
+
+        if (level == 2)
+        {
+            Xerion_R_AD = 150;
+        }
+        else if (level == 3)
+        {
+            Xerion_R_AD = 250;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

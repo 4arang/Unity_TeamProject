@@ -28,17 +28,24 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     private float Q_MP = 60;
     private bool Q_On = false;
     public bool Q_LaserFull = false;
+    private float Q_CoolTime = 9.0f; // 9 8 7 6 5
+    private bool Q_Ready = true;
+    Skill_BarQ skillQ;
+    private int levelQ = 1;
 
     [Header("W_Skill")]
     [SerializeField] private GameObject satellite;
     [SerializeField] private GameObject satellite_range;
-    private float W_MP = 70;
+    private float W_MP = 70; // 80 90 100 110
     private byte W_Level = 1;
     private bool W_On = false;
     private bool isW_ready = false;
     public float W_Distance = 9.5f;
     private Vector3 Wdirection; //W방향좌표 저장
-    
+    private bool W_Ready = true;
+    private float W_CoolTime = 14; //14 13 12 11 10
+    Skill_BarW skillW;
+    private int levelW = 1;
 
     [Header("E_Skill")]
     [SerializeField] private Transform grenade;
@@ -48,7 +55,10 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     private float E_MP = 60;
     private byte E_Level = 1;
     private bool E_On = false;
-
+    private float E_CoolTime = 13; // 13 11 9 8 7 
+    private bool E_Ready = true;
+    Skill_BarE skillE;
+    private int levelE = 1;
 
 
     [Header("R_Skill")]
@@ -60,6 +70,10 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     private bool R_On = false;
     private float R_MP = 100;
     public float R_camFOV = 20.0f;
+    private bool R_Ready = true;
+    private float R_CoolTime = 130; // 130 115 100
+    Skill_BarR skillR;
+    private int levelR = 1;
 
     private bool DroneReload;
     private int DroneShot = 4;
@@ -95,6 +109,11 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 
         animator = GetComponent<Animator>();
         if(PV.IsMine) mainCamera = Camera.main;
+
+        skillQ = FindObjectOfType<Skill_BarQ>();
+        skillW = FindObjectOfType<Skill_BarW>();
+        skillE = FindObjectOfType<Skill_BarE>();
+        skillR = FindObjectOfType<Skill_BarR>();
     }
 
 
@@ -102,7 +121,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     {
         if (PV.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().mp >= Q_MP)
+            if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().mp >= Q_MP && Q_Ready)
             {
                 isSkillon = true;
                 GetComponent<Player_Stats>().DropMP(Q_MP);
@@ -145,6 +164,8 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.Q) && Q_On)  //E키 떼는 순간 스킬 시작
             {
+                Q_Ready = false;
+                skillQ.OnSkill(Q_CoolTime);
                 //Q_WeaponEffect.SetActive(false);
                 PV.RPC("activeQWeapenEffect", RpcTarget.AllViaServer, false);
                 Range.SetActive(false);
@@ -164,7 +185,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
                 Q_On = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().mp >= W_MP)
+            if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().mp >= W_MP &&W_Ready)
             {
                 isSkillon = true;
                 W_On = true;
@@ -180,6 +201,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.W) && W_On)  //E키 떼는 순간 스킬 시작
             {
+                skillW.OnSkill(W_CoolTime);
                 Wdirection = satellite_range.transform.position;
                 if ((transform.position - Wdirection).magnitude > W_Distance) //사거리 외에있을 경우 이동
                 {
@@ -211,7 +233,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
                 isW_ready = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && GetComponent<Player_Stats>().mp >= E_MP)
+            if (Input.GetKeyDown(KeyCode.E) && GetComponent<Player_Stats>().mp >= E_MP &&E_Ready)
             {
                 isSkillon = true;
                 GetComponent<Player_Stats>().DropMP(E_MP);
@@ -228,6 +250,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.E) && E_On)  //E키 떼는 순간 스킬 시작
             {
+                skillE.OnSkill(E_CoolTime);
                 GetComponent<Player_Stats>().DropMP(E_MP);
                 Direction.SetActive(false);
 
@@ -251,8 +274,9 @@ public class Xerion_Shooting_Skill : MonoBehaviour
             }
             if (!R_active)
             {
-                if (Input.GetKeyDown(KeyCode.R) && GetComponent<Player_Stats>().mp >= R_MP)
+                if (Input.GetKeyDown(KeyCode.R) && GetComponent<Player_Stats>().mp >= R_MP &&R_Ready)
                 {
+                    skillR.OnSkill(R_CoolTime);
                     isSkillon = true;
                     GetComponent<Player_Stats>().DropMP(R_MP);
                     satellite_range.SetActive(true);
@@ -340,13 +364,17 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     {
         while (true)
         {
+            R_Ready = false;
             yield return new WaitForSeconds(0.1f);
             R_active = true;
             yield return new WaitForSeconds(1.0f);
             animator.SetBool("R_Xerion", false);
+            isSkillon = false;
+            yield return new WaitForSeconds(R_CoolTime - 1.1f);
+            R_Ready = true;
             break;
         }
-        isSkillon = false;
+
     }
 
 
@@ -355,49 +383,60 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     {
         while (true)
         {
+            E_Ready = false;
             //grenadeEffect.SetActive(true);
             PV.RPC("activeE", RpcTarget.AllViaServer, true);
             yield return new WaitForSeconds(0.5f);
             //grenadeEffect.SetActive(false);
             PV.RPC("activeE", RpcTarget.AllViaServer, false);
             animator.SetBool("E_Xerion", false);
+            isSkillon = false;
+            yield return new WaitForSeconds(E_CoolTime - 0.5f);
+            E_Ready = true;
             break;
         }
-        isSkillon = false;
+
     }
     IEnumerator Active_W()
     {
         while (true)
         {
+            W_Ready = false;
             yield return new WaitForSeconds(1.0f);
             // Instantiate(satellite, Wdirection, Quaternion.identity);
             PV.RPC("instantiateWSatellite", RpcTarget.AllViaServer, Wdirection);
             yield return new WaitForSeconds(0.1f);
             animator.SetBool("W_Xerion", false);
             yield return new WaitForSeconds(1.0f);
-
+            isSkillon = false;
+            yield return new WaitForSeconds(W_CoolTime - 2.1f);
+            W_Ready = true;
             break;
         }
-        isSkillon = false;
+
     }
     IEnumerator Active_Q()
     {
         while (true)
         {
+            Q_Ready = false;
             // Laser.SetActive(true);
             PV.RPC("activeQLaser", RpcTarget.AllViaServer, true, Laser.transform.localScale);
-            Laser.GetComponent<Xerion_Q_Laser_Collider>().setup();
+            Laser.GetComponent<Xerion_Q_Laser_Collider>().setup(levelQ);
            // GetComponentInChildren<Xerion_Q_Laser_Collider>().Xerion_Q_ColliderOn = true;
             yield return new WaitForSeconds(1.0f);
             //GetComponentInChildren<Xerion_Q_Laser_Collider>().Xerion_Q_Full = Q_LaserFull;
             // Laser.SetActive(false);
             PV.RPC("activeQLaser", RpcTarget.AllViaServer, false, Laser_org_Size);
             animator.SetBool("A_Xerion", false);
+            Laser.transform.localScale = Laser_org_Size;
+            Q_LaserFull = false;
+            isSkillon = false;
+            yield return new WaitForSeconds(Q_CoolTime - 1.0f);
+            Q_Ready = true;
             break;
         }
-        Laser.transform.localScale = Laser_org_Size;
-        Q_LaserFull = false;
-        isSkillon = false;
+
     }
     Vector3 GetMousePos()
     {
@@ -430,6 +469,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     void instantiateWSatellite(Vector3 Wdirection)
     {
         Instantiate(satellite, Wdirection, Quaternion.identity);
+        satellite.GetComponentInChildren<Xerion_W_Skill_Colider>().setup(this.transform, W_Level);
     }
 
     [PunRPC]
@@ -457,6 +497,7 @@ Quaternion.AngleAxis(DirecAngle, Vector3.up)); //유탄발사 and transform 저장
    Drone.transform.position.x, Drone.transform.position.y + 1.0f, Drone.transform.position.z),
       Quaternion.identity); //드론좌표에서 스킬 발사
         DroneGrenadeTransform.GetComponent<Xerion_Drone_Grenade>().Setup(Drone.transform.position, dir);
+        DroneGrenadeTransform.GetComponentInChildren<Xerion_R_Bomb_Collider>().Setup(this.transform, levelR);
         //드론에 방향, 포격위치 전달
     }
     [PunRPC]
@@ -466,6 +507,35 @@ Quaternion.AngleAxis(DirecAngle, Vector3.up)); //유탄발사 and transform 저장
                          Drone.transform.position.x, 1.0f, Drone.transform.position.z)*/,
                Quaternion.identity); //드론좌표에서 스킬 발사
         DroneGrenadeTransform.GetComponent<Xerion_Drone_Grenade>().Setup(Drone.transform.position, dir);
+        DroneGrenadeTransform.GetComponentInChildren<Xerion_R_DroneBomb_Collider>().Setup(this.transform, levelR);
         //드론에 방향, 포격위치 전달
+    }
+
+
+    public void levelupQ()
+    {
+        levelQ++;
+        Q_CoolTime--; //1씩 감소
+    }
+    public void levelupW()
+    {
+        levelW++;
+        W_CoolTime--; //1씩 감소
+        W_MP += 10;
+    }
+    public void levelupE()
+    {
+        levelE++;
+        E_MP += 5;
+        E_AD += 30;
+        if (levelE == 2) E_CoolTime = 11;
+        else if (levelE == 3) E_CoolTime = 9;
+        else if (levelE == 4) E_CoolTime = 8;
+        else if (levelE == 5) E_CoolTime = 7;
+    }
+    public void levelupR()
+    {
+        levelR++;
+        R_CoolTime -= 15; //1씩 감소
     }
 }
