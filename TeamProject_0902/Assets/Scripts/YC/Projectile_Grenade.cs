@@ -37,6 +37,15 @@ public class Projectile_Grenade : MonoBehaviour
         startPos = player_.transform.position;
         teamcolor = player.GetComponent<Player_Stats>().TeamColor;
     }
+    public void Setup(Vector3 ShootDir, float AD, float MD, GameObject player_)
+    {
+        grenadeDir = ShootDir;
+        SkillAD = AD;
+        SkillMD = MD;
+        player = player_;
+        startPos = player_.transform.position;
+        teamcolor = player.GetComponent<Player_Stats>().TeamColor;
+    }
 
     private void Start()
     {
@@ -130,7 +139,7 @@ public class Projectile_Grenade : MonoBehaviour
 
     private void damageEnemy(Transform other)
     {
-        if (player.GetComponent<Player_Stats>().AttackAbility == 8) //coldy
+        if (player.GetComponent<Player_Stats>().AttackAbility == 3) //coldy
         {
             if (other.CompareTag("Player") && other.GetComponent<Player_Stats>().TeamColor !=
                 player.GetComponent<Player_Stats>().TeamColor)

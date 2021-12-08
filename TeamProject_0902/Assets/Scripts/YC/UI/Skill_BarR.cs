@@ -7,6 +7,7 @@ public class Skill_BarR : MonoBehaviour
 {
     [SerializeField] private Image imgCoolDown;
     [SerializeField] private Text txtCoolDown;
+    public Image[] imgLevelorg;
 
     private bool bCoolDown = false;
     private float coolDownTime;

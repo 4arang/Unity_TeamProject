@@ -18,7 +18,7 @@ public class Nexus_Spawn : MonoBehaviour
     {
         MonsterSpawnPos = new Vector3(-7,0,25);
         InvokeRepeating("SpawnMinion", 1.0f, 30.0f);
-        if(transform.position.x<0) InvokeRepeating("SpawnMonster", 100.0f, 30.0f);
+        SpawnMonster();
     }
 
     

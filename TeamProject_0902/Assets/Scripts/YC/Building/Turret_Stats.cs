@@ -5,6 +5,9 @@ using Photon.Pun;
 
 public class Turret_Stats : MonoBehaviour
 {
+    public float xx;
+    public int testnum=0;
+    PhotonView PV;
     public float HP;
     public float MaxHP;
     public float HPregen; 
@@ -39,7 +42,7 @@ public class Turret_Stats : MonoBehaviour
 
         if (transform.position.x>=-25 && transform.position.x<25)
         {
-
+            testnum = 1;
             MaxHP = float.Parse(data[8]["statshp"].ToString());
             HP = MaxHP;
 
@@ -62,7 +65,7 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding1 = transform;
         }
-       else if((transform.position.x>=-40 && transform.position.x<-25)
+       else if((transform.position.x>=-43 && transform.position.x<-25)
             ||(transform.position.x>=25 && transform.position.x<40))
          {
             MaxHP = float.Parse(data[9]["statshp"].ToString());
@@ -83,19 +86,19 @@ public class Turret_Stats : MonoBehaviour
             MRPp = float.Parse(data[9]["statsspellblockperlevel"].ToString());//16~30분 증가
             Gold = int.Parse(data[9]["gold"].ToString());
             Exp = int.Parse(data[9]["exp"].ToString());
-
+            testnum = 2;
             if (TeamColor)
                 Turret_Manager.Instance.Red_TargetBuilding2 = transform;
             else
                 Turret_Manager.Instance.Blue_TargetBuilding2 = transform;
         }
-        else if ((transform.position.x >= -70 && transform.position.x < -60)
+        else if ((transform.position.x >= -73 && transform.position.x < -60)
       || (transform.position.x >= 60 && transform.position.x < 70))
         {
             MaxHP = float.Parse(data[10]["statshp"].ToString());
             HP = MaxHP;
             HPregen = float.Parse(data[10]["statshpregen"].ToString()); //5초당 
-
+            testnum = 4;
             MaxAD = 278;
             AD = float.Parse(data[10]["statsattackdamage"].ToString());
             ADperTime = float.Parse(data[10]["statsattackdamageperlevel"].ToString());//3~17분 증가
@@ -125,7 +128,7 @@ public class Turret_Stats : MonoBehaviour
                     Turret_Manager.Instance.Blue_TargetBuilding5 = transform;
             }
         }
-        else if ((transform.position.x >= -58 && transform.position.x < -45)
+        else if ((transform.position.x >= -58 && transform.position.x < -44)
 || (transform.position.x >= 45 && transform.position.x < 58))
         {
             MaxHP = float.Parse(data[11]["statshp"].ToString());
@@ -140,7 +143,7 @@ public class Turret_Stats : MonoBehaviour
 
             MaxAP = 40;
             AP = float.Parse(data[11]["statsarmor"].ToString());
-
+            testnum = 3;
             MaxMRP = 40;
             MRP = float.Parse(data[11]["statsspellblock"].ToString());
             Gold = int.Parse(data[11]["gold"].ToString());
@@ -151,15 +154,14 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding3 = transform;
         }
-        else if ((transform.position.x <= -70)||(transform.position.x >= 70))
+        else if ((transform.position.x <= -73)||(transform.position.x >= 73))
         {
             MaxHP = float.Parse(data[12]["statshp"].ToString());
             HP = MaxHP;
             HPregen = float.Parse(data[12]["statshpregen"].ToString()); //5초당 
-
+            testnum = 6;
             MaxAP = 40;
             AP = float.Parse(data[12]["statsarmor"].ToString());
-
             MaxMRP = 40;
             MRP = float.Parse(data[12]["statsspellblock"].ToString());
 
@@ -168,13 +170,15 @@ public class Turret_Stats : MonoBehaviour
             else
                 Turret_Manager.Instance.Blue_TargetBuilding6 = transform;
         }
+        xx = transform.position.x;
+        PV = GetComponent<PhotonView>();
     }
 
     public void DropHP(float damage)
     {
         damage *= (1 - AP / (100 + AP));
         HP -= damage;
-        Debug.Log("Turret HP" + HP);
+  
 
         if (HP <= 0)
         {
@@ -200,10 +204,7 @@ public class Turret_Stats : MonoBehaviour
                     }
                 }
             }
-          
-            //PV.RPC("instantiateExplosition", RpcTarget.AllViaServer);
-            Destroy(gameObject);
-
+            StartCoroutine("Explosion");
         }
     }
 
@@ -221,4 +222,20 @@ public class Turret_Stats : MonoBehaviour
         }
     }
 
+    IEnumerator Explosion()
+    {
+        while (true)
+        {
+            PV.RPC("activeExplosion", RpcTarget.AllViaServer, true);
+            yield return new WaitForSeconds(2.0f);
+            Destroy(gameObject);
+            break;
+        }
+    }
+
+    [PunRPC]
+    void activeExplosion(bool b)
+    {
+        ExplosionEffect.SetActive(b);
+    }
 }

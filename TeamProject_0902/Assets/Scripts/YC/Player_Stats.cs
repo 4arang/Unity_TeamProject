@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+
 public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 {
+    [SerializeField] private Sprite lvlupImg;
     //Player Information
-    public byte AttackAbility; // coldy 8 wt 3  xerion2
+    public byte AttackAbility; // coldy 3 wt 8  xerion2
     public byte DefenseAbility;
     public byte MagicAbility;
     public byte Difficulty;
@@ -14,6 +16,15 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     //UI info
     Stats_Text UI_Stats;
     UI_Bar ActionBar;
+    Skill_BarQ Qbar;
+    Skill_BarW Wbar;
+    Skill_BarE Ebar;
+    Skill_BarR Rbar;
+    int Qlevel = 1;
+    int Wlevel = 1;
+    int Elevel = 1;
+    int Rlevel = 1;
+
 
     //Game Stats
     public bool TeamColor;
@@ -102,6 +113,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
 
            // GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
+            MaxMP=100;
             Helium = 100;
         }
         else if (TryGetComponent(out Xerion_Stats Champ_Num2))
@@ -133,7 +145,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             MPregen = GetComponent<Xerion_Stats>().MPregen;
             MPregenperLevel = GetComponent<Xerion_Stats>().MPregenperLevel;
 
-
+            mp = MaxMP;
             Xerion_Manager.Instance.Xerion_AD = AD;
         }
         else if (TryGetComponent(out WhiteTiger_Stats Champ_Num3))
@@ -169,7 +181,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             //GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP); //mp들어가나
         }
         hp = MaxHP;
-        mp = MaxMP;
+        
 
         Recover_MoveSpeed = MoveSpeed;
 
@@ -201,11 +213,18 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         ActionBar.SetHP(hp);
         ActionBar.SetMaxRP(MaxMP);
         ActionBar.SetRP(mp);
+        if (AttackAbility == 3) ActionBar.SetRP(Helium);
+
+        //skill bar
+        Qbar = FindObjectOfType<Skill_BarQ>();
+        Wbar = FindObjectOfType<Skill_BarW>();
+        Ebar = FindObjectOfType<Skill_BarE>();
+        Rbar = FindObjectOfType<Skill_BarR>();
     }
 
     private void Update()
     {
-        if (AttackAbility == 8) //coldy
+        if (AttackAbility == 3) //coldy
         {
             if (Charging)        //충전가능한 상태인 경우 1초마다 충전
             {
@@ -231,6 +250,9 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
                 isZero = true;
             }
             //Debug.Log("Helium " + Helium);
+
+            GetComponentInChildren<RP_Bar>().SetRP(Helium);
+            ActionBar.SetRP(Helium);
         }
 
         if (AttackAbility == 2) //xerion
@@ -240,14 +262,9 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
                 Energy = 100;
                 GetComponent<Xerion>().OnPassive();
             }
-
-
-
-            Regen();
-
         }
-
-        if(Input.GetKeyDown(KeyCode.L))
+        Regen();
+        if (Input.GetKeyDown(KeyCode.L)) //경험치 치트키
         {
             GetComponent<Player_Level>().GetEXP(280);
         }
@@ -264,17 +281,20 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
                 hp += HPregen;
                 if (hp > MaxHP) hp = MaxHP;
             }
-            if (mp < MaxMP)
+            if (AttackAbility == 2 && mp < MaxMP) //mp regen only goes for xerion
             {
                 mp += MPregen;
                 if (mp > MaxMP) mp = MaxMP;
-            }
-            TimeCheck = 0;
-            GetComponentInChildren<HP_Bar>().SetHP(hp);
-            GetComponentInChildren<RP_Bar>().SetRP(mp);
 
+                GetComponentInChildren<RP_Bar>().SetRP(mp);
+                ActionBar.SetRP(mp);
+            }
+
+            TimeCheck = 0;
+
+            GetComponentInChildren<HP_Bar>().SetHP(hp);
             ActionBar.SetHP(hp);
-            ActionBar.SetRP(mp);
+
         }
     }
 
@@ -354,6 +374,8 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         if (Helium >= 20)
             Helium -= 20;
         StartCoroutine("ConsumeHe");
+        GetComponentInChildren<RP_Bar>().SetRP(Helium);
+        ActionBar.SetRP(Helium);
     }
 
     IEnumerator ConsumeHe()
@@ -412,10 +434,10 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     public void LevelupQ()
-    {
-        if (AttackAbility == 8) //coldy
+    { 
+        if (AttackAbility == 3) //coldy
         {
-
+            GetComponent<ColD_W>().levelupQ();
         }
 
         else if (AttackAbility == 2) //xerion
@@ -424,16 +446,17 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         }
         else //WT
         {
-
+            GetComponent<WhiteTiger>().levelUpQ();
         }
 
-
+        Qbar.imgLevelorg[Qlevel-1].sprite = lvlupImg;
+        Qlevel++;
     }
     public void LevelupW()
     {
-        if (AttackAbility == 8) //coldy
+        if (AttackAbility == 3) //coldy
         {
-
+            GetComponent<ColD_W>().levelupW();
         }
 
         else if (AttackAbility == 2) //xerion
@@ -442,14 +465,17 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         }
         else //WT
         {
-
+            GetComponent<WhiteTiger_Skill>().levelUpW();
         }
+        Wbar.imgLevelorg[Wlevel - 1].sprite = lvlupImg;
+        Wlevel++;
+
     }
     public void LevelupE()
     {
-        if (AttackAbility == 8) //coldy
+        if (AttackAbility == 3) //coldy
         {
-
+            GetComponent<ColD_W>().levelupE();
         }
 
         else if (AttackAbility == 2) //xerion
@@ -458,14 +484,16 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         }
         else //WT
         {
-
+            GetComponent<WhiteTiger_Skill>().levelUpE();
         }
+        Ebar.imgLevelorg[Elevel - 1].sprite = lvlupImg;
+        Elevel++;
     }
     public void LevelupR()
     {
-        Debug.Log("levle up R"); if (AttackAbility == 8) //coldy
+      if (AttackAbility == 3) //coldy
         {
-
+            GetComponent<ColD_W>().levelupR();
         }
 
         else if (AttackAbility == 2) //xerion
@@ -474,8 +502,22 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         }
         else //WT
         {
-
+            GetComponent<WhiteTiger_Skill>().levelUpR();
         }
+        Rbar.imgLevelorg[Rlevel - 1].sprite = lvlupImg;
+        Rlevel++;
+    }
+
+    public void GetHP(float gain)
+    {
+
+        hp += gain;
+        if (hp >= MaxHP)
+            hp = MaxHP;
+
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
+        ActionBar.SetHP(hp);
+
     }
 
 }

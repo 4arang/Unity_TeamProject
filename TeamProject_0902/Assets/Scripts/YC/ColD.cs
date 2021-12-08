@@ -72,7 +72,6 @@ public class ColD : MonoBehaviour
         BasicRangef = GetComponent<Player_Stats>().AttackRange * BasicRange_Ref;
         BasicRange.transform.localScale = new Vector3(BasicRangef, BasicRangef, 0);
         BasicAttack_Effect.SetActive(false);
-        BasicAttack_Effect_Slash.SetActive(false);
 
         AttackSpeed = GetComponent<Player_Stats>().AttackSpeed;
         //cameraObj = Camera.main.gameObject;
@@ -263,8 +262,8 @@ public class ColD : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             PV.RPC("activeA", RpcTarget.AllViaServer, true);
             //GetComponentInChildren<ColD_Punch_Collider>().Skill();
-            PV.RPC("activeA_Slash", RpcTarget.AllViaServer, true);
             yield return new WaitForSeconds(0.6f);
+            PV.RPC("activeA_Slash", RpcTarget.AllViaServer, target.position);
             PV.RPC("activeA", RpcTarget.AllViaServer, false);
             animator.SetBool("A_ColD", false);
 
@@ -316,8 +315,8 @@ public class ColD : MonoBehaviour
         BasicAttack_Effect.SetActive(b);
     }
     [PunRPC]
-    void activeA_Slash(bool b)
+    void activeA_Slash(Vector3 targetPos)
     {
-        BasicAttack_Effect_Slash.SetActive(b);
+        Instantiate(BasicAttack_Effect_Slash, targetPos, Quaternion.identity);
     }
 }

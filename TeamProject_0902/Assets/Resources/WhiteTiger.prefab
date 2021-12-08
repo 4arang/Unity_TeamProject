@@ -4872,7 +4872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2166294662052986977
 Transform:
   m_ObjectHideFlags: 0
@@ -5131,7 +5131,7 @@ MonoBehaviour:
   linerenderobj: {fileID: 2166294663499179372}
   BasicRange: {fileID: 2166294662653895402}
   BasicRange_Col: {fileID: 2166294662960996835}
-  BasicAttack_Effect_Slash: {fileID: 0}
+  BasicAttack_Effect_Slash: {fileID: 106990022216249666, guid: 0e9e1be4421d30f47a578340a2e9e071, type: 3}
   CheckEnemy: 0
   TargetEnemy: {fileID: 0}
   Q_Punch_L: {fileID: 2166294663774759293}
@@ -5326,6 +5326,7 @@ MonoBehaviour:
   MPregenperLevel: 0
   hp: 0
   mp: 0
+  Level: 1
   Helium: 0
   minHelium: 0
   maxHelium: 100
@@ -5336,7 +5337,6 @@ MonoBehaviour:
   DamageStorage: 0
   isAttack_Minion: 0
   isAttack_Player: 0
-  Level: 1
 --- !u!114 &2692839534449877777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67777,7 +67777,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WT_W_AD: 50
-  WT_W_Recover: 0.5
 --- !u!1 &2166294663052279105
 GameObject:
   m_ObjectHideFlags: 0
@@ -109356,7 +109355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WT_WP_AD: 70
-  WT_WP_Recover: 0.8
 --- !u!1 &2166294663774759293
 GameObject:
   m_ObjectHideFlags: 0

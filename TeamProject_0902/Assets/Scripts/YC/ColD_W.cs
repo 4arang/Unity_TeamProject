@@ -13,24 +13,35 @@ public class ColD_W : MonoBehaviour
 
     [Header("Q_Skill")]
     [SerializeField] private GameObject flame;
+    private float Q_CoolTime = 10; // 9 8 7 6 
+    private bool Q_Ready = true;
+    Skill_BarQ skillQ;
+    private int levelQ = 1;
 
     [Header("W_Skill")]
     [SerializeField] private GameObject aura;
     [SerializeField] private GameObject shield;
-    private float W_cooldown = 7.0f; //6.75  6.75  6.25  6
     private float W_SpeedUp = 1.1f; // 1.15  1.20  1.25  1.30
     private float W_HP = 60;        // 95 135 165 200
+    private bool W_Ready = true;
+    private float W_CoolTime = 7; //6.75 6.75 6.25 6
+    Skill_BarW skillW;
+    private int levelW = 1;
 
     [Header("E_Skill")]
     [SerializeField] private GameObject Direction;
     [SerializeField] private GameObject grenade_L;
     [SerializeField] private GameObject grenade_R;
     [SerializeField] private Transform grenade_Bomb;
-    private float E_AD = 90; // 90 120 160 200 240, 0.4주문력, 2초간 둔화율 15 20 25 30 35, 위험상태 50, 1초간속박
-    private int E_Level = 1;
+    private float E_AD = 90; // 120 160 200 240
+    private float E_dropspeed = 0.15f; //0.20 0.25 0.30 0.35
     protected float DirecAngle; //e키 방향각도
     private bool grenade_Left = true;
     private bool E_SkillOn = false;
+    private float E_CoolTime = 6; //fixed
+    private bool E_Ready = true;
+    Skill_BarE skillE;
+    private int levelE = 1;
 
     [Header("R_Skill")]
     [SerializeField] private GameObject missile;
@@ -41,6 +52,10 @@ public class ColD_W : MonoBehaviour
     public float R_Distance = 10.0f; //사거리 밖에 있는경우 이동해서 스킬 발동
     private bool isR_ready; //r스킬 발동가능한지
     private Vector3 Rdirection; //r방향좌표 저장
+    private bool R_Ready = true;
+    private float R_CoolTime = 100; // 85 70
+    Skill_BarR skillR;
+    private int levelR = 1;
 
     //마우스 좌표 저장용(임시)
     Vector3 mouseVector;
@@ -64,6 +79,11 @@ public class ColD_W : MonoBehaviour
         //  missile_target_effect.SetActive(false);
         animator = GetComponent<Animator>();
         isR_ready = false;
+
+        skillQ = FindObjectOfType<Skill_BarQ>();
+        skillW = FindObjectOfType<Skill_BarW>();
+        skillE = FindObjectOfType<Skill_BarE>();
+        skillR = FindObjectOfType<Skill_BarR>();
     }
 
 
@@ -71,23 +91,25 @@ public class ColD_W : MonoBehaviour
     {
         if (PV.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().Helium >= 20)
+            if (Input.GetKeyDown(KeyCode.W) && GetComponent<Player_Stats>().Helium >= 20 && W_Ready)
             {
+                skillW.OnSkill(W_CoolTime);
                 isSkillon = true;
                 if (animator.GetBool("W_ColD") == false)
                     StartCoroutine("Active_W");
                 animator.SetBool("W_ColD", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().Helium >= 20)
+            if (Input.GetKeyDown(KeyCode.Q) && GetComponent<Player_Stats>().Helium >= 20 &Q_Ready)
             {
+                skillQ.OnSkill(Q_CoolTime);
                 isSkillon = true;
                 if (animator.GetBool("Q_ColD") == false)
                     StartCoroutine("Active_Q");
                 animator.SetBool("Q_ColD", true);
             }
 
-            if (Input.GetKey(KeyCode.E) && GetComponent<Player_Stats>().Helium >= 20)
+            if (Input.GetKey(KeyCode.E) && GetComponent<Player_Stats>().Helium >= 20&E_Ready)
             {
                 isSkillon = true;
                 E_SkillOn = true;
@@ -102,6 +124,7 @@ public class ColD_W : MonoBehaviour
             {
                 Direction.SetActive(false);
                 GetComponent<Player_Stats>().DropHe();
+                skillE.OnSkill(E_CoolTime);
 
                 if (grenade_Left)   //첫탄
                 {
@@ -139,14 +162,14 @@ public class ColD_W : MonoBehaviour
                 E_SkillOn = false;
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R)&R_Ready)
             {
                 isSkillon = true;
                 mouseVector = GetMousePos(); //화살 방향 마우스방향에 미리 이동
                 Direction.SetActive(true); //방향화살 active
                                            //화살표 위치 고정
             }
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetKey(KeyCode.R)&R_Ready)
             {
                 Direction.transform.position = mouseVector;
                 Range.SetActive(true);
@@ -155,8 +178,9 @@ public class ColD_W : MonoBehaviour
                     Quaternion.AngleAxis(R_DirecAngle, Vector3.up);
 
             }
-            if (Input.GetKeyUp(KeyCode.R))
+            if (Input.GetKeyUp(KeyCode.R)&R_Ready)
             {
+                skillR.OnSkill(R_CoolTime);
                 Rdirection = Direction.transform.position;
                 Range.SetActive(false);
                 Direction.SetActive(false);
@@ -188,17 +212,21 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
+            Q_Ready = false;
             GetComponent<Player_Stats>().DropHe();
             yield return new WaitForSeconds(0.1f);
             PV.RPC("activeQ", RpcTarget.AllViaServer, true);
+            flame.GetComponentInChildren<Player_Skill_Attack>().setup(levelQ);
             yield return new WaitForSeconds(2.5f);
             animator.SetBool("Q_ColD", false);
             yield return new WaitForSeconds(0.5f);
             PV.RPC("activeQ", RpcTarget.AllViaServer, false);
-
+            isSkillon = false;
+            yield return new WaitForSeconds(Q_CoolTime-3.1f);
+            Q_Ready = true;
             break;
         }
-        isSkillon = false;
+
     }
     IEnumerator Active_W()
     {
@@ -206,27 +234,32 @@ public class ColD_W : MonoBehaviour
         {
             GetComponent<Player_Stats>().DropHe();
             PV.RPC("activeW", RpcTarget.AllViaServer, true);
-
+            W_Ready = false;
             if (GetComponent<Player_Stats>().isDanger)
             {
-                GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp * 1.5f;
+                GetComponent<Player_Stats>().MoveSpeed *= 1.5f;
                 GetComponent<Player_Stats>().MaxHP += W_HP * 1.5f;
+                GetComponent<Player_Stats>().GetHP(W_HP * 1.5f);
                 yield return new WaitForSeconds(1.5f);
-                GetComponent<Player_Stats>().MoveSpeed *= 1 / (W_SpeedUp * 1.5f);
+                GetComponent<Player_Stats>().MoveSpeed *= 1 /  1.5f;
                 GetComponent<Player_Stats>().MaxHP -= W_HP * 1.5f;
+                GetComponent<Player_Stats>().GetHP(0);
             }
             else
             {
                 GetComponent<Player_Stats>().MoveSpeed *= W_SpeedUp;
                 GetComponent<Player_Stats>().MaxHP += W_HP;
+                GetComponent<Player_Stats>().GetHP(W_HP);
                 yield return new WaitForSeconds(1.5f);
                 GetComponent<Player_Stats>().MoveSpeed *= 1 / W_SpeedUp;
                 GetComponent<Player_Stats>().MaxHP -= W_HP;
+                GetComponent<Player_Stats>().GetHP(0);
             }
-
             yield return new WaitForSeconds(0.5f);
             PV.RPC("activeW", RpcTarget.AllViaServer, false);
             animator.SetBool("W_ColD", false);
+            yield return new WaitForSeconds(W_CoolTime - 2.0f);
+            W_Ready = true;
             break;
         }
         isSkillon = false;
@@ -235,6 +268,7 @@ public class ColD_W : MonoBehaviour
     {
         while (true)
         {
+            E_Ready = false;
             if (grenade_Left)
             {
                 PV.RPC("activeE_L", RpcTarget.AllViaServer, true);
@@ -251,12 +285,16 @@ public class ColD_W : MonoBehaviour
                 PV.RPC("activeE_R", RpcTarget.AllViaServer, false);
                 animator.SetBool("E_ColD", false);
             }
+            isSkillon = false;
+            yield return new WaitForSeconds(E_CoolTime - 0.5f);
+            E_Ready = true;
             break;
         }
-        isSkillon = false;
+
     }
     IEnumerator Active_R()
     {
+        R_Ready = false;
         while (true)
         {
             animator.SetBool("R_ColD", true);
@@ -281,6 +319,9 @@ public class ColD_W : MonoBehaviour
             break;
         }
         isSkillon = false;
+        yield return new WaitForSeconds(R_CoolTime-0.67f);
+        R_Ready = true;
+
     }
 
     Vector3 GetMousePos()
@@ -334,14 +375,14 @@ public class ColD_W : MonoBehaviour
             Transform grenadeTransform = Instantiate(grenade_Bomb, grenade_L.transform.position,
     Quaternion.identity); //유탄발사 and transform 저장
             grenadeTransform.GetComponent<Projectile_Grenade>().Setup(dir, E_AD
-    , gameObject); //유탄에 방향전달
+    , E_dropspeed,gameObject); //유탄에 방향전달
         }
         else
         {
             Transform grenadeTransform = Instantiate(grenade_Bomb, grenade_R.transform.position,
     Quaternion.identity); //유탄발사 and transform 저장
             grenadeTransform.GetComponent<Projectile_Grenade>().Setup(dir, E_AD
-    , gameObject); //유탄에 방향전달
+    , E_dropspeed,gameObject); //유탄에 방향전달
         }
 
     }
@@ -358,5 +399,50 @@ public class ColD_W : MonoBehaviour
         //미사일 타겟 위치
         GameObject Missile = Instantiate(missile_target_effect, missile_target_effect.transform.position,
       Quaternion.AngleAxis(dir, Vector3.up)); //유탄발사
+        Missile.GetComponentInChildren<ColD_R_Skill_damage>().setup(levelR, this.transform);
+    }
+
+    public void levelupQ()
+    {
+        levelQ++;
+        Q_CoolTime--; 
+    }
+    public void levelupW()
+    {
+        levelW++;
+
+        W_SpeedUp += 0.05f;
+        if (levelW == 2)
+        {
+            W_HP += 35;
+            W_CoolTime -= 0.25f;
+        }
+        else if (levelW == 3)
+            W_HP += 40;
+        else if (levelW == 4)
+        {
+            W_HP += 30;
+            W_CoolTime -= 0.5f;
+        }
+        else if (levelW == 5)
+        {
+            W_HP += 35;
+            W_CoolTime -= 0.25f;
+        }
+    }
+    public void levelupE()
+    {
+        levelE++;
+        if (levelE == 2)
+            E_AD += 30;
+        else
+            E_AD += 40;
+        E_dropspeed += 0.05f;
+
+    }
+    public void levelupR()
+    {
+        levelR++;
+        R_CoolTime -= 15; 
     }
 }

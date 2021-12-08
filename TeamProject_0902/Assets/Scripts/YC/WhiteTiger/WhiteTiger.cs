@@ -71,7 +71,10 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     //[SerializeField] private GameObject Q_Effect;
     //[SerializeField] private GameObject adv_Q_Effect;
     private float Q_AD;
-    private byte Q_Level = 1;
+    private int Q_Level = 1;
+    Skill_BarQ skillQ;
+    private bool Q_Ready = true;
+    private float Q_CoolTime = 9; // 9 8 7 6 5 
 
     [Header("R_Skill")]
     [SerializeField] private GameObject R_Effect;
@@ -83,6 +86,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject TeamBlue_hp;
     [SerializeField] private GameObject TeamRed_hp;
 
+    //E_skill_adv
+    private bool E_adv = false;
+    private float E_recoverRate;
 
     private void Start()
     {
@@ -133,6 +139,8 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             TeamRed.SetActive(true);
             TeamRed_hp.SetActive(true);
         }
+
+        skillQ = FindObjectOfType<Skill_BarQ>();
     }
 
 
@@ -202,8 +210,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
 
             /////Q사용시 공격력up A공격////
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && Q_Ready)
             {
+                skillQ.OnSkill(Q_CoolTime);
                 StartCoroutine("Active_Q");
                 if (!GetComponent<WhiteTiger_Skill>().isWild) GetComponent<WhiteTiger_Skill>().WildPoint++;
             }
@@ -358,9 +367,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             if (!On_adv_Q)
             {
                 animator.SetBool("A_WT", true);
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.5f);
                 if (target) damageEnemy(target);
-
+                yield return new WaitForSeconds(0.5f);
                 animator.SetBool("A_WT", false);
                 yield return new WaitForSeconds(AttackSpeed);
                 OnAttack = false;
@@ -369,8 +378,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             else
             {
                 animator.SetBool("A_WT", true);
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(0.5f);
                 if (target) damageEnemy(target);
+                yield return new WaitForSeconds(0.5f);
                 animator.SetBool("A_WT", false);
                 yield return new WaitForSeconds(AttackSpeed);
                 OnAttack = false;
@@ -387,13 +397,15 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     {
         while (true)
         {
-
+            Q_Ready = false;
             if (!GetComponent<WhiteTiger_Skill>().isWild)
             {
                 GetComponent<Player_Stats>().AD += 10 * Q_Level;
                 PV.RPC("activeQ_L", RpcTarget.AllViaServer, true);
                 PV.RPC("activeQ_R", RpcTarget.AllViaServer, true);
-                yield return new WaitForSeconds(10.0f);
+                yield return new WaitForSeconds(Q_CoolTime);
+                Q_Ready = true;
+                yield return new WaitForSeconds(10.0f-Q_CoolTime);
                 PV.RPC("activeQ_L", RpcTarget.AllViaServer, false);
                 PV.RPC("activeQ_R", RpcTarget.AllViaServer, false);
                 GetComponent<Player_Stats>().AD -= 10 * Q_Level;
@@ -405,7 +417,9 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
                 GetComponent<Player_Stats>().AD += 20 * Q_Level;
                 PV.RPC("activeQ_adv", RpcTarget.AllViaServer, true);
                 //adv_Q_Punch.SetActive(true);
-                yield return new WaitForSeconds(10.0f);
+                yield return new WaitForSeconds(Q_CoolTime);
+                Q_Ready = true;
+                yield return new WaitForSeconds(10.0f - Q_CoolTime);
                 PV.RPC("activeQ_adv", RpcTarget.AllViaServer, false);
                 //adv_Q_Punch.SetActive(false);
                 GetComponent<Player_Stats>().AD -= 20 * Q_Level;
@@ -493,6 +507,11 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
                 CheckEnemy = false;
             }
         }
+        PV.RPC("instantiateA", RpcTarget.AllViaServer, target.position);
+        if (E_adv) //E스킬 사용중인경우 생명력 흡수
+        {
+            GetComponent<Player_Stats>().GetHP(WT_BasicAD * E_recoverRate);
+        }
     }
 
     private void Passive()
@@ -537,6 +556,27 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     void instantiateR(Vector3 targetPos)
     {
         Instantiate(R_Effect, targetPos, Quaternion.AngleAxis(playerDir, Vector3.up));
+    }
+    [PunRPC]
+    void instantiateA(Vector3 targetPos)
+    {
+        Instantiate(BasicAttack_Effect_Slash, targetPos, Quaternion.identity);
+    }
+
+    public void levelUpQ()
+    {
+        Q_Level++;
+        Q_CoolTime--;
+    }
+
+    public void activeE(float skillRate)
+    {
+        E_adv = true;
+        E_recoverRate = skillRate;
+    }
+    public void disactiveE()
+    {
+        E_adv = false;
     }
 }
 
