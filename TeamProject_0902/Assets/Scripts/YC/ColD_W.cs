@@ -15,7 +15,7 @@ public class ColD_W : MonoBehaviour
     [SerializeField] private GameObject flame;
     private float Q_CoolTime = 10; // 9 8 7 6 
     private bool Q_Ready = true;
-    Skill_BarQ skillQ;
+    public Skill_BarQ skillQ;
     private int levelQ = 1;
 
     [Header("W_Skill")]
@@ -25,7 +25,7 @@ public class ColD_W : MonoBehaviour
     private float W_HP = 60;        // 95 135 165 200
     private bool W_Ready = true;
     private float W_CoolTime = 7; //6.75 6.75 6.25 6
-    Skill_BarW skillW;
+    public Skill_BarW skillW;
     private int levelW = 1;
 
     [Header("E_Skill")]
@@ -40,7 +40,7 @@ public class ColD_W : MonoBehaviour
     private bool E_SkillOn = false;
     private float E_CoolTime = 6; //fixed
     private bool E_Ready = true;
-    Skill_BarE skillE;
+    public Skill_BarE skillE;
     private int levelE = 1;
 
     [Header("R_Skill")]
@@ -54,7 +54,7 @@ public class ColD_W : MonoBehaviour
     private Vector3 Rdirection; //r방향좌표 저장
     private bool R_Ready = true;
     private float R_CoolTime = 100; // 85 70
-    Skill_BarR skillR;
+    public Skill_BarR skillR;
     private int levelR = 1;
 
     //마우스 좌표 저장용(임시)
@@ -80,10 +80,10 @@ public class ColD_W : MonoBehaviour
         animator = GetComponent<Animator>();
         isR_ready = false;
 
-        skillQ = FindObjectOfType<Skill_BarQ>();
-        skillW = FindObjectOfType<Skill_BarW>();
-        skillE = FindObjectOfType<Skill_BarE>();
-        skillR = FindObjectOfType<Skill_BarR>();
+        //skillQ = FindObjectOfType<Skill_BarQ>();
+        //skillW = FindObjectOfType<Skill_BarW>();
+        //skillE = FindObjectOfType<Skill_BarE>();
+        //skillR = FindObjectOfType<Skill_BarR>();
     }
 
 

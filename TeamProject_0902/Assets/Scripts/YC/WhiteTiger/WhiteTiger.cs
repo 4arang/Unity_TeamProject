@@ -72,7 +72,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
     //[SerializeField] private GameObject adv_Q_Effect;
     private float Q_AD;
     private int Q_Level = 1;
-    Skill_BarQ skillQ;
+    public Skill_BarQ skillQ;
     private bool Q_Ready = true;
     private float Q_CoolTime = 9; // 9 8 7 6 5 
 
@@ -140,7 +140,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             TeamRed_hp.SetActive(true);
         }
 
-        skillQ = FindObjectOfType<Skill_BarQ>();
+       // skillQ = FindObjectOfType<Skill_BarQ>();
     }
 
 
@@ -196,14 +196,14 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             {
                 if (TargetEnemy)//타겟설정이 되었다면 
                 {
-                    Debug.Log("Targeted");
+                   // Debug.Log("Targeted");
                     GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
                     agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
                     AttackTargetEnemy(TargetEnemy); //타겟 공격
                 }
                 else if (!isBasicAttack)
                 {       //타겟이 없으면 재설정
-                    Debug.Log("Targeting");
+                   // Debug.Log("Targeting");
                     GetComponentInChildren<WhiteTiger_Basic_Range_Collider>().isAttackReady();
                 }
             }
@@ -256,10 +256,10 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
                 movingManager.Instance.PlayerDirection = shootDir;
                 agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
 
-                Debug.Log("TargetSet, Player Stop");
+               // Debug.Log("TargetSet, Player Stop");
                 if (!OnAttack)
                 {
-                    Debug.Log("Active animation");
+                    //Debug.Log("Active animation");
                     StartCoroutine("Active_A", target);
                 }
             }
@@ -303,7 +303,7 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
             {
                 movingManager.Instance.PlayerClickedPos = hit.point;//이동좌표 저장
                 hit_ = hit;
-                Debug.Log("마우스 우클릭");
+                //Debug.Log("마우스 우클릭");
             }
             isupdate = true;
             PlayerDest = movingManager.Instance.PlayerClickedPos;
@@ -446,15 +446,15 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
         StartCoroutine("Active_R", target);
 
         //damageEnemy(target);
-        Debug.Log("RSkill Targeted");
+      //  Debug.Log("RSkill Targeted");
     }
     IEnumerator Active_R(Transform target)
     {
         while (target)
         {
             animator.SetBool("R_Final", true);
-            Debug.Log("Target " + target);
-            Debug.Log("my " + this.transform);
+            //Debug.Log("Target " + target);
+           // Debug.Log("my " + this.transform);
             target.GetComponent<Player_Stats>().DropHP(R_AD/4, this.transform);
             PV.RPC("instantiateR", RpcTarget.AllViaServer, target.position); //공격이펙트
             target.GetComponent<Player_Stats>().Stun(1.5f);
@@ -485,15 +485,24 @@ public class WhiteTiger : MonoBehaviourPunCallbacks
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD,this.transform);
+            if (!target.GetComponent<Minion_Stats>().isDead)
+            {
+                target.GetComponent<Minion_Stats>().DropHP(WT_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(WT_BasicAD, this.transform);
+            if (!target.GetComponent<Player_Stats>().isDead)
+            {
+                target.GetComponent<Player_Stats>().DropHP(WT_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Turret"))
         {
-            target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
+            if (target.GetComponent<Turret_Stats>().HP > 0)
+            {
+                target.GetComponent<Turret_Stats>().DropHP(WT_BasicAD);
+            }
         }
         else if (target.CompareTag("Monster"))
         {

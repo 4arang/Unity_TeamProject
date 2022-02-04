@@ -8,7 +8,7 @@ public class WhiteTiger_W_Damage : MonoBehaviour
     private bool TeamColor;
     private Transform player;
 
-    private void Start()
+    private void Enable()
     {
         player = GetComponentInParent<Player_Stats>().gameObject.transform;
        TeamColor =  GetComponentInParent<Player_Stats>().TeamColor;

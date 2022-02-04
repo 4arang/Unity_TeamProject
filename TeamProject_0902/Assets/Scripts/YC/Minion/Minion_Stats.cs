@@ -48,7 +48,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
     //for minion target setting
     public bool isAttack_Minion;
     public bool isAttack_Player;
-
+    public bool isDead;
     [SerializeField] private GameObject DamagedEffect;
 
     Animator animator;
@@ -187,6 +187,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
 
     private void Awake()
     {
+        isDead = false;
         if (transform.position.x < 0) TeamColor = true;
         else TeamColor = false;
         stopwatch.Start();
@@ -323,14 +324,21 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
 
 
     public void DropHP(float damage, Transform obj)
-    {     
+    {
 
-        damage *= (1-AP/(100+AP));
+        damage *= (1 - AP / (100 + AP));
 
         hp -= damage;
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
+        //photonView.RPC("damaged", RpcTarget.AllViaServer, damage);
+        //damage *= (1-AP/(100+AP));
+
+        //hp -= damage;
+        //GetComponentInChildren<HP_Bar>().SetHP(hp);
 
         if (hp <= 0)
         {
+            isDead = true;
             if (obj.CompareTag("Player")) //플레이어에게 사망한경우
             {
                 Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
@@ -378,7 +386,7 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
                 animator.SetBool("Die", true);
                 StartCoroutine("Dying");
             }
-        GetComponentInChildren<HP_Bar>().SetHP(hp);
+
     }
 
     public void DropSpeed(float damage, float time)
@@ -428,5 +436,11 @@ public class Minion_Stats : MonoBehaviourPunCallbacks,IPunObservable
             MoveSpeed = (float)stream.ReceiveNext();
             EXP = (float)stream.ReceiveNext();
         }
+    }
+
+    [PunRPC]
+    void damaged(float damage)
+    {
+
     }
 }

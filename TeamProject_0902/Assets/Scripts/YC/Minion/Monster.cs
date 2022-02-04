@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class Monster : MonoBehaviour
 {
@@ -191,7 +192,10 @@ public class Monster : MonoBehaviour
 
     private void damageEnemy(Transform target)
     {
-        target.GetComponent<Player_Stats>().DropHP(Monster_AD, this.transform);
+        if (!target.GetComponent<Player_Stats>().isDead)
+        {
+            target.GetComponent<Player_Stats>().DropHP(Monster_AD, this.transform);
+        }
     }
 
     float GetDirection(Vector3 home, Vector3 away)
@@ -207,14 +211,17 @@ public class Monster : MonoBehaviour
         collider.enabled = false;
         Target = null;
         attacked = false;
-        StartCoroutine("Respawn");
+        Debug.Log("name " + name);
+        if (this.name == "Monster1(Clone)") StartCoroutine("Respawn");
+        else StartCoroutine("Respawn2");
         setup = false;
     }
 
     IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(10.0f);
-        Instantiate(Monster2, transform.position, Quaternion.AngleAxis(180, Vector3.up));
+        Debug.Log("respawn1");
+        yield return new WaitForSeconds(180.0f);
+        PhotonNetwork.Instantiate("Monster2", transform.position, Quaternion.AngleAxis(180, Vector3.up));
         animator.SetBool("Spawn", true);
         yield return new WaitForSeconds(9.2f);
         animator.SetBool("Spawn", false);
@@ -222,6 +229,12 @@ public class Monster : MonoBehaviour
 
         Destroy(gameObject);
 
+    }
+    IEnumerator Respawn2()
+    {
+        yield return new WaitForSeconds(180.0f);
+        PhotonNetwork.Instantiate("Monster1", transform.position, Quaternion.AngleAxis(180, Vector3.up));
+        Destroy(gameObject);
     }
 
     IEnumerator AttackedTimeCheck()
@@ -232,6 +245,8 @@ public class Monster : MonoBehaviour
         Debug.Log("attacked false");
     }
 }
+
+
 
 //	공격 패턴
 //(특수공격 – 일반 공격 – 일반 공격 – 일반 공격) (특수 공격 – 일반 공격 – 일반 공격 – 일반 공격)의 형태

@@ -6,6 +6,10 @@ using Photon.Pun;
 
 public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 {
+    Animator animator;
+    Collider collider;
+    public bool isDead;
+    PhotonView PV;
     [SerializeField] private Sprite lvlupImg;
     //Player Information
     public byte AttackAbility; // coldy 3 wt 8  xerion2
@@ -14,8 +18,10 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     public byte Difficulty;
 
     //UI info
-    Stats_Text UI_Stats;
-    UI_Bar ActionBar;
+    public GameObject uiprefab;
+    public UI_Setup uisetup;
+    public Stats_Text UI_Stats;
+    public UI_Bar ActionBar;
     Skill_BarQ Qbar;
     Skill_BarW Wbar;
     Skill_BarE Ebar;
@@ -24,6 +30,8 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     int Wlevel = 1;
     int Elevel = 1;
     int Rlevel = 1;
+    [SerializeField] private RP_Bar rpBar;
+    [SerializeField] private HP_Bar hpBar;
 
 
     //Game Stats
@@ -79,6 +87,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
     private Transform[] champs; //처치에 관여한 챔피언들
 
+    private bool invincibleMode = false;
 
     private void Awake()
     {
@@ -186,17 +195,97 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         Recover_MoveSpeed = MoveSpeed;
 
         PlayerStatManager.Instance.Player = this.transform;
-      //  GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
+        //  GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP);
+        //action bar
+        PV = GetComponent<PhotonView>();
+
 
     }
+    
     private void Start()
     {
-        //stats bar
-        UI_Stats = FindObjectOfType<Stats_Text>();
+        isDead = false;
+        rpBar = GetComponentInChildren<RP_Bar>();
+        hpBar = GetComponentInChildren<HP_Bar>();
+        rpBar.SetMaxRP(MaxMP);
+        hpBar.SetMaxHP(MaxHP, 0.259f);
+    //}
+    //public void SetUI(GameObject UIprefab)
+    //{
+        //uisetup = UIprefab.GetComponent<UI_Setup>();
 
-        GetComponentInChildren<RP_Bar>().SetMaxRP(MaxMP);
-        GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.259f);
+        //ActionBar = UIprefab.GetComponentInChildren<UI_Bar>();
 
+        //UI_Stats = UIprefab.GetComponentInChildren<Stats_Text>();
+        //UI_Stats.SetAD(AD);
+        ////UI_Stats.SetMP();
+        //UI_Stats.SetArmor(AP);
+        //UI_Stats.SetMRP(MRP);
+        ////UI_Stats.SetCoolTime();
+        //UI_Stats.SetMoveSpeed(MoveSpeed);
+        ////UI_Stats.SetCriticalRate
+        //UI_Stats.SetAttackSpeed(AttackSpeed);
+
+
+
+        //ActionBar.SetMaxHP(MaxHP);
+        //ActionBar.SetHP(hp);
+        //ActionBar.SetMaxRP(MaxMP);
+        //ActionBar.SetRP(mp);
+        //if (AttackAbility == 3) ActionBar.SetRP(Helium);
+
+        ////skill bar
+        //Qbar = UIprefab.GetComponentInChildren<Skill_BarQ>();
+        //Wbar = UIprefab.GetComponentInChildren<Skill_BarW>();
+        //Ebar = UIprefab.GetComponentInChildren<Skill_BarE>(); 
+        //Rbar = UIprefab.GetComponentInChildren<Skill_BarR>();
+
+        //if(AttackAbility==2)
+        //{
+        //    GetComponent<Xerion_Shooting_Skill>().skillQ = UIprefab.GetComponentInChildren<Skill_BarQ>();
+        //    GetComponent<Xerion_Shooting_Skill>().skillW = UIprefab.GetComponentInChildren<Skill_BarW>();
+        //    GetComponent<Xerion_Shooting_Skill>().skillE = UIprefab.GetComponentInChildren<Skill_BarE>();
+        //    GetComponent<Xerion_Shooting_Skill>().skillR = UIprefab.GetComponentInChildren<Skill_BarR>();
+        //}
+        //else if (AttackAbility == 3)
+        //{
+        //    GetComponent<ColD_W>().skillQ = UIprefab.GetComponentInChildren<Skill_BarQ>();
+        //    GetComponent<ColD_W>().skillW = UIprefab.GetComponentInChildren<Skill_BarW>();
+        //    GetComponent<ColD_W>().skillE = UIprefab.GetComponentInChildren<Skill_BarE>();
+        //    GetComponent<ColD_W>().skillR = UIprefab.GetComponentInChildren<Skill_BarR>();
+        //}
+        //else
+        //{
+        //    GetComponent<WhiteTiger>().skillQ  = UIprefab.GetComponentInChildren<Skill_BarQ>();
+        //    GetComponent<WhiteTiger_Skill>().skillW  = UIprefab.GetComponentInChildren<Skill_BarW>();
+        //    GetComponent<WhiteTiger_Skill>().skillE = UIprefab.GetComponentInChildren<Skill_BarE>();
+        //    GetComponent<WhiteTiger_Skill>().skillR = UIprefab.GetComponentInChildren<Skill_BarR>();
+        //}
+
+        //animator = GetComponent<Animator>();
+        //isDead = false;
+        //collider = GetComponent<CapsuleCollider>();
+        //UIbar = FindObjectOfType<UI_Setup>();
+        //if (!UIbar) Debug.Log("uibar failed");
+        //ActionBar = UIbar.GetComponentInChildren<UI_Bar>();
+        //if (!ActionBar) Debug.Log("actionbar failed");
+        ////stats bar
+
+
+
+
+
+
+     
+
+        //uiprefab = FindObjectOfType<PlayerUI>().gameObject;
+        if (!uiprefab) Debug.Log("ui prefab null");
+        //uisetup = movingManager.Instance.UIPrefab.GetComponent<UI_Setup>();
+
+        ActionBar = Photon.Pun.Demo.PunBasics.PlayerManager.UiInstance.GetComponentInChildren<UI_Bar>(); //FindObjectOfType<UI_Bar>();
+        if (!ActionBar) Debug.Log("ui actionbar null");
+
+        UI_Stats = Photon.Pun.Demo.PunBasics.PlayerManager.UiInstance.GetComponentInChildren<Stats_Text>();//FindObjectOfType<Stats_Text>();
         UI_Stats.SetAD(AD);
         //UI_Stats.SetMP();
         UI_Stats.SetArmor(AP);
@@ -206,8 +295,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         //UI_Stats.SetCriticalRate
         UI_Stats.SetAttackSpeed(AttackSpeed);
 
-        //action bar
-        ActionBar = FindObjectOfType<UI_Bar>();
+
 
         ActionBar.SetMaxHP(MaxHP);
         ActionBar.SetHP(hp);
@@ -216,58 +304,112 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         if (AttackAbility == 3) ActionBar.SetRP(Helium);
 
         //skill bar
-        Qbar = FindObjectOfType<Skill_BarQ>();
-        Wbar = FindObjectOfType<Skill_BarW>();
-        Ebar = FindObjectOfType<Skill_BarE>();
-        Rbar = FindObjectOfType<Skill_BarR>();
+        Qbar = ActionBar.GetComponentInChildren<Skill_BarQ>();
+        Wbar = ActionBar.GetComponentInChildren<Skill_BarW>();
+        Ebar = ActionBar.GetComponentInChildren<Skill_BarE>();
+        Rbar = ActionBar.GetComponentInChildren<Skill_BarR>();
+
+        if (AttackAbility == 2)
+        {
+            GetComponent<Xerion_Shooting_Skill>().skillQ = ActionBar.GetComponentInChildren<Skill_BarQ>();
+            GetComponent<Xerion_Shooting_Skill>().skillW = ActionBar.GetComponentInChildren<Skill_BarW>();
+            GetComponent<Xerion_Shooting_Skill>().skillE = ActionBar.GetComponentInChildren<Skill_BarE>();
+            GetComponent<Xerion_Shooting_Skill>().skillR = ActionBar.GetComponentInChildren<Skill_BarR>();
+        }
+        else if (AttackAbility == 3)
+        {
+            GetComponent<ColD_W>().skillQ = ActionBar.GetComponentInChildren<Skill_BarQ>();
+            GetComponent<ColD_W>().skillW = ActionBar.GetComponentInChildren<Skill_BarW>();
+            GetComponent<ColD_W>().skillE = ActionBar.GetComponentInChildren<Skill_BarE>();
+            GetComponent<ColD_W>().skillR = ActionBar.GetComponentInChildren<Skill_BarR>();
+        }
+        else
+        {
+            GetComponent<WhiteTiger>().skillQ = ActionBar.GetComponentInChildren<Skill_BarQ>();
+            GetComponent<WhiteTiger_Skill>().skillW = ActionBar.GetComponentInChildren<Skill_BarW>();
+            GetComponent<WhiteTiger_Skill>().skillE = ActionBar.GetComponentInChildren<Skill_BarE>();
+            GetComponent<WhiteTiger_Skill>().skillR = ActionBar.GetComponentInChildren<Skill_BarR>();
+        }
+
+        animator = GetComponent<Animator>();
+        isDead = false;
+        collider = GetComponent<SphereCollider>();
+
+
+        Qbar.imgLevelorg[0].sprite = lvlupImg;
+        Wbar.imgLevelorg[0].sprite = lvlupImg;
+        Ebar.imgLevelorg[0].sprite = lvlupImg;
+        Rbar.imgLevelorg[0].sprite = lvlupImg;
     }
 
     private void Update()
     {
-        if (AttackAbility == 3) //coldy
-        {
-            if (Charging)        //충전가능한 상태인 경우 1초마다 충전
+      
+            if (AttackAbility == 3) //coldy
             {
-                TimeCheck += Time.deltaTime;
-                if (TimeCheck > 1.0f)
+                if (Charging)        //충전가능한 상태인 경우 1초마다 충전
                 {
-                    ChargeHe();
-                    TimeCheck = 0;
+                    TimeCheck += Time.deltaTime;
+                    if (TimeCheck > 1.0f)
+                    {
+                        ChargeHe();
+                        TimeCheck = 0;
+                    }
+                }
+
+                if (Helium <= 50)
+                {
+                    isDanger = true; //->스킬 수정?
+                }
+                else
+                {
+                    isDanger = false;
+                }
+
+                if (Helium == 0)
+                {
+                    isZero = true;
+                }
+                //Debug.Log("Helium " + Helium);
+
+                rpBar.SetRP(Helium);
+                ActionBar.SetRP(Helium);
+            }
+
+            if (AttackAbility == 2) //xerion
+            {
+                if (Energy >= 100)
+                {
+                    Energy = 100;
+                    GetComponent<Xerion>().OnPassive();
                 }
             }
-
-            if (Helium <= 50)
+            Regen();
+            if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F9)) //경험치 치트키
             {
-                isDanger = true; //->스킬 수정?
+                GetComponent<Player_Level>().GetEXP(280);
             }
-            else
+            if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F10)) //공격력 치트키
             {
-                isDanger = false;
+                GetComponent<Player_Stats>().AD += 10000;
             }
-
-            if (Helium == 0)
+            if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F11)) //방어력 치트키
             {
-                isZero = true;
+                GetComponent<Player_Stats>().AP += 10000;
             }
-            //Debug.Log("Helium " + Helium);
-
-            GetComponentInChildren<RP_Bar>().SetRP(Helium);
-            ActionBar.SetRP(Helium);
-        }
-
-        if (AttackAbility == 2) //xerion
+            if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F12)) //방어력 치트키
+            {
+                GetComponent<Player_Level>().GetGold(10000);
+            }
+            if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F8)) //체력감소 치트키
+            {
+                GetComponent<Player_Stats>().DropHP(200, this.transform);
+            }
+        if (Input.GetKey(KeyCode.L) && Input.GetKeyDown(KeyCode.F7)) //무적 치트키
         {
-            if (Energy >= 100)
-            {
-                Energy = 100;
-                GetComponent<Xerion>().OnPassive();
-            }
+            GetComponent<Player_Stats>().invincibleMode = true;
         }
-        Regen();
-        if (Input.GetKeyDown(KeyCode.L)) //경험치 치트키
-        {
-            GetComponent<Player_Level>().GetEXP(280);
-        }
+
     }
 
     void Regen()
@@ -280,22 +422,23 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             {
                 hp += HPregen;
                 if (hp > MaxHP) hp = MaxHP;
+
+                hpBar.SetHP(hp);
+                // ActionBar.SetMaxHP(MaxHP);
+                ActionBar.SetHP(hp);
             }
             if (AttackAbility == 2 && mp < MaxMP) //mp regen only goes for xerion
             {
                 mp += MPregen;
                 if (mp > MaxMP) mp = MaxMP;
 
-                GetComponentInChildren<RP_Bar>().SetRP(mp);
+                rpBar.SetRP(mp);
                 ActionBar.SetRP(mp);
             }
 
             TimeCheck = 0;
-
-            GetComponentInChildren<HP_Bar>().SetHP(hp);
-            ActionBar.SetHP(hp);
-
         }
+
     }
 
 
@@ -307,7 +450,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         }
         if (mp > MaxMP) mp = MaxMP;
 
-        GetComponentInChildren<RP_Bar>().SetRP(mp);
+       rpBar.SetRP(mp);
 
         ActionBar.SetRP(mp);
     }
@@ -316,43 +459,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
     public void DropHP(float Damage, Transform obj)
     {
-        Damage *= (1 - AP / (100 + AP));
-        hp -= Damage;
-        if (AttackAbility == 3) //for whitetiger
-            StartCoroutine("StoreDamage", Damage);
-
-        GetComponentInChildren<HP_Bar>().SetHP(hp);
-
-        ActionBar.SetHP(hp);
-
-        if (hp<=0)
-        {
-            //죽었을때
-            Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
-            foreach (Collider col in colliderArray)
-            {
-                if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
-                 && (player.TeamColor != TeamColor))
-                {
-                    //사거리 내에 있는 경우 자동으로 획득 처치에 관여한 플레이와 중복 방지
-                    if((player.transform != champs[0]) 
-                        ||(player.transform !=champs[1]))
-                    {
-                        player.GetComponent<Player_Level>().GetEXP(90 * (Level - 1) + 42);
-                    }
-                }
-            }
-            return;
-        }
-
-       
-        if(obj.CompareTag("Player"))
-        {
-            if (true/*/해당 오브젝트가 죽어있는 상태인 경우 10초간 저장*/)
-            {
-                StartCoroutine("StoreChampion", obj);
-            }
-        }
+        PV.RPC("damaged", RpcTarget.AllViaServer, Damage);
     }
 
     IEnumerator StoreChampion(Transform champion)
@@ -417,20 +524,20 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            //동기화되는 변수들 추가
+            //동기화되는 변수들 추가 we own this player. send the others our data
             stream.SendNext(hp);
-            stream.SendNext(MaxHP);
             stream.SendNext(mp);
-            stream.SendNext(MaxMP);
+            stream.SendNext(Helium);
         }
         else
         {
-            //받아오는 변수들 추가
+            //받아오는 변수들 추가 network player
             hp = (float)stream.ReceiveNext();
-            MaxHP = (float)stream.ReceiveNext();
             mp = (float)stream.ReceiveNext();
-            MaxMP = (float)stream.ReceiveNext();
+            Helium = (int)stream.ReceiveNext();
         }
+
+
     }
 
     public void LevelupQ()
@@ -449,7 +556,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
             GetComponent<WhiteTiger>().levelUpQ();
         }
 
-        Qbar.imgLevelorg[Qlevel-1].sprite = lvlupImg;
+        Qbar.imgLevelorg[Qlevel].sprite = lvlupImg;
         Qlevel++;
     }
     public void LevelupW()
@@ -467,7 +574,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         {
             GetComponent<WhiteTiger_Skill>().levelUpW();
         }
-        Wbar.imgLevelorg[Wlevel - 1].sprite = lvlupImg;
+        Wbar.imgLevelorg[Wlevel ].sprite = lvlupImg;
         Wlevel++;
 
     }
@@ -486,7 +593,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         {
             GetComponent<WhiteTiger_Skill>().levelUpE();
         }
-        Ebar.imgLevelorg[Elevel - 1].sprite = lvlupImg;
+        Ebar.imgLevelorg[Elevel ].sprite = lvlupImg;
         Elevel++;
     }
     public void LevelupR()
@@ -504,7 +611,7 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
         {
             GetComponent<WhiteTiger_Skill>().levelUpR();
         }
-        Rbar.imgLevelorg[Rlevel - 1].sprite = lvlupImg;
+        Rbar.imgLevelorg[Rlevel ].sprite = lvlupImg;
         Rlevel++;
     }
 
@@ -520,4 +627,153 @@ public class Player_Stats : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    public void GetAD()
+    {
+        int orgAD = AD;
+        AD = Mathf.RoundToInt(AD * 1.2f);
+        StartCoroutine("RecoverAD", orgAD);
+    }
+
+
+IEnumerator RecoverAD(int ad)
+{
+    yield return new WaitForSeconds(90);
+        AD = ad;
+
+}
+
+    IEnumerator Die()
+    {
+        while (!isDead)
+        {
+            animator.SetBool("Die", true);
+            isDead = true;
+            collider.enabled = false;
+            yield return new WaitForSeconds(1.5f);
+            animator.SetBool("Die", false);
+            movingManager.Instance.Die(this.transform);
+            break;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (isDead)
+        {
+            collider.enabled = true;
+            isDead = false;
+            hp = MaxHP;
+            mp = MaxMP;
+            Helium = 100;
+            hpBar.SetHP(hp);
+            ActionBar.SetHP(hp);
+            if (AttackAbility == 3)
+            {
+                rpBar.SetRP(Helium);
+                ActionBar.SetRP(Helium);
+            }
+            else
+            {
+                rpBar.SetRP(mp);
+                ActionBar.SetRP(mp);
+            }
+        }
+    }
+
+    public void EquippedSpeedItem(float gain)
+    {
+        MoveSpeed += gain;
+    }
+    public void UnequippedSpeedItem(float loss)
+    {
+        MoveSpeed -= loss;
+    }
+    public void EquippedArmorItem(int gain)
+    {
+        AP += gain;
+    }
+    public void UnequippedArmorItem(int loss)
+    {
+        AP -= loss;
+    }
+
+    public void GetMP(float gain)
+    {
+        mp += gain;
+    }
+    public void EquippedAttackItem(int gain)
+    {
+        AD += gain;
+    }
+    public void UnequippedAttackItem(int loss)
+    {
+        AD -= loss;
+    }
+    public void InvincibleMode(float time)
+    {
+        StartCoroutine("onInvinsibleMode", time);
+    }
+IEnumerator onInvinsibleMode(float time)
+    {
+        invincibleMode = true;
+        yield return new WaitForSeconds(time);
+        invincibleMode = false;
+    }
+
+
+    [PunRPC]
+    void damaged(float Damage)
+    {
+        if (!invincibleMode)
+        {
+            Damage *= (1 - AP / (100 + AP));
+            hp -= Damage;
+            if (AttackAbility == 3) //for whitetiger
+                StartCoroutine("StoreDamage", Damage);
+
+            hpBar.SetHP(hp);
+            ActionBar.SetHP(hp);
+
+            // Debug.Log("actionbar whos " + ActionBar.GetComponentInParent<UI_Setup>().Player.transform.position);
+            if (hp <= 0)
+            {
+      
+                //죽었을때
+                Collider[] colliderArray = Physics.OverlapSphere(transform.position, 16.0f);
+                foreach (Collider col in colliderArray)
+                {
+                    if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
+                     && (player.TeamColor != TeamColor))
+                    {
+                        player.GetComponent<Player_Level>().GetEXP(90 * (Level - 1) + 42);
+                        //사거리 내에 있는 경우 자동으로 획득 처치에 관여한 플레이와 중복 방지
+                        //if (champs[0] || champs[1])
+                        //{
+                        //    if ((player.transform != champs[0])
+                        //        || (player.transform != champs[1]))
+                        //    {
+
+                        //    }
+                        //}
+                    }
+                }
+                if (!isDead) StartCoroutine("Die");
+                isDead = true;
+                return;
+            }
+
+            //if (obj)
+            //{
+            //    if (obj.CompareTag("Player"))
+            //    {
+            //        if (true/*/해당 오브젝트가 죽어있는 상태인 경우 10초간 저장*/)
+            //        {
+            //            //StartCoroutine("StoreChampion", obj);
+            //        }
+            //    }
+            //}
+        }
+        hpBar.SetHP(hp);
+        ActionBar.SetHP(hp);
+    }
 }

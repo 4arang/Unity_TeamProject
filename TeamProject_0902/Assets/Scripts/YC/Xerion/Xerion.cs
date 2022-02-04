@@ -323,15 +323,24 @@ public class Xerion : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(Xerion_BasicAD, this.transform);
+            if (!target.GetComponent<Minion_Stats>().isDead)
+            {
+                target.GetComponent<Minion_Stats>().DropHP(Xerion_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(Xerion_BasicAD, this.transform);
+            if (target.GetComponent<Player_Stats>().isDead)
+            {
+                target.GetComponent<Player_Stats>().DropHP(Xerion_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Turret"))
         {
-            target.GetComponent<Turret_Stats>().DropHP(Xerion_BasicAD);
+            if (target.GetComponent<Turret_Stats>().HP > 0)
+            {
+                target.GetComponent<Turret_Stats>().DropHP(Xerion_BasicAD);
+            }
         }
         else if (target.CompareTag("Monster"))
         {
@@ -347,6 +356,8 @@ public class Xerion : MonoBehaviour
         }
 
     }
+
+
 
     [PunRPC]
     void instantiateBullet(Vector3 target)

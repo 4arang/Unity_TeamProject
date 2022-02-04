@@ -84,7 +84,7 @@ public class MouseCursor : MonoBehaviour
     void Active_Ping_Position()
     {
 
-        Debug.Log("ÇÎ ÂïÈû x : " + PingPos.x + ",  y : " + PingPos.y);
+       // Debug.Log("ÇÎ ÂïÈû x : " + PingPos.x + ",  y : " + PingPos.y);
         StartCoroutine("Ping_Spawn");
     }
     IEnumerator Ping_Spawn()

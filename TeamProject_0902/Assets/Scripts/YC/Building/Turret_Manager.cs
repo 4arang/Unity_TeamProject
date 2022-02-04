@@ -36,4 +36,16 @@ public class Turret_Manager : MonoBehaviour
     {
         DontDestroyOnLoad(this.gameObject);
     }
+
+    public void spawnMinion(bool teamcolor)
+    {
+        if(teamcolor)
+        {
+            Blue_TargetBuilding6.GetComponent<Nexus_Spawn>().SpawnMinion2();
+        }
+        else
+        {
+            Red_TargetBuilding6.GetComponent<Nexus_Spawn>().SpawnMinion2();
+        }
+    }
 }

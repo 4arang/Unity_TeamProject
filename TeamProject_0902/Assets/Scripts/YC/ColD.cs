@@ -132,14 +132,14 @@ public class ColD : MonoBehaviour
             {
                 if (TargetEnemy)//타겟설정이 되었다면 
                 {
-                    Debug.Log("Targeted");
+                    //Debug.Log("Targeted");
                     GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
                     agent.SetDestination(TargetEnemy.transform.position); //타겟 위치로 이동
                     AttackTargetEnemy(TargetEnemy); //타겟 공격
                 }
                 else
                 {       //타겟이 없으면 재설정
-                    Debug.Log("Targeting");
+                    //Debug.Log("Targeting");
                     GetComponentInChildren<ColD_Basic_Range_collider>().isAttackReady();
                 }
             }
@@ -240,10 +240,10 @@ public class ColD : MonoBehaviour
                 float shootDir = GetDirection(transform.position, target.transform.position);
                 movingManager.Instance.PlayerDirection = shootDir;
                 agent.transform.rotation = Quaternion.AngleAxis(shootDir, Vector3.up);
-                Debug.Log("TargetSet, Player Stop");
+                //Debug.Log("TargetSet, Player Stop");
                 if (!OnAttack)
                 {
-                    Debug.Log("Active animation");
+                   // Debug.Log("Active animation");
                     StartCoroutine("Active_A", target);
                 }
             }
@@ -257,19 +257,21 @@ public class ColD : MonoBehaviour
         OnAttack = true;
         while (true)
         {
-           
-            animator.SetBool("A_ColD", true);
-            yield return new WaitForSeconds(0.2f);
-            PV.RPC("activeA", RpcTarget.AllViaServer, true);
-            //GetComponentInChildren<ColD_Punch_Collider>().Skill();
-            yield return new WaitForSeconds(0.6f);
-            PV.RPC("activeA_Slash", RpcTarget.AllViaServer, target.position);
-            PV.RPC("activeA", RpcTarget.AllViaServer, false);
-            animator.SetBool("A_ColD", false);
+            if (target)
+            {
+                animator.SetBool("A_ColD", true);
+                yield return new WaitForSeconds(0.2f);
+                PV.RPC("activeA", RpcTarget.AllViaServer, true);
+                //GetComponentInChildren<ColD_Punch_Collider>().Skill();
+                yield return new WaitForSeconds(0.6f);
+                PV.RPC("activeA_Slash", RpcTarget.AllViaServer, target.position);
+                PV.RPC("activeA", RpcTarget.AllViaServer, false);
+                animator.SetBool("A_ColD", false);
 
-            if(target)damageEnemy(target);
-            yield return new WaitForSeconds(AttackSpeed);
-            break;
+                if (target) damageEnemy(target);
+                yield return new WaitForSeconds(AttackSpeed);
+                break;
+            }
         }
         OnAttack = false;
     }
@@ -280,15 +282,24 @@ public class ColD : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD, this.transform);
+            if (!target.GetComponent<Minion_Stats>().isDead)
+            {
+                target.GetComponent<Minion_Stats>().DropHP(ColD_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(ColD_BasicAD, this.transform);
+            if (!target.GetComponent<Player_Stats>().isDead)
+            {
+                target.GetComponent<Player_Stats>().DropHP(ColD_BasicAD, this.transform);
+            }
         }
         else if (target.CompareTag("Turret"))
         {
-            target.GetComponent<Turret_Stats>().DropHP(ColD_BasicAD);
+            if (target.GetComponent<Turret_Stats>().HP > 0)
+            {
+                target.GetComponent<Turret_Stats>().DropHP(ColD_BasicAD);
+            }
         }
         else if (target.CompareTag("Monster"))
         {

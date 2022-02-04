@@ -216,15 +216,24 @@ public class Minion1 : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(Minion1_AD, this.transform);
+            if (!target.GetComponent<Minion_Stats>().isDead)
+            {
+                target.GetComponent<Minion_Stats>().DropHP(Minion1_AD, this.transform);
+            }
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(Minion1_AD, this.transform);
+            if (!target.GetComponent<Player_Stats>().isDead)
+            {
+                target.GetComponent<Player_Stats>().DropHP(Minion1_AD, this.transform);
+            }
         }
         else if (target.CompareTag("Turret"))
         {
-            target.GetComponent<Turret_Stats>().DropHP(Minion1_AD);
+            if (target.GetComponent<Turret_Stats>().HP > 0)
+            {
+                target.GetComponent<Turret_Stats>().DropHP(Minion1_AD);
+            }
         }
 
     }

@@ -66,9 +66,9 @@ public class Xerion_W_Skill_Colider : MonoBehaviour
                     other.GetComponent<Player_Stats>().DropSpeed(1 - Xerion_W_SideDS, 2.5f);
 
                 damageEnemy(Xerion_W_CenterAD * 0.8f, other.transform);
-            }
+         }
 
-    }
+         }
     }
 
     private void damageEnemy(float AD, Transform target)
@@ -94,6 +94,8 @@ public class Xerion_W_Skill_Colider : MonoBehaviour
             }
 
         }
+
+        //Debug.Log("wskill " + target);
 
     }
 }

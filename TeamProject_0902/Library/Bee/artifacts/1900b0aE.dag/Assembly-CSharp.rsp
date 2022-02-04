@@ -27,7 +27,6 @@
 -define:PLATFORM_ARCH_64
 -define:UNITY_64
 -define:UNITY_INCLUDE_TESTS
--define:UNITY_ANALYTICS
 -define:USE_SEARCH_ENGINE_API
 -define:USE_QUICK_SEARCH_MODULE
 -define:SCENE_TEMPLATE_MODULE
@@ -643,6 +642,7 @@
 "Assets/Scripts/YC/PlayerStats/StatCSVimplement.cs"
 "Assets/Scripts/YC/PlayerStats/StatCSVreader.cs"
 "Assets/Scripts/YC/PlayerStats/WhiteTigerCSV.cs"
+"Assets/Scripts/YC/Player_Item.cs"
 "Assets/Scripts/YC/Player_Level.cs"
 "Assets/Scripts/YC/Player_Return.cs"
 "Assets/Scripts/YC/Player_Skill_Attack.cs"
@@ -651,10 +651,28 @@
 "Assets/Scripts/YC/Test_ConnectServer.cs"
 "Assets/Scripts/YC/Test_MaterialChange.cs"
 "Assets/Scripts/YC/Test_SpawnPlayers.cs"
+"Assets/Scripts/YC/UI/Button_UI.cs"
+"Assets/Scripts/YC/UI/GameAssets.cs"
 "Assets/Scripts/YC/UI/Gold_Text.cs"
+"Assets/Scripts/YC/UI/Gold_Text_Shop.cs"
 "Assets/Scripts/YC/UI/HP_Bar.cs"
+"Assets/Scripts/YC/UI/Interface_Shop.cs"
+"Assets/Scripts/YC/UI/Item.cs"
+"Assets/Scripts/YC/UI/Item_explain.cs"
+"Assets/Scripts/YC/UI/Item_Slots.cs"
 "Assets/Scripts/YC/UI/Level_Text.cs"
+"Assets/Scripts/YC/UI/Lvlup.cs"
+"Assets/Scripts/YC/UI/Lvlup_Button.cs"
+"Assets/Scripts/YC/UI/Player_UI.cs"
 "Assets/Scripts/YC/UI/RP_Bar.cs"
+"Assets/Scripts/YC/UI/Shop.cs"
+"Assets/Scripts/YC/UI/Skill_Bar.cs"
+"Assets/Scripts/YC/UI/Skill_BarE.cs"
+"Assets/Scripts/YC/UI/Skill_BarQ.cs"
+"Assets/Scripts/YC/UI/Skill_BarR.cs"
+"Assets/Scripts/YC/UI/Skill_BarW.cs"
+"Assets/Scripts/YC/UI/Stat_Bar.cs"
+"Assets/Scripts/YC/UI/UI_Setup.cs"
 "Assets/Scripts/YC/UI/XP_Bar.cs"
 "Assets/Scripts/YC/WhiteTiger/WhiteTiger.cs"
 "Assets/Scripts/YC/WhiteTiger/WhiteTiger_Basic_Range_Collider.cs"
@@ -703,6 +721,7 @@
 "Assets/SpecialSkillsEffectsPack/Scripts/VariousMouseOrbit.cs"
 "Assets/SpecialSkillsEffectsPack/Scripts/VariousRotateObject.cs"
 "Assets/SpecialSkillsEffectsPack/Scripts/VariousTranslateMove.cs"
+"Assets/Stats_Text.cs"
 "Assets/TestBasicAttack.cs"
 "Assets/TestCameraFollow.cs"
 "Assets/TestChampStatusBar.cs"
@@ -714,6 +733,7 @@
 "Assets/TestServer.cs"
 "Assets/TestSetup.cs"
 "Assets/Test_CreateJoinRooms.cs"
+"Assets/UI_Bar.cs"
 -langversion:8.0
 
 /deterministic

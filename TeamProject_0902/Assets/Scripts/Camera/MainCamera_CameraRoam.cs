@@ -24,6 +24,7 @@ public class MainCamera_CameraRoam : MonoBehaviour
 
     private void Start()
     {
+        Screen.SetResolution(1920, 1080, false);
         //player = GameObject.FindWithTag("Player").transform;
         camHeight = transform.position.y;
         //if (player == null)

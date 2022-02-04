@@ -5,5 +5,8 @@ using UnityEngine.UI;
 
 public class Lvlup : MonoBehaviour
 {
-
+    private void Start()
+    {
+        return;
+    }
 }

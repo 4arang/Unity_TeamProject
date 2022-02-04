@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3300902332192225733}
   - component: {fileID: 3300902332192225732}
   - component: {fileID: 3300902332192225735}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HPstate (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4696,7 +4696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8515230744370366466}
   - component: {fileID: 635269992607267075}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: jungle_boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}

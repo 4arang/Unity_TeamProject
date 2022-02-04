@@ -28,21 +28,24 @@ public class MapCamera : MonoBehaviour
 
     public GameObject Player2Dsprite;
 
+
     void Start()
     {
         if (cam == null)
         {
             cam = GetComponent<Camera>();
         }
+        camToMove = Camera.main.gameObject;
+
+        PlayerToMove = Photon.Pun.Demo.PunBasics.PlayerManager.LocalPlayerInstance.transform;
+        agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
 
     }
 
     public void SetCameraTarget(Transform player)
     {
 
-        PlayerToMove = player;
-        agent = PlayerToMove.GetComponentInChildren<NavMeshAgent>();
-
+       
     }
 
 

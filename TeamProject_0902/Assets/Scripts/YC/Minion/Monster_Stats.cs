@@ -69,7 +69,7 @@ public class Monster_Stats : MonoBehaviourPunCallbacks, IPunObservable
         AttackRange = int.Parse(data[6]["statsattackrange"].ToString());
 
         GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0.06f);
-        hp = 100; //hp = HP;
+        hp = MaxHP;
 
         //for passive
         AD_ = AD;
@@ -112,11 +112,13 @@ public class Monster_Stats : MonoBehaviourPunCallbacks, IPunObservable
     public void DropHP(float damage, Transform obj)
     {
 
+        photonView.RPC("damaged", RpcTarget.AllViaServer, damage);
+        //damage *= (1 - armor / (100 + armor));
 
-    damage *= (1 - Armor / (100 + Armor));
-
-        hp -= damage;
-
+        //hp -= damage;
+        //unityengine.debug.log("monster hp " + hp);
+        //getcomponent<monster>().attacked();
+        //getcomponentinchildren<hp_bar>().sethp(hp);
         if (hp <= 0)
         {
                 //사거리 2000이내의 팀 영웅 이동속도 증가
@@ -126,18 +128,20 @@ public class Monster_Stats : MonoBehaviourPunCallbacks, IPunObservable
             if (col.TryGetComponent<Player_Stats>(out Player_Stats player)
              && (player.TeamColor == obj.GetComponent<Player_Stats>().TeamColor))
             {
-                //이동속도 175% 2초간 줄어들게
+                    player.GetComponent<Player_Stats>().DropSpeed(1.75f, 2);
+                    player.GetComponent<Player_Level>().GetGold(300);
+                    player.GetComponent<Player_Level>().GetEXP(150);
+                    player.GetComponent<Player_Stats>().GetAD();
+                    //이동속도 175% 2초간 줄어들게
+                }
             }
-        }
         //팀원들 잃은체력 15% 회복
         //경험치 골드 제공
         //90초간 주문력 공격력 16%증가
         //사망시 사라지는 버프
             GetComponent<Monster>().Die();
         }
-        UnityEngine.Debug.Log("Monster hp " + hp);
-        GetComponent<Monster>().Attacked();
-        GetComponentInChildren<HP_Bar>().SetHP(hp);
+
 
     }
 
@@ -185,5 +189,16 @@ public class Monster_Stats : MonoBehaviourPunCallbacks, IPunObservable
             MoveSpeed = (float)stream.ReceiveNext();
             EXP = (float)stream.ReceiveNext();
         }
+    }
+
+    [PunRPC]
+    void damaged(float damage)
+    {
+        damage *= (1 - Armor / (100 + Armor));
+
+        hp -= damage;
+        UnityEngine.Debug.Log("monster hp " + hp);
+        GetComponent<Monster>().Attacked();
+        GetComponentInChildren<HP_Bar>().SetHP(hp);
     }
 }

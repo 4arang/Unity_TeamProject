@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 0d84d6eb-4322-4d9e-bb53-cd925d973cab
+    AppIdRealtime: 72473fcc-f4cd-4ca5-bce6-e82292927c9e
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
@@ -85,6 +85,10 @@ MonoBehaviour:
   - instantiateExplosion
   - instantiateA
   - activeExplosion
+  - DestroyTurret
+  - hpchanged
+  - damage
+  - damaged
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

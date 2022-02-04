@@ -10220,7 +10220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4309339646192897887}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.5916357, y: -0.04755211, z: 0.4022293}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 2127255696756011910}
@@ -10349,6 +10349,7 @@ MonoBehaviour:
   MyPos: {x: 0, y: 0, z: 0}
   isAttack_Minion: 0
   isAttack_Player: 0
+  isDead: 0
   DamagedEffect: {fileID: 8682400839364694740}
 --- !u!114 &4273195882427612568
 MonoBehaviour:

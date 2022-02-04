@@ -19,14 +19,17 @@ public class Player_Return : MonoBehaviour
 
     void Start()
     {
+        TeamColor = GetComponent<Player_Stats>().TeamColor;
         //CameraOrgPos = MainCamera.transform.position;
         Return_isReady = true;
         isFree = true; //인게임 매니저에서 관리해야 할듯
-        StartPoint = new Vector3(0, 0, 0);
+        if (TeamColor)
+            StartPoint = new Vector3(-70, 0, 0);
+        else
+            StartPoint = new Vector3(70, 0, 0);
         Return_Aura.SetActive(false);
+        MainCamera = Camera.main.GetComponent<Camera>(); ;
 
-        if (transform.position.x < 0) TeamColor = true;
-        else TeamColor = false; //decided by start position
     }
 
     void Update()

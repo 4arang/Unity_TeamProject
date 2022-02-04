@@ -32,6 +32,7 @@ public class Turret_Stats : MonoBehaviour
     public bool isAttack_Minion;
     [SerializeField] private GameObject ExplosionEffect;
 
+    Rigidbody rigidBody;
 
     private void Awake()
     {
@@ -174,6 +175,14 @@ public class Turret_Stats : MonoBehaviour
         PV = GetComponent<PhotonView>();
     }
 
+    private void Start()
+    {
+        GetComponentInChildren<HP_Bar>().SetMaxHP(MaxHP, 0);
+        GetComponentInChildren<HP_Bar>().SetHP(HP);
+        ExplosionEffect.SetActive(false);
+        rigidBody = GetComponent<Rigidbody>();
+    }
+
     public void DropHP(float damage)
     {
         damage *= (1 - AP / (100 + AP));
@@ -205,7 +214,13 @@ public class Turret_Stats : MonoBehaviour
                 }
             }
             StartCoroutine("Explosion");
+            rigidBody.useGravity = true;
+            if ((transform.position.x >= -58 && transform.position.x < -44)
+|| (transform.position.x >= 45 && transform.position.x < 58)) //억제기인 경우
+                Turret_Manager.Instance.spawnMinion(TeamColor);
+
         }
+        GetComponentInChildren<HP_Bar>().SetHP(HP);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -227,15 +242,20 @@ public class Turret_Stats : MonoBehaviour
         while (true)
         {
             PV.RPC("activeExplosion", RpcTarget.AllViaServer, true);
-            yield return new WaitForSeconds(2.0f);
-            Destroy(gameObject);
+            yield return new WaitForSeconds(1.5f);
             break;
         }
+        PV.RPC("DestroyTurret", RpcTarget.AllViaServer);
     }
 
     [PunRPC]
     void activeExplosion(bool b)
     {
         ExplosionEffect.SetActive(b);
+    }
+    [PunRPC]
+    void DestroyTurret()
+    {
+        Destroy(gameObject);
     }
 }

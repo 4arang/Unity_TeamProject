@@ -58,11 +58,17 @@ public class TurretBullet : MonoBehaviour
 
         if (target.CompareTag("Minion"))
         {
-            target.GetComponent<Minion_Stats>().DropHP(turretAD, this.transform);
+                if (!target.GetComponent<Minion_Stats>().isDead)
+                {
+                    target.GetComponent<Minion_Stats>().DropHP(turretAD, this.transform);
+                }
         }
         else if (target.CompareTag("Player"))
         {
-            target.GetComponent<Player_Stats>().DropHP(turretAD, this.transform);
+            if (!target.GetComponent<Player_Stats>().isDead)
+            {
+                target.GetComponent<Player_Stats>().DropHP(turretAD, this.transform);
+            }
         }
         Destroy(gameObject);
     }

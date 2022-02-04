@@ -30,21 +30,20 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     public bool Q_LaserFull = false;
     private float Q_CoolTime = 9.0f; // 9 8 7 6 5
     private bool Q_Ready = true;
-    Skill_BarQ skillQ;
+    public Skill_BarQ skillQ;
     private int levelQ = 1;
 
     [Header("W_Skill")]
     [SerializeField] private GameObject satellite;
     [SerializeField] private GameObject satellite_range;
     private float W_MP = 70; // 80 90 100 110
-    private byte W_Level = 1;
     private bool W_On = false;
     private bool isW_ready = false;
     public float W_Distance = 9.5f;
     private Vector3 Wdirection; //W방향좌표 저장
     private bool W_Ready = true;
     private float W_CoolTime = 14; //14 13 12 11 10
-    Skill_BarW skillW;
+    public Skill_BarW skillW;
     private int levelW = 1;
 
     [Header("E_Skill")]
@@ -53,11 +52,10 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     protected float DirecAngle; //e키 방향각도
     private float E_AD = 80; // 80 110 140 170 200 0.45주문력 거리에 비례 기절시간 0.5~2s
     private float E_MP = 60;
-    private byte E_Level = 1;
     private bool E_On = false;
     private float E_CoolTime = 13; // 13 11 9 8 7 
     private bool E_Ready = true;
-    Skill_BarE skillE;
+    public Skill_BarE skillE;
     private int levelE = 1;
 
 
@@ -72,7 +70,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     public float R_camFOV = 20.0f;
     private bool R_Ready = true;
     private float R_CoolTime = 130; // 130 115 100
-    Skill_BarR skillR;
+    public Skill_BarR skillR;
     private int levelR = 1;
 
     private bool DroneReload;
@@ -83,6 +81,8 @@ public class Xerion_Shooting_Skill : MonoBehaviour
 
     //마우스 좌표 저장용(임시)
     Vector3 mouseVector;
+
+   // private GameObject UIprefab;
 
     void Start()
     {
@@ -99,7 +99,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
         Laser_Range.SetActive(false);
         Q_WeaponEffect.SetActive(false);
 
-
+      // UIprefab = FindObjectOfType<PlayerUI>().gameObject;
         // RangeDirection.SetActive(false);
         satellite_range.SetActive(false);
         DroneReload = false;
@@ -110,10 +110,7 @@ public class Xerion_Shooting_Skill : MonoBehaviour
         animator = GetComponent<Animator>();
         if(PV.IsMine) mainCamera = Camera.main;
 
-        skillQ = FindObjectOfType<Skill_BarQ>();
-        skillW = FindObjectOfType<Skill_BarW>();
-        skillE = FindObjectOfType<Skill_BarE>();
-        skillR = FindObjectOfType<Skill_BarR>();
+
     }
 
 
@@ -468,8 +465,8 @@ public class Xerion_Shooting_Skill : MonoBehaviour
     [PunRPC]
     void instantiateWSatellite(Vector3 Wdirection)
     {
-        Instantiate(satellite, Wdirection, Quaternion.identity);
-        satellite.GetComponentInChildren<Xerion_W_Skill_Colider>().setup(this.transform, W_Level);
+        GameObject satelliteTransform = Instantiate(satellite, Wdirection, Quaternion.identity);
+        satelliteTransform.GetComponentInChildren<Xerion_W_Skill_Colider>().setup(this.transform, levelW);
     }
 
     [PunRPC]

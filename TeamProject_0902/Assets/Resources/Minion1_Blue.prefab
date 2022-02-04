@@ -451,6 +451,7 @@ MonoBehaviour:
   MyPos: {x: 0, y: 0, z: 0}
   isAttack_Minion: 0
   isAttack_Player: 0
+  isDead: 0
   DamagedEffect: {fileID: 2389679743667058932}
 --- !u!114 &-5991224284096693414
 MonoBehaviour:
@@ -509,16 +510,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Speed
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Attack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: Die
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!1 &4015881265962946478
 GameObject:

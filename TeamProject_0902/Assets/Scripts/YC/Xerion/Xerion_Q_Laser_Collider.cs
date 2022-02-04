@@ -80,6 +80,7 @@ private void damageEnemy(float AD, Transform target)
     else if (target.CompareTag("Player"))
     {
         target.GetComponent<Player_Stats>().DropHP(AD, player);
+            Debug.Log("player AD " + AD);
     }
     else if (target.CompareTag("Turret"))
     {

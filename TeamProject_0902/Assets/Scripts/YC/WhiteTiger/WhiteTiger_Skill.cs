@@ -30,7 +30,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     private float W_AD = 50; //80 110 140 170   //범위 500, 50%회복 
     private float W_AD_monster = 65; //몬스터 + a 65 80 95 110 130
     private float W_AD_adv = 70; //110 150 190 250 //80%회복
-    Skill_BarW skillW;
+    public Skill_BarW skillW;
     private int levelW = 1;
 
     [Header("E_Skill")]
@@ -38,7 +38,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     [SerializeField] private GameObject adv_E_Aura;
     private float E_CoolTime = 12; // fixed
     private bool E_Ready = true;
-    Skill_BarE skillE;
+    public Skill_BarE skillE;
     private int levelE = 1;
     private float E_Recover = 0.1f; //0.12 0.14 0.18 0.20 //데미지 비례 체력 회복
     private float E_Recover_adv = 0.14f; //0.14 0.16 0.18 0.22 0.24
@@ -54,7 +54,7 @@ public class WhiteTiger_Skill : MonoBehaviour
     public bool R_Targeted;
     private bool R_Ready = true;
     private float R_CoolTime = 110; // 110 90 70
-    Skill_BarR skillR;
+   public  Skill_BarR skillR;
     private int levelR = 1;
 
     void Start()
@@ -72,6 +72,10 @@ public class WhiteTiger_Skill : MonoBehaviour
 
         animator = GetComponent<Animator>();
         WildPoint = 0;
+
+        //skillW = FindObjectOfType<Skill_BarW>();
+        //skillE = FindObjectOfType<Skill_BarE>();
+        //skillR = FindObjectOfType<Skill_BarR>();
     }
 
 

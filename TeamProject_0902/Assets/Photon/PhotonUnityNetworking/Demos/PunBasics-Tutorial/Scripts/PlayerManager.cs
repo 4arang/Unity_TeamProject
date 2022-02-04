@@ -37,6 +37,8 @@ namespace Photon.Pun.Demo.PunBasics
         [SerializeField]
         private GameObject playerUiPrefab;
 
+        public static GameObject UiInstance;
+
         [Tooltip("The Beams GameObject to control")]
         [SerializeField]
         private GameObject beams;
@@ -53,22 +55,67 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public void Awake()
         {
-            if (this.beams == null)
-            {
-                Debug.LogError("<Color=Red><b>Missing</b></Color> Beams Reference.", this);
-            }
-            else
-            {
-                this.beams.SetActive(false);
-            }
+            //if (this.beams == null)
+            //{
+            //    Debug.LogError("<Color=Red><b>Missing</b></Color> Beams Reference.", this);
+            //}
+            //else
+            //{
+            //    this.beams.SetActive(false);
+            //}
 
             // #Important
             // used in GameManager.cs: we keep track of the localPlayer instance to prevent instanciation when levels are synchronized
+
             if (photonView.IsMine)
             {
                 LocalPlayerInstance = gameObject;
+
+            }
+            if (this.playerUiPrefab != null)
+            {
+                GameObject _uiGo = Instantiate(this.playerUiPrefab);
+                Debug.Log("Character UI Prefab loaded");
+                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+                UiInstance = _uiGo;
+                if (!photonView.IsMine)
+                {
+                    _uiGo.SetActive(false);
+
+
+                }
+            }
+            else
+            {
+                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
             }
 
+
+
+
+            //CameraWork _cameraWork = gameObject.GetComponent<CameraWork>();
+
+            //if (_cameraWork != null)
+            //{
+            //    if (photonView.IsMine)
+            //    {
+            //        _cameraWork.OnStartFollowing();
+            //    }
+            //}
+            //else
+            //{
+            //    Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
+            //}
+
+            // Create the UI
+
+
+
+
+#if UNITY_5_4_OR_NEWER
+            // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+#endif
             // #Critical
             // we flag as don't destroy on load so that instance survives level synchronization, thus giving a seamless experience when levels load.
             DontDestroyOnLoad(gameObject);
@@ -79,36 +126,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public void Start()
         {
-            CameraWork _cameraWork = gameObject.GetComponent<CameraWork>();
 
-            if (_cameraWork != null)
-            {
-                if (photonView.IsMine)
-                {
-                    _cameraWork.OnStartFollowing();
-                }
-            }
-            else
-            {
-                Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
-            }
-
-            // Create the UI
-            if (this.playerUiPrefab != null)
-            {
-                GameObject _uiGo = Instantiate(this.playerUiPrefab);
-                Debug.Log("Character UI Prefab loaded");
-                _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
-            }
-            else
-            {
-                Debug.LogWarning("<Color=Red><b>Missing</b></Color> PlayerUiPrefab reference on player Prefab.", this);
-            }
-
-            #if UNITY_5_4_OR_NEWER
-            // Unity 5.4 has a new scene management. register a method to call CalledOnLevelWasLoaded.
-			UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
-            #endif
         }
 
 
@@ -146,7 +164,9 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 this.beams.SetActive(this.IsFiring);
             }
+
         }
+    
 
         /// <summary>
         /// MonoBehaviour method called when the Collider 'other' enters the trigger.
@@ -220,8 +240,8 @@ namespace Photon.Pun.Demo.PunBasics
                 transform.position = new Vector3(0f, 5f, 0f);
             }
 
-            GameObject _uiGo = Instantiate(this.playerUiPrefab);
-            _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
+          //  GameObject _uiGo = Instantiate(this.playerUiPrefab);
+          //  _uiGo.SendMessage("SetTarget", this, SendMessageOptions.RequireReceiver);
         }
 
         #endregion

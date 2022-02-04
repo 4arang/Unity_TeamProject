@@ -14,14 +14,14 @@ public class UI_Bar : MonoBehaviour
     StringBuilder HPsb;
     StringBuilder RPsb;
 
-    void Start()
+    void Awake()
     {
        // UIbar = GetComponentsInChildren<Slider>();
         hptext = UIbarHP.gameObject.GetComponentInChildren<Text>();
        rptext = UIbarRP.gameObject.GetComponentInChildren<Text>();
 
-        HPsb = new StringBuilder("");
-        RPsb = new StringBuilder("");
+       // HPsb = new StringBuilder("");
+      //  RPsb = new StringBuilder("");
     }
 
     public void SetMaxHP(float maxHP) 
@@ -48,6 +48,8 @@ public class UI_Bar : MonoBehaviour
 
     private void SetHPtext()
     {
+
+        HPsb = new StringBuilder("");
         HPsb.Clear();
         HPsb.Append(UIbarHP.value);
         HPsb.Append("  /  ");
@@ -58,6 +60,8 @@ public class UI_Bar : MonoBehaviour
 
     private void SetRPtext()
     {
+
+        RPsb = new StringBuilder("");
         RPsb.Clear();
         RPsb.Append(UIbarRP.value);
         RPsb.Append("  /  ");
